@@ -1,0 +1,166 @@
+Name:  Michael Kelly
+E-mail Address: mkelly32@cmu.edu
+
+Project Title: A dynamic method of UID/GID management
+
+Project Goals: 
+
+ - Create a standard format for storing user / group info in
+   portage. The file should be formatted in the same way as the
+   /etc/conf.d files (i.e. shell script variables). The directory
+   structure used is defined in GLEP 27
+   <http://www.gentoo.org/proj/en/glep/glep-0027.html>.
+
+ - Implement the proper code in portage to allow for the
+   EUSERS/EGROUPS functionality. Devise a format for a database of
+   users and groups added by this system for use by the users-update
+   script.
+
+ - Write a script, called users-update, which will allow the user to
+   control all users which have been added by portage, and remove
+   unneeded users. In addition to a stand alone script, a module for
+   eselect should be developed, along with proper bash-completion
+   support.
+
+ - Make the Gentoo community aware of the new system, encourage users
+   to file bugs against ebuilds which don't yet support it, and make
+   documentation available on the webpage regarding the transition and
+   the use of the new tools.
+
+Project Benefits:
+
+   Implementing GLEP 27 will allow for a more automated approach to
+   adding users with ebuilds in more cases. This will help the overall
+   security of the Gentoo rise, as it will be easier for every daemon
+   to run as its own limited user, reducing the risk of a security
+   flaw in a daemon from causing damage to a system. Also, adding this
+   level of automation will add a level of polish to the Gentoo
+   distribution. 
+
+   This project could be generalized to work with other package
+   management systems in other distributions, so that they can also
+   have dynamically-assigned UIDs/GIDs for package-specific
+   users/groups and not have to worry about maintaining a list of
+   officially assigned numbers.
+
+Project Tasks and Deliverables:
+
+ - The initial task will be to solidify the user/group file format.
+
+   Contained in a user file should be:
+
+   * UID (Required) - given as range (e.g.. "123-499"). The first number
+     found to be available will be used.
+   * SHELL - if not given, should default to "/bin/false".
+   * HOME - if not given, should default to "/dev/null".
+   * GROUPS - if not given, should default to none.
+   * COMMENT - the GECOS comment data to add for the user. If not
+     given, defaults to "added by portage".
+   * CUSTOM - custom extra arguments for useradd. If not given,
+     defaults to nothing.
+
+   And in a group file:
+
+   * GID (Required) - handled the same as UID above.
+
+   Additionally, a methodology should be developed to allow for
+   changes in these groups to be properly propagated to end users
+   (e.g. the recent change of the slocate group to be called
+   locate). When a group or user is renamed in a newer version of an
+   ebuild, this change shouldn't be immediately propagated to all
+   users, but should instead only occur once the package is
+   updated. Another variable should be added to the new group's file,
+   REPLACES, which tells the system that this user should replace the
+   currently existing one.
+
+ - The proper modifications need to be made to the portage code to
+   support the new system. The core modifications to the portage code
+   would be written in python, in as modular a fashion as possible, to
+   allow for it to be backported easily.
+
+   The deeper part of the update code is a shell script which will
+   dynamically load the module for the current authentication
+   system. This script could easily be ported to support other
+   userlands, such as BSD, and to also become a stand-alone
+   application, since it just uses standard Bourne shell syntax. This
+   would allow it to be used in other distributions' packaging systems
+   as well (e.g. RPM).
+
+   The script will automatically detect the correct authentication
+   mechanism to use from /etc/nsswitch.conf (which determines this in
+   both GNU/Linux and FreeBSD userlands). It is important that all
+   appropriate backends listed in nsswitch.conf are updated, not just
+   the first one listed. For example, if the file contains the line:
+   "passwd: ldap files", then both the /etc/passwd files and the LDAP
+   server should be updated with the same new user information.
+
+   Also included in this task is preparing the format of the portage
+   users database, which is used internally by portage and the
+   users-update script below to determine which users were dynamically
+   added, and when they can be safely removed.
+
+ - The users-update script, written in shell script, is a user
+   interface to the portage user database. It allows the user to view
+   currently added users and the packages which added them, as well as
+   purge added users which are no longer used, and optionally all
+   files owned by those users. This script would also properly use
+   nsswitch.conf to determine the proper authentication backends to
+   work with.
+
+ - Add code to the eutils.eclass which will detect if the installed
+   version of portage supports the new system, notifies the operator
+   that the current ebuild is using depreciated code, and properly add
+   the user using the new system's code. This would check for the
+   proper EAPI version to know when to execute the new code instead.
+
+ - All other details not addressed here are to be handled as discussed
+   in GLEP 27.
+
+Project Schedule:
+
+ - First week - meet with mentor and discuss proposal. Work out any
+   oversights. Begin to add the required new structure to the portage
+   tree and its update scripts.
+
+ - Next 4-6 weeks - prepare initial patch set for portage to add
+   support for the EUSERS and EGROUPS variables, per GLEP 27. This
+   will be the bulk of the project, as I need to become familiar with
+   the internals of portage and sharpen my python skills.
+
+ - Following 2-3 weeks - prepare user interfaces (users-update,
+   eselect module). Begin testing the code with various commonly-used
+   ebuilds, such as net-www/apache and sys-apps/slocate.
+
+ - Rest of summer - write documentation for webpage for when the
+   transition occurs. Search portage tree for any ebuilds which make
+   use of the old enew{user,group} functions and rewrite them to use
+   the new EUSERS/EGROUPS. Add transitional code to the eutils.eclass.
+
+Personal Statement:
+
+   I am a fourth-year student studying Cognitive Science at Carnegie
+   Mellon University. I have taken several mid-level Computer Science
+   courses at this institution. I have 3 years of experience with
+   Gentoo in particular, and 7 years with GNU/Linux.
+
+   I'm comfortable programming in C, Perl, shell, and I am willing and
+   able to learn python (so far I have only dabbled in it). I'm very
+   comfortable with reading documentation and learning new languages /
+   techniques. For example, last summer I learned JSP and Java
+   Servlets for implementing a web application for my employer (see
+   demo on my webpage).
+
+   I've been a contributor to Gentoo in the past, submitting ebuilds
+   for things like DenyHosts and Zephyr, so I've become fairly
+   familiar with Gentoo operating policies.
+
+   My resume is available at:
+     <http://www.pioto.org/~pioto/cv/Michael-Kelly-Resume-s06.pdf>
+
+   For a little more about me, visit my homepage:
+     <http://www.pioto.org/~pioto/>
+
+   The most recent version of this proposal can be found at:
+     <http://www.pioto.org/~pioto/gentoo/soc2006/glep27-proposal.txt>
+
+   $Id: glep27-proposal.txt,v 1.7 2006/05/06 22:05:37 pioto Exp $
