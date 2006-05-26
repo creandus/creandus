@@ -1,0 +1,111 @@
+<genone> pioto: btw, if you need any portage-related input on ypur project feel free to bug me (you'll have to do that anyway at some point ;)
+* steev-laptop (n=steev-la@gentoo/developer/steev) has joined #gentoo-soc
+<christel> :)
+<genone> I should note that my bribes better be higher than ciaranms though
+* gerrynjr (n=gerrynjr@gentoo/developer/gerrynjr) has joined #gentoo-soc
+<pioto> genone: ok
+<pioto> i'm gonna read through O'Reilly's "Learning Python" over the weekend first, though
+<ciaranm> you think you need python?
+<pioto> well, a little at least, to have the thing hook into portage, right?
+<ciaranm> not sure that that's necessary
+<pioto> or is there some place where i put the script and portage will just run it?
+<ciaranm> i'm kinda thinking you may not need to go beyond eclass scope
+<pioto> ciaranm: hmm... yeah, that makes sense
+<ciaranm> would be a shame to require python just for that
+<pioto> definitely
+<pioto> i want it to translate easily to other distros, too, if they're interested in it
+<pioto> and most others don't have python in their base system
+<antarus> yeah, thats why other distros suck!
+<pioto> well, i think the first thing i had in my proposed schedule was to finalize the structure of what needs to be added to the portage tree, so that can start to be phased in and ebuild maintaners can become aware of the transition
+<pioto> does that sound like the logical first step to folks here?
+<ciaranm> i'd say start with figuring out what exactly is really needed, from an ebuild perspective
+* KillerX (n=anant@137.132.247.1) has joined #gentoo-soc
+<pioto> well, the ebuild needs to have new variables set in it (EUSERS, EGROUPS), and it needs to inherit whatever new eclass i create
+<ciaranm> details!
+<spb> look at what ebuilds are currently doing
+<ciaranm> indeed
+<pioto> currently, they make use of enewuser from eutils
+<spb> decide how the effects they need could better be achieved
+<spb> higher level than that
+<spb> ends, not means
+<ciaranm> pioto: what are ebuilds trying to do, in high level terms?
+<ciaranm> it's very easy to come up with a good solution to the wrong problem
+<antarus> prototype, test, etc..
+<spb> nono
+<ciaranm> nooooooooooooooooooooo
+<spb> before you prototype, test, etc
+<ciaranm> antarus is t3h lose
+<spb> you work out what the problem you're actually trying to solve is
+<spb> then you sit and think for a while
+<spb> when you have spent long enough sitting and thinking that people start to say "this is clearly vapourware where's the code", then you sit down and write it, getting 90% of it right first time
+<ciaranm> noooo! you write the test cases
+<ciaranm> *then* you write the code
+<spb> test cases are part of the code
+<ciaranm> true
+<spb> but yes, you do write them before the bulk of the code
+<pioto> hmm... one sorce of inconsistency i see is that could be called from any of the pkg_* functions, and there doesn't seem to be much of a pattern right now as to which one it is called in
+<pioto> apache puts it in pkg_preinst, mpd-dvn puts it in pkg_setup, and openssh puts it in pkg_postinst
+<pioto> that's due to how they use these added users... some install files owned by them, others just run themselves as them
+<spb> right
+<spb> now consider why they each put it in different places
+<antarus> eh, prototyping can often help you think about the problem ;)
+<antarus> especially if you have wrong ideas about how things work/are used
+<antarus> as long as you are prepared to throw code away
+<spb> your implicit assumption is that you are going to get it horribly wrong
+<spb> which need not be the case
+<antarus> true
+<pioto> hmm... so, in the case of the first time of installing an application, i can't see how it would hurt to have the user always created in the pkg_setup stage (which, if i understand correctly, runs before anything else)...
+<pioto> if the app is already installed, though, you don't wanna apply any changes to the users until you actually install the package [in case you're building a binary package and installing it later, for example]
+<antarus> pioto: I think the question is does it matter when the user is created, pkg_setup vs pre/postinst
+<pioto> well, hmm... i don't think most of the user stuff is done during compilation, most seems to be done around the install time
+<spb> stop thinking about how things are done now
+<spb> start thinking about what is actually required
+<pioto> well, i'm thinking of how it would be needed during compilation
+<spb> what are the various cases for when any users to be added will be required?
+<antarus> pioto: er, I can't think of any use case where you need specific user during compile..
+<pioto> are there packages where the user is configured during the ./configure phase, for example, and it's needed to exist then?
+<genone> hehe, too many 404s for Google
+<pioto> the cases i'm looking at now could all stand to have the user made during preinst... some need it then, for others there wouldn't be any harm, from what i see
+<spb> many packages will need it during src_install
+* antarus doens't think you should worry about rollbacks
+<antarus> aka if an ebuild adds the user during pkg_setup and it fails during src_* or qmerge somehow
+<pioto> ok, so are there any times where the user would have to not exist until after install?
+<spb> rolling back like that will have to be portage's problem
+* antarus nods
+<spb> or whatever package manager you happen to be using, of course
+<antarus> file-based is easy, otherwise it's kind of a pita ;)
+<genone> though that brings us back to portage mods (to track changes)
+<pioto> ok, so in the case of this eclass, would there be any cases where it shouldn't just process the EUSERS and EGROUPS variables during the pkg_preinst() phase?
+<spb> pioto: if a daemon installs all its files root-owned and then just adds a user as which it will run
+<pioto> i can't think of any
+<spb> then it won't be needed until postinst
+<spb> preinst runs after install
+<antarus> pioto: pkg_setup()
+<antarus> not preinst ;)
+<pioto> gah, is there a flow chart somewhere of these functions?
+<antarus> there a dependency table
+<antarus> somewhere..
+<ciaranm> pioto: i made one a while back
+<pioto> ya, the ebuild(5) manpage told me pkg_setup goes before anything else, which i'd see as meaning it goes before compile... which we don't want
+<ciaranm> pioto: 's in devmanual somewhere
+<antarus> http://devmanual.gentoo.org/ebuild-writing/functions/index.html
+<ciaranm> yes. that.
+<pioto> ah, thanks
+<ciaranm> under what circumstances do you think using pkg_setup would be inappropriate?
+<pioto> well, say something like when the slocate group changed lately
+<pioto> you don't wanna apply that kinda change until the new version of the package is installed
+<pioto> or things could get messed up in the interrum
+<ciaranm> ok. where are you writing this down?
+<pioto> uhh... irc logs... and now emacs...
+<spb> i suggest you note it down in an editor or on a pad of paper
+<ciaranm> yeah. a text editor would be good
+<genone> man, never thought that Google would have problems with serving static files
+<pioto> ya, i'm gonna throw it in my current working svn repository for this project
+* ciaranm smirks as pioto misses it
+* pioto was gonna ignore the emacs flame
+<pioto> take the higher ground...
+<pioto> [nevermind i've got a half dozen windows of gvim open now too...]
+<spb> that wasn't a flame
+<spb> twas far too subtle
+* mikearthur has quit (Read error: 104 (Connection reset by peer))
+* mikearthur (i=mike@82-41-205-190.cable.ubr11.edin.blueyonder.co.uk) has joined #gentoo-soc
