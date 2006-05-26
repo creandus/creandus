@@ -1,8 +1,14 @@
+Summary: 
+
+1. Implement as an eclass
+2. In addition to EUSERS and EGROUPS, need EUSERS_PRECOMPILE or 
+   EUSERS_PHASE="pkg_setup"
+
+Raw Logs (minus join/part messages):
+
 <genone> pioto: btw, if you need any portage-related input on ypur project feel free to bug me (you'll have to do that anyway at some point ;)
-* steev-laptop (n=steev-la@gentoo/developer/steev) has joined #gentoo-soc
 <christel> :)
 <genone> I should note that my bribes better be higher than ciaranms though
-* gerrynjr (n=gerrynjr@gentoo/developer/gerrynjr) has joined #gentoo-soc
 <pioto> genone: ok
 <pioto> i'm gonna read through O'Reilly's "Learning Python" over the weekend first, though
 <ciaranm> you think you need python?
@@ -19,7 +25,6 @@
 <pioto> well, i think the first thing i had in my proposed schedule was to finalize the structure of what needs to be added to the portage tree, so that can start to be phased in and ebuild maintaners can become aware of the transition
 <pioto> does that sound like the logical first step to folks here?
 <ciaranm> i'd say start with figuring out what exactly is really needed, from an ebuild perspective
-* KillerX (n=anant@137.132.247.1) has joined #gentoo-soc
 <pioto> well, the ebuild needs to have new variables set in it (EUSERS, EGROUPS), and it needs to inherit whatever new eclass i create
 <ciaranm> details!
 <spb> look at what ebuilds are currently doing
@@ -107,5 +112,13 @@
 <pioto> [nevermind i've got a half dozen windows of gvim open now too...]
 <spb> that wasn't a flame
 <spb> twas far too subtle
-* mikearthur has quit (Read error: 104 (Connection reset by peer))
-* mikearthur (i=mike@82-41-205-190.cable.ubr11.edin.blueyonder.co.uk) has joined #gentoo-soc
+<pioto> well, am i thinking right about when just using pkg_setup could be a problem?
+<ciaranm> probably
+<ciaranm> you could use a variable...
+<pioto> like EUSERS_PRECOMPILE or some such thing?
+<ciaranm> EUSERS_PHASE="pkg_setup"
+<ciaranm> just an idea
+<pioto> ok
+<ciaranm> i didn't say it was a good idea
+<pioto> well, does any package add more than one user and one group?
+<ciaranm> yes
