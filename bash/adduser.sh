@@ -9,3 +9,11 @@
 . common/config.sh
 
 # Read the command line arguments.
+
+# The only option recognized now is the user to be added.
+NEWUSER="${1}"
+###
+
+# Read the proper data file for the desired user
+. "${DATADIR}/user/${NEWUSER}"
+

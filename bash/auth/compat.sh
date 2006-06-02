@@ -1,6 +1,11 @@
-# auth/compat/adduser.sh - adds a user using the "compat" backend
+# auth/compat.sh - "compat" backend functions
 #
 # $Id$
+
+# adduser_compat() - adds a user to the system using the "compat" backend
+# all arguments are required
+adduser_compat() {
+}
 
 # Adapted from enewuser, by vapier@gentoo.org
 #
@@ -15,13 +20,6 @@
 # groups:	none
 # extra:	comment of 'added by portage for ${PN}'
 adduser_compat() {
-	case ${EBUILD_PHASE} in
-		unpack|compile|test|install)
-		eerror "'enewuser()' called from '${EBUILD_PHASE}()' which is not a pkg_* function."
-		eerror "Package fails at QA and at life.  Please file a bug."
-		die "Bad package!  enewuser is only for use in pkg_* functions!"
-	esac
-
 	# get the username
 	local euser=$1; shift
 	if [[ -z ${euser} ]] ; then
