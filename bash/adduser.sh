@@ -15,15 +15,14 @@ NEWUSER="${1}"
 ###
 
 # Read the proper data file for the desired user
-## "${DATADIR}/user/${NEWUSER}"
 
 # In the full implementation, should go through all the cascading
 # profiles in proper order, but for now we're just parsing these 2
 # config files
 
+# TODO: Build USERFILE dynamically based upon the currently selected profile.
+# Work from the profile up to its parents, etc, to build this list.
 USERFILE="${DATADIR}/user/${NEWUSER} ${DATADIR}/accounts"
-
-## TODO: Verify scoping of these variables, make adjustments as necessary
 
 for i in ${USERFILE}; do
     userid_=$(grep ^uid: ${i} |cut -d: -f2)
