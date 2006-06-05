@@ -1,8 +1,6 @@
 # Default account settings for the glep27-user/group tools
-
-DEFAULT_nUID="1-999"
-DEFAULT_nSHELL="/bin/false"
-DEFAULT_nHOME="/dev/null"
-DEFAULT_nGROUPS=""
-DEFAULT_nCOMMENT="user created by portage"
-DEFAULT_nCUSTOM=""
+uid: 1-999
+shell: /bin/false
+home: /dev/null
+groups: 
+comment: user created by portage

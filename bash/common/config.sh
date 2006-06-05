@@ -12,6 +12,7 @@ NSSWITCH_CONF="/etc/nsswitch.conf"
 DATADIR="../data"
 
 # Get a list of the backend databases we're going to use
+## TODO: Make these regexps better, more general
 PASSWD_BACKENDS=`grep ^passwd: "${NSSWITCH_CONF}" |cut -d: -f2`
 SHADOW_BACKENDS=`grep ^shadow: "${NSSWITCH_CONF}" |cut -d: -f2`
 GROUP_BACKENDS=`grep ^group: "${NSSWITCH_CONF}" |cut -d: -f2`
@@ -36,5 +37,18 @@ for i in ${GROUP_BACKENDS}; do
 done
 echo
 
+###
+
+# Load variable defaults
+#. "${DATADIR}/accounts"
+## Normally here, we would continue to load, from general to specific,
+## the necessary config for the currently selected profile
+
+### Debugging output
+#echo "Default UID Range: ${DEFAULT_UID}"
+#echo "Default shell: ${DEFAULT_SHELL}"
+#echo "Default home: ${DEFAULT_HOME}"
+#echo "Default groups: ${DEFAULT_GROUPS}"
+#echo "Default comment: ${DEFAULT_COMMENT}"
 ###
 

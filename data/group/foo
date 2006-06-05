@@ -1,2 +1,2 @@
 # A sample group config file, for group "foo"
-nGID=1234
+gid: 1234

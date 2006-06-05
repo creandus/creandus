@@ -1,7 +1,6 @@
 # A sample user config file, for user "foo"
-nUID="1234"
-nSHELL="/bin/false"
-nHOME="/var/empty"
-nGROUPS="foo"
-nCOMMENT="user added by glep27 sample code"
-nCUSTOM=""
+uid: 1234
+shell: /bin/false
+home: /var/empty
+groups: foo
+comment: foo's user
