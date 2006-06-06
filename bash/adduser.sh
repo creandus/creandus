@@ -25,27 +25,27 @@ NEWUSER="${1}"
 USERFILE="${DATADIR}/user/${NEWUSER} ${DATADIR}/accounts"
 
 for i in ${USERFILE}; do
-    userid_=$(grep ^uid: ${i} |cut -d: -f2)
-    userid_=${userid_## }
-    userid=${userid:-${userid_}}
+	userid_=$(grep ^uid: ${i} |cut -d: -f2)
+	userid_=${userid_## }
+	userid=${userid:-${userid_}}
 
-    usershell_=$(grep ^shell: "${i}" |cut -d: -f2)
-    usershell_=${usershell_## }
-    usershell=${usershell:-${usershell_}}
+	usershell_=$(grep ^shell: "${i}" |cut -d: -f2)
+	usershell_=${usershell_## }
+	usershell=${usershell:-${usershell_}}
 
-    userhome_=$(grep ^home: "${i}" |cut -d: -f2)
-    userhome_=${userhome_## }
-    userhome=${userhome:-${userhome_}}
+	userhome_=$(grep ^home: "${i}" |cut -d: -f2)
+	userhome_=${userhome_## }
+	userhome=${userhome:-${userhome_}}
 
-    usergroups_=$(grep ^groups: "${i}" |cut -d: -f2)
-    usergroups_=${usergroups_## }
-    usergroups=${usergroups:-${usergroups_}}
+	usergroups_=$(grep ^groups: "${i}" |cut -d: -f2)
+	usergroups_=${usergroups_## }
+	usergroups=${usergroups:-${usergroups_}}
 
-    usercomment_=$(grep ^comment: "${i}" |cut -d: -f2)
-    usercomment_=${usercomment_## }
-    usercomment=${usercomment:-${usercomment_}}
+	usercomment_=$(grep ^comment: "${i}" |cut -d: -f2)
+	usercomment_=${usercomment_## }
+	usercomment=${usercomment:-${usercomment_}}
 
-    unset userid_ usershell_ userhome_ usergroups_ usercomment_
+	unset userid_ usershell_ userhome_ usergroups_ usercomment_
 done
 
 # Now, we would verify this information against our database, and if
@@ -60,15 +60,16 @@ done
 ## TODO: Add code for knowing when we are modifying, not adding
 
 for i in ${PASSWD_BACKENDS}; do
-    case ${i} in
-	compat)
-	    . "auth/${i}.sh"
-	    adduser_compat
-	    ;;
-	*)
-	    echo "ERROR: Auth mechanism \"${i}\" not supported by this script."
-	    return 1
-	    ;;
-    esac
+	case ${i} in
+		compat)
+			. "auth/${i}.sh"
+			adduser_compat
+			;;
+		*)
+			echo -n "ERROR: Auth mechanism \"${i}\" not supported"
+			echo    "by this script."
+			return 1
+			;;
+	esac
 done
 
