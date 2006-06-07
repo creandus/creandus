@@ -2,6 +2,9 @@
 #
 # $Id$
 
+# We make use of egetent:
+. common/getent.sh
+
 # adduser_compat() - adds a user to the system using the "compat" backend.
 #
 # Expects the following variables to already be set:
@@ -19,8 +22,20 @@ adduser_compat() {
 	fi
 
 	# TODO: Add code to determine a free UID here
-		
+	uidmin=${userid%-*}
+	uidmax=${userid#*-}
 
-    # For plain-old Gentoo/Linux
-    echo We\'d be doing: useradd -d \"${userhome}\" -G \"${usergroups}\" -s \"${usershell}\" -u \"${userid}\" -c \"${usercomment}\" \"${NEWUSER}\"
+	if [[ -z $(egetent passwd ${uidmin}) ]] ; then
+		userid=${uidmin}
+	else
+		userid=$(( ${usermin} + 1))
+		for i in $( seq ${userid} ${uidmax} ) ; do
+			[[ -z $(egetent passwd ${i}) ]] && userid=${i} && break
+		done
+	fi
+
+	# For plain-old Gentoo/Linux
+	echo We\'d be doing: useradd -d \"${userhome}\" -G \
+	\"${usergroups}\" -s \"${usershell}\" -u \"${userid}\" -c \
+	\"${usercomment}\" \"${NEWUSER}\"
 }

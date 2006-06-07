@@ -72,4 +72,3 @@ for i in ${PASSWD_BACKENDS}; do
 			;;
 	esac
 done
-

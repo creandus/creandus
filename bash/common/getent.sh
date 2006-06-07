@@ -1,3 +1,4 @@
+# Based upon the egetent function from eutils.eclass
 # Small wrapper for getent (Linux), nidump (Mac OS X),
 # and pw (FreeBSD) used in enewuser()/enewgroup()
 # Joe Jezak <josejx@gmail.com> and usata@gentoo.org
@@ -5,7 +6,7 @@
 #
 # egetent(database, key)
 egetent() {
-	case ${CHOST} in
+	case ${MACHTYPE} in
 	*-darwin*)
 		case "$2" in
 		*[!0-9]*) # Non numeric
