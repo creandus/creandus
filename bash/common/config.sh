@@ -13,7 +13,7 @@ NSSWITCH_CONF="/etc/nsswitch.conf"
 # profile, at least in Gentoo. Other distros would use an appropriate
 # directory here.
 #DATADIR="/etc/make.profile"
-DATADIR="../data"
+DATADIR="../../data"
 
 # DBDIR: The directory which contains the database of auto-added users. 
 # It is made up of a list of files in 2 subdirs, users and groups, named 
@@ -24,7 +24,7 @@ DATADIR="../data"
 # properly know when a dynamically-added user can be removed from the 
 # system.
 #DBDIR="/var/db/dynusers"
-DBDIR="../db"
+DBDIR="../../db"
 
 # Get a list of the backend databases we're going to use
 ## TODO: Make these regexps better, more general
