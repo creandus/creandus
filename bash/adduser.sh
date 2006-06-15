@@ -56,11 +56,13 @@ if [[ -f "${DBDIR}/users/${NEWUSER}" ]] ; then
 	# TODO: We need to see if the user matches what it should. If 
 	# not, inform the operator of what changes must be made.
 	echo "User already exists. Doing nothing [for now]"
+elif [[ 
+	# In this case, we know that the user exists on the system, but 
+	# that they were not created by this script. We should now check 
+	# to see if they are 
 else
 	# Finally, we take take the necessary action, either via usermod 
 	# or useradd [or it's comparable friends]
-
-	## TODO: Add code for knowing when we are modifying, not adding
 
 	for i in ${PASSWD_BACKENDS}; do
 		case ${i} in
@@ -68,10 +70,12 @@ else
 				. "auth/${i}.sh"
 				adduser_compat
 				;;
+			files)
+				. "auth/${i}.sh"
+				adduser_files
 			*)
-				echo -n "ERROR: Auth mechanism \"${i}\""
-				echo	" not supported by this script."
-				return 1
+				echo -n "ERROR: Auth mechanism \"${i}\"" >&2
+				echo	" not supported by this script." >&2
 				;;
 		esac
 	done

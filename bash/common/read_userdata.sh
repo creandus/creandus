@@ -1,4 +1,4 @@
-# adduser.sh - Read the proper data file for the desired user
+# read_userdata.sh - Read the proper data file for the desired user
 # $Id$
 
 # In the full implementation, should go through all the cascading

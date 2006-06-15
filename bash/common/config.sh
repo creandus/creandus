@@ -29,5 +29,4 @@ DBDIR="../../db"
 # Get a list of the backend databases we're going to use
 ## TODO: Make these regexps better, more general
 PASSWD_BACKENDS=$(grep ^passwd: "${NSSWITCH_CONF}" |cut -d: -f2)
-SHADOW_BACKENDS=$(grep ^shadow: "${NSSWITCH_CONF}" |cut -d: -f2)
 GROUP_BACKENDS=$(grep ^group: "${NSSWITCH_CONF}" |cut -d: -f2)
