@@ -11,7 +11,7 @@
 # Read the command line arguments.
 
 # The only options recognized now are the user to be added and the 
-# package which is doing the adding.
+# package which is asking for the adding.
 NEWUSER="${1}"
 PKGNAME="${2}"
 
@@ -33,6 +33,11 @@ then
 	# TODO: If there needs to be some change made, note it
 	# properly, for the user to take care of later with
 	# the eselect tool
+
+	# Now, since we've made the proper arrangements for any possible 
+	# changes, we now add the current package name to the database 
+	# and call it quits
+	echo "${PKGNAME}" >> "${DBDIR}/users/${NEWUSER}"
 	return 0
 fi
 # TODO: Add code to determine a free UID here
@@ -56,10 +61,6 @@ if [[ -f "${DBDIR}/users/${NEWUSER}" ]] ; then
 	# TODO: We need to see if the user matches what it should. If 
 	# not, inform the operator of what changes must be made.
 	echo "User already exists. Doing nothing [for now]"
-elif [[ 
-	# In this case, we know that the user exists on the system, but 
-	# that they were not created by this script. We should now check 
-	# to see if they are 
 else
 	# Finally, we take take the necessary action, either via usermod 
 	# or useradd [or it's comparable friends]
