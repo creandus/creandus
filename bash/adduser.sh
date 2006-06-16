@@ -37,8 +37,11 @@ then
 	# Now, since we've made the proper arrangements for any possible 
 	# changes, we now add the current package name to the database 
 	# and call it quits
+	echo -n "We already have a user named ${NEWUSER}." >&2
+	echo " Doing nothing, for now." >&2
+	
 	echo "${PKGNAME}" >> "${DBDIR}/users/${NEWUSER}"
-	return 0
+	exit 0
 fi
 # TODO: Add code to determine a free UID here
 uidmin=${userid%-*}
@@ -60,13 +63,14 @@ if [[ -f "${DBDIR}/users/${NEWUSER}" ]] ; then
 
 	# TODO: We need to see if the user matches what it should. If 
 	# not, inform the operator of what changes must be made.
-	echo "User already exists. Doing nothing [for now]"
+	echo "User already exists. Doing nothing [for now]" >&2
 else
 	# Finally, we take take the necessary action, either via usermod 
 	# or useradd [or it's comparable friends]
 
 	for i in ${PASSWD_BACKENDS}; do
 		if [[ -e "auth/${i}-linux-user.sh" ]] ; then
+			echo "Running ${i}..."
 			. "auth/${i}-linux-user.sh"
 		else
 			echo -n "Auth backend ${i} not " >&2

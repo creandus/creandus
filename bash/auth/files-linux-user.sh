@@ -2,7 +2,7 @@
 #
 # $Id$
 
-# adduser_files() - adds a user to the system using the "compat" backend.
+# adduser_files() - adds a user to the system using the "files" backend.
 #
 # Expects the following variables to already be set:
 #
