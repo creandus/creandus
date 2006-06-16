@@ -10,10 +10,12 @@
 
 # Read the command line arguments.
 
-# The only options recognized now are the user to be added and the 
-# package which is asking for the adding.
+# The only options recognized now are the user to be added, the 
+# package which is asking for the adding, and the userspace type (e.g. 
+# GNU, fbsd, etc)
 NEWUSER="${1}"
 PKGNAME="${2}"
+USERSPACE="${3}"
 
 ###
 
@@ -71,7 +73,7 @@ else
 	for i in ${PASSWD_BACKENDS}; do
 		if [[ -e "auth/${i}-linux-user.sh" ]] ; then
 			echo "Running ${i}..."
-			. "auth/${i}-linux-user.sh"
+			. "auth/${i}-${USERSPACE}-user.sh"
 		else
 			echo -n "Auth backend ${i} not " >&2
 			echo "supported by this script." >&2
