@@ -7,11 +7,8 @@
 # Expects the following variables to already be set:
 #
 # NEWUSER: the username to be added
-# 
+# ...
 # Expects a valid userid to have already been determined
-adduser_compat() {
-	# For plain-old Gentoo/Linux
-	echo We\'d be doing: useradd -d \"${userhome}\" -G \
-	\"${usergroups}\" -s \"${usershell}\" -u \"${userid}\" -c \
-	\"${usercomment}\" \"${NEWUSER}\"
-}
+echo We\'d be doing: useradd -d \"${userhome}\" -G \
+\"${usergroups}\" -s \"${usershell}\" -u \"${userid}\" -c \
+\"${usercomment}\" \"${NEWUSER}\"

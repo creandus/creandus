@@ -66,19 +66,12 @@ else
 	# or useradd [or it's comparable friends]
 
 	for i in ${PASSWD_BACKENDS}; do
-		case ${i} in
-			compat)
-				. "auth/${i}.sh"
-				adduser_compat
-				;;
-			files)
-				. "auth/${i}.sh"
-				adduser_files
-			*)
-				echo -n "ERROR: Auth mechanism \"${i}\"" >&2
-				echo	" not supported by this script." >&2
-				;;
-		esac
+		if [[ -e "auth/${i}-linux-user.sh" ]] ; then
+			. "auth/${i}-linux-user.sh"
+		else
+			echo -n "Auth backend ${i} not " >&2
+			echo "supported by this script." >&2
+		fi
 	done
 fi
 
