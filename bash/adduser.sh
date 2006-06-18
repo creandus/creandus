@@ -17,6 +17,11 @@ NEWUSER="${1}"
 PKGNAME="${2}"
 USERSPACE="${3}"
 
+if [[ -z "${3}" || -z "${2}" || -z "${1}" ]] ; then
+	echo "Script expects 3 arguments: username pkgname userspace." 	>&2
+	exit 1
+fi
+
 ###
 
 # Read the proper data file for the desired user
@@ -75,8 +80,9 @@ else
 			echo "Running ${i}..."
 			. "auth/${i}-${USERSPACE}-user.sh"
 		else
-			echo -n "Auth backend ${i} not " >&2
-			echo "supported by this script." >&2
+			echo -n "Auth backend ${i} with " >&2
+			echo -n "userspace ${USERSPACE} " >&2
+			echo "not supported by this script." >&2
 		fi
 	done
 fi
