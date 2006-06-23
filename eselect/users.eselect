@@ -1,10 +1,10 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id: $
+# $Id$
 
 DESCRIPTION="Maintain the system users added by the package manager"
 MAINTAINER="pioto@pioto.org"
-SVN_DATE='$Date: 2005-10-16 19:31:47 +0100 (Sun, 16 Oct 2005) $'
+SVN_DATE='$Date$'
 VERSION=$(svn_date_to_version "${SVN_DATE}" )
 
 #DBDIR="/var/db/dynusers"
