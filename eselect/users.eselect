@@ -1,0 +1,54 @@
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Id: $
+
+DESCRIPTION="Maintain the system users added by the package manager"
+MAINTAINER="pioto@pioto.org"
+SVN_DATE='$Date: 2005-10-16 19:31:47 +0100 (Sun, 16 Oct 2005) $'
+VERSION=$(svn_date_to_version "${SVN_DATE}" )
+
+#DBDIR="/var/db/dynusers"
+DBDIR="../../db"
+
+### show action
+
+describe_show() {
+	echo "Show the users currently added by this script"
+}
+
+describe_show_parameters() {
+	echo "<mode>"
+}
+
+describe_show_options() {
+	echo "mode : One of users, groups, or all. Defaults to all."
+}
+
+do_show() {
+	local mode=all
+	mode=${mode:-${1}}
+
+	case ${mode} in
+		users)
+			for i in $(ls "${DBDIR}/users") ; do
+				echo "* ${i}:"
+				cat "${DBDIR}/users/${i}"
+			done
+			;;
+		groups)
+			for i in $(ls "${DBDIR}/groups") ; do
+				echo "* ${i}:"
+				cat "${DBDIR}/groups/${i}"
+			done
+			;;
+		*)
+			for i in $(ls "${DBDIR}/users") ; do
+				echo "* ${i}:"
+				cat "${DBDIR}/users/${i}"
+			done
+			for i in $(ls "${DBDIR}/groups") ; do
+				echo "* ${i}:"
+				cat "${DBDIR}/groups/${i}"
+			done
+			;;
+}
