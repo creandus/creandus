@@ -119,8 +119,8 @@ describe_update_parameters() {
 }
 
 describe_update_options() {
-	echo "--pretend|-p : don't actually remove any users or groups,"
-	echo "just show what would be done."
+	echo -n "--pretend|-p : don't actually remove any users or "
+	echo "groups, just show what would be done."
 }
 
 do_update() {
