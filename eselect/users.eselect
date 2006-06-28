@@ -1,5 +1,3 @@
-# Copyright 1999-2005 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 DESCRIPTION="Maintain the system users added by the package manager"
@@ -7,6 +5,7 @@ MAINTAINER="pioto@pioto.org"
 SVN_DATE='$Date$'
 VERSION=$(svn_date_to_version "${SVN_DATE}" )
 
+# TODO: Fix this path with autotools
 #DBDIR="/var/db/dynusers"
 DBDIR="../../db"
 
@@ -51,4 +50,115 @@ do_show() {
 				cat "${DBDIR}/groups/${i}"
 			done
 			;;
+	esac
+}
+
+### scan action
+
+describe_scan() {
+	echo "Scans the system for any files owned by the given user and,"
+	echo "optionally, removes them. This operation is SLOW."
+}
+
+describe_scan_parameters() {
+	echo "[--user user|--group group] <--remove>"
+}
+
+describe_scan_options() {
+	echo "--user user : scan the filesystem for all files owned by user"
+	echo "--group group : scan the filesystem for all files owned by group"
+	echo "--remove : remove all files which are found"
+}
+
+do_scan() {
+	# Parse our commandline args
+	local params="/"
+	while [[ ${1#--} != ${1} ]] ; do
+		if [[ "--user" == ${1} ]] ; then
+			shift
+			params="${params} -user ${1}"
+			shift
+		elif [[ "--group" == "${1}" ]] ; then
+			shift
+			params="${params} -group ${1}"
+			shift
+		elif [[ "--remove" == "${1}" ]] ; then
+			shift
+			# This rm -rf seems kinda risky.
+			# TODO: possibly make this safer
+			params="${params} -exec rm -rf \{\} \;"
+		elif [[ "--" == "${1}" ]] ; then
+			break
+		else
+			die -q "Unknown parameter ${1}"
+		fi
+	done
+
+	params="${params} -print"
+
+	find ${params}	
+}
+
+### update action
+
+describe_update() {
+	echo "Removes any users from the system which no longer are"
+	echo "required by any installed package, but were once"
+	echo "installed by a package."
+}
+
+describe_update_parameters() {
+	echo "<--pretend|-p>"
+}
+
+describe_update_options() {
+	echo "--pretend|-p : don't actually remove any users or groups,"
+	echo "just show what would be done."
+}
+
+do_update() {
+	# Parse our commandline args
+	local PRETEND=
+	while [[ ${1#--} != ${1} ]] ; do
+		elif [[ "--pretend" == "${1}" || "-p" == "${1}" ]] ; then
+			shift
+			PRETEND="yes"
+		elif [[ "--" == "${1}" ]] ; then
+			break
+		else
+			die -q "Unknown parameter ${1}"
+		fi
+	done
+
+	# Find all the data files which are empty
+	deadusers_=$(find "${DBDIR}/users" -size 0 -print)
+	deadgroups_=$(find "${DBDIR}/groups" -size 0 -print)
+
+	for i in ${deadusers_} ; do 
+		deadusers="${deadusers} $(basename ${i})"
+	done
+	for i in ${deadgroups_} ; do 
+		deadgroups="${deadgroups} $(basename ${i})"
+	done
+	unset deadusers_ deadgroups_
+
+	echo "Removing users:"
+	for i in ${deadusers} ; do
+		echo -n "  ${i} : "
+		# TODO: Make this more general.
+		# e.g. use ../bash/auth/compat-GNU-userdel.sh
+		if [[ ! ${PRETEND} ]] ; then
+			userdel ${i} && echo "done" || die -q "failed"
+		fi
+	done
+
+	echo "Removing groups:"
+	for i in ${deadgroups} ; do
+		echo -n "  ${i} : "
+		# TODO: Make this more general.
+		# e.g. use ../bash/auth/compat-GNU-groupdel.sh
+		if [[ ! ${PRETEND} ]] ; then
+			groupdel ${i} && echo "done" || die -q "failed"
+		fi
+	done
 }
