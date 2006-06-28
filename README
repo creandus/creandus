@@ -1,0 +1,6 @@
+These scripts aim to provide a unified, simple way for package managers 
+to add users and groups to the system when demanded by a package, and 
+then to maintain them later on.
+
+Right now they're not at all ready for use, but any feedback, test 
+cases, etc would be very much appreciated.
