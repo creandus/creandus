@@ -127,7 +127,8 @@ do_update() {
 	# Parse our commandline args
 	local PRETEND=
 	while [[ ${1#--} != ${1} ]] ; do
-		elif [[ "--pretend" == "${1}" || "-p" == "${1}" ]] ; then
+		elif [[ "--pretend" == "${1}" ]] 
+		  || [[ "-p" == "${1}" ]] ; then
 			shift
 			PRETEND="yes"
 		elif [[ "--" == "${1}" ]] ; then
