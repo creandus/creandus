@@ -149,6 +149,7 @@ do_update() {
 		# e.g. use ../bash/auth/compat-GNU-userdel.sh
 		if [[ ! ${PRETEND} ]] ; then
 			userdel ${i} && echo "done" || die -q "failed"
+			rm "${DATADIR}/users/${i}"
 		fi
 	done
 
@@ -159,6 +160,7 @@ do_update() {
 		# e.g. use ../bash/auth/compat-GNU-groupdel.sh
 		if [[ ! ${PRETEND} ]] ; then
 			groupdel ${i} && echo "done" || die -q "failed"
+			rm "${DATADIR}/groups/${i}"
 		fi
 	done
 }
