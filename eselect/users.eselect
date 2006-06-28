@@ -73,20 +73,22 @@ describe_scan_options() {
 do_scan() {
 	# Parse our commandline args
 	local params="/"
+	local params2=
+	local gotNecessary=
 	while [[ ${1#--} != ${1} ]] ; do
 		if [[ "--user" == ${1} ]] ; then
 			shift
 			params="${params} -user ${1}"
 			shift
+			gotNecessary="yes"
 		elif [[ "--group" == "${1}" ]] ; then
 			shift
 			params="${params} -group ${1}"
 			shift
+			gotNecessary="yes"
 		elif [[ "--remove" == "${1}" ]] ; then
 			shift
-			# This rm -rf seems kinda risky.
-			# TODO: possibly make this safer
-			params="${params} -exec rm -rf \{\} \;"
+			params2="${params2} | xargs -0 rm -rf"
 		elif [[ "--" == "${1}" ]] ; then
 			break
 		else
@@ -94,9 +96,14 @@ do_scan() {
 		fi
 	done
 
-	params="${params} -print"
+	if [[ ! ${gotNecessary} ]] ; then
+		echo "You didn't provide one of the required paramenters."
+		die -q "You must provide either a user or group."
+	fi
 
-	find ${params}	
+	params="${params} -print0"
+
+	find ${params} ${params2}
 }
 
 ### update action
