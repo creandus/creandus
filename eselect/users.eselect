@@ -79,13 +79,13 @@ do_scan() {
 		if [[ "--user" == ${1} ]] ; then
 			shift
 			params="${params} -user ${1}"
-			shift
 			gotNecessary="yes"
+			shift
 		elif [[ "--group" == "${1}" ]] ; then
 			shift
 			params="${params} -group ${1}"
-			shift
 			gotNecessary="yes"
+			shift
 		elif [[ "--remove" == "${1}" ]] ; then
 			shift
 			params2="${params2} | xargs -0 rm -rf"
@@ -127,8 +127,8 @@ do_update() {
 	# Parse our commandline args
 	local PRETEND=
 	while [[ ${1#--} != ${1} ]] ; do
-		elif [[ "--pretend" == "${1}" ]] 
-		  || [[ "-p" == "${1}" ]] ; then
+		if [[ "--pretend" == "${1}" ]] \
+		|| [[ "-p" == "${1}" ]] ; then
 			shift
 			PRETEND="yes"
 		elif [[ "--" == "${1}" ]] ; then
