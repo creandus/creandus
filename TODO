@@ -1,0 +1,6 @@
+Remove any and all relative paths in the various scripts here, replace 
+them with autofoo magic.
+
+Add backend scripts for other systems, e.g. gentoo-fbsd.
+
+Create some test cases.
