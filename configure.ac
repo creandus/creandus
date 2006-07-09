@@ -37,8 +37,7 @@ AC_OUTPUT(
 	bash/Makefile
 	bash/auth/Makefile
 	bash/common/Makefile
+	bash/common/config.sh
 	eselect/Makefile
 	)
 dnl }}}
-
-

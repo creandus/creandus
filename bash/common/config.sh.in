@@ -3,10 +3,12 @@
 #
 # $Id$
 
+prefix=@prefix@
+
 # NSSWITCH_CONF: The nsswitch.conf file, which contains the
 # configuration of which backends to use. See nsswitch.conf(5) for
 # more info.
-NSSWITCH_CONF="/etc/nsswitch.conf"
+NSSWITCH_CONF=@sysconfdir@/nsswitch.conf
 
 # DATADIR: The directory where the user and group data is contained.
 # In reality this should be the "accounts" directory of their portage
@@ -23,8 +25,7 @@ DATADIR="../../data"
 # files. Then, the userspace update-users [or similar] script can 
 # properly know when a dynamically-added user can be removed from the 
 # system.
-#DBDIR="/var/db/dynusers"
-DBDIR="../../db"
+DBDIR=@localstatedir@/db/@PACKAGE@
 
 # Get a list of the backend databases we're going to use
 ## TODO: Make these regexps better, more general

@@ -5,9 +5,8 @@ MAINTAINER="pioto@pioto.org"
 SVN_DATE='$Date$'
 VERSION=$(svn_date_to_version "${SVN_DATE}" )
 
-# TODO: Fix this path with autotools
-#DBDIR="/var/db/dynusers"
-DBDIR="../../db"
+prefix=@prefix@
+DBDIR=@localstatedir@/db/@PACKAGE@
 
 ### show action
 
