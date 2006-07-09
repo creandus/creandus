@@ -4,3 +4,7 @@ MAINTAINERCLEANFILES = Makefile.in configure config/* aclocal.m4 \
 AUTOMAKE_OPTIONS = dist-bzip2 no-dist-gzip
 EXTRA_DIST = autogen.bash
 SUBDIRS = . bash eselect
+
+install-data-local:
+	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/users
+	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/groups
