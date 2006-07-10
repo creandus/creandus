@@ -2,7 +2,9 @@ MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = *~ gmon.out *.gcov *.gcno *.gcda .keep
 SUBDIRS = .
 
-noinst_SCRIPTS = \
+installauthdir = $(datadir)/$(PACKAGE)/auth/
+
+installauth_SCRIPTS = \
 	compat-GNU-groupadd.sh \
 	compat-GNU-groupmod.sh \
 	compat-GNU-useradd.sh \

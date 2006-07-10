@@ -1,9 +1,13 @@
 MAINTAINERCLEANFILES = Makefile.in
-CLEANFILES = *~ gmon.out *.gcov *.gcno *.gcda .keep
+CLEANFILES = *~ addgroup.sh adduser.sh
 SUBDIRS = . auth common
 
-noinst_SCRIPTS = \
+installbackenddir = $(datadir)/$(PACKAGE)/
+
+installbackend_SCRIPTS = \
 	addgroup.sh \
 	adduser.sh
 
-EXTRA_DIST = $(noinst_SCRIPTS)
+EXTRA_DIST = \
+	addgroup.sh.in \
+	adduser.sh.in

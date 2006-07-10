@@ -1,13 +1,17 @@
 MAINTAINERCLEANFILES = Makefile.in
-CLEANFILES = *~ gmon.out *.gcov *.gcno *.gcda .keep
+CLEANFILES = *~ config.sh
 SUBDIRS = .
 
-noinst_SCRIPTS = \
+installcommonbackenddir = $(datadir)/$(PACKAGE)/common/
+
+installcommonbackend_SCRIPTS = \
 	config.sh \
 	getent.sh \
 	read_groupdata.sh \
 	read_userdata.sh
 
-EXTRA_DIST = $(noinst_SCRIPTS)
-
-
+EXTRA_DIST = \
+	getent.sh \
+	read_groupdata.sh \
+	read_userdata.sh \
+	config.sh.in

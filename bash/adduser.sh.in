@@ -3,11 +3,13 @@
 # adduser.sh - intelligently adds a new user for the system package
 # manager.
 #
-# $Id$
+# $Id: adduser.sh 32 2006-06-22 04:16:52Z pioto $
+
+prefix=@prefix@
+scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration.
-# TODO: Fix this path with autotools.
-. common/config.sh
+. "${scriptdir}/common/config.sh"
 
 # Read the command line arguments.
 
@@ -29,13 +31,11 @@ ACTION="add"
 ###
 
 # Read the proper data file for the desired user
-# TODO: Fix this path with autotools.
-. common/read_userdata.sh
+. "${scriptdir}/common/read_userdata.sh"
 
 # Determine a free uid
 # We make use of egetent:
-# TODO: Fix this path with autotools.
-. common/getent.sh
+. "${scriptdir}/common/getent.sh"
 
 # TODO: allow for more sophisticated range specifications
 uidmin=${userid%-*}
@@ -92,10 +92,10 @@ fi
 # Finally, we take take the necessary action, either via usermod 
 # or useradd [or it's comparable friends]
 for i in ${PASSWD_BACKENDS}; do
-	# TODO: Fix this path with autotools.
-	if [[ -e "auth/${i}-${USERSPACE}-user${ACTION}.sh" ]] ; then
+	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-user${ACTION}.sh" ]] ; 
+	then
 		echo "Running ${i}-${USERSPACE}-user${ACTION}..."
-		. "auth/${i}-${USERSPACE}-user${ACTION}.sh"
+		. "${scriptdir}/auth/${i}-${USERSPACE}-user${ACTION}.sh"
 	else
 		echo -n "Auth backend ${i} with " >&2
 		echo -n "userspace ${USERSPACE} " >&2

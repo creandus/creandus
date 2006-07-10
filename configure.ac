@@ -2,7 +2,7 @@ dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}}
 
 dnl {{{ program, version
 AC_PREREQ(2.59)
-AC_INIT([bash/addgroup.sh])
+AC_INIT([bash/adduser.sh.in])
 AC_CONFIG_AUX_DIR(config)
 
 VERSION_MAJOR=0
@@ -31,7 +31,6 @@ if test x$BASH = "x" ; then
     AC_MSG_ERROR([bash is required])
 fi
 
-AM_CONFIG_HEADER(config.h)
 AC_OUTPUT(
 	Makefile
 	bash/Makefile
@@ -39,5 +38,6 @@ AC_OUTPUT(
 	bash/common/Makefile
 	bash/common/config.sh
 	eselect/Makefile
+	eselect/users.eselect
 	)
 dnl }}}

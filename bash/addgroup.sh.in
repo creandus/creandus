@@ -3,11 +3,13 @@
 # addgroup.sh - intelligently adds a new group for the system package
 # manager.
 #
-# $Id$
+# $Id: addgroup.sh 33 2006-06-22 20:21:23Z pioto $
+
+prefix=@prefix@
+scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration.
-# TODO: Fix this path with autotools.
-. common/config.sh
+. "${scriptdir}/common/config.sh"
 
 # Read the command line arguments.
 
@@ -29,13 +31,11 @@ ACTION="add"
 ###
 
 # Read the proper data file for the desired group
-# TODO: Fix this path with autotools.
-. common/read_groupdata.sh
+. "${scriptdir}/common/read_groupdata.sh"
 
 # Determine a free uid
 # We make use of egetent:
-# TODO: Fix this path with autotools.
-. common/getent.sh
+. "${scriptdir}/common/getent.sh"
 
 # TODO: allow for more sophisticated range specifications
 gidmin=${groupid%-*}
@@ -54,7 +54,7 @@ done
 if [[ ${NEWGROUP} == $(egetent group "${NEWGROUP}" | cut -d: -f1) ]] ;
 then
 	# TODO: If there needs to be some change made, note it
-	# properly, for the group to take care of later with
+	# properly, for the operator to take care of later with
 	# the eselect tool
 	getentinfo=$(egetent group "${NEWGROUP}")
 	
@@ -86,10 +86,10 @@ fi
 # Finally, we take take the necessary action, either via groupmod 
 # or groupadd [or it's comparable friends]
 for i in ${GROUP_BACKENDS}; do
-	# TODO: Fix this path with autotools.
-	if [[ -e "auth/${i}-${USERSPACE}-group${ACTION}.sh" ]] ; then
+	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.sh" ]] ; 
+	then
 		echo "Running ${i}-${USERSPACE}-group${ACTION}..."
-		. "auth/${i}-${USERSPACE}-group${ACTION}.sh"
+		. "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.sh"
 	else
 		echo -n "Auth backend ${i} with " >&2
 		echo -n "userspace ${USERSPACE} " >&2
