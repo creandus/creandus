@@ -34,6 +34,8 @@ fi
 AC_OUTPUT(
 	Makefile
 	bash/Makefile
+	bash/addgroup.sh
+	bash/adduser.sh
 	bash/auth/Makefile
 	bash/common/Makefile
 	bash/common/config.sh

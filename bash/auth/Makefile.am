@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-CLEANFILES = *~ gmon.out *.gcov *.gcno *.gcda .keep
+CLEANFILES = *~
 SUBDIRS = .
 
 installauthdir = $(datadir)/$(PACKAGE)/auth/
@@ -14,5 +14,5 @@ installauth_SCRIPTS = \
 	files-GNU-useradd.sh \
 	files-GNU-usermod.sh
 
-EXTRA_DIST = $(noinst_SCRIPTS)
+EXTRA_DIST = $(installauth_SCRIPTS)
 
