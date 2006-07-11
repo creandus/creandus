@@ -7,23 +7,24 @@ High Priority:
 Medium Priority:
 
  bash/common/read{user,group}data.sh:
-   Build {USER,GROUP}FILE dynamically based upon the currently selected 
+   Build {USER,GROUP}FILE dynamically based upon the currently selected
    profile.
-
-   Split this file up in such a way as to be automatically done 
-   correctly for various distros.
 
  bash/common/config.sh:
    Make these nsswitch.conf parsing regexps better, more general.
+
+ bash/adduser.sh:
+   Check that the user is in all the proper groups (line 64).
 
 Low Priority:
 
  bash/add{user,group}.sh:
    Allow for more sophisticated range specifications for UID/GIDs.
 
-   If there needs to be some change made, note it properly, for the 
-   operator to take care of later with the eselect tool. Right now the 
+   If there needs to be some change made, note it properly, for the
+   operator to take care of later with the eselect tool. Right now the
    modification is done automatically.
-   
- bash/adduser.sh:
-   Check that the user is in all the proper groups (line 64).
+
+ bash/common/read{user,group}data.sh:
+   Split this file up in such a way as to be automatically done
+   correctly for various distros.

@@ -8,3 +8,5 @@ SUBDIRS = . bash eselect
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/db/$(PACKAGE)/users
 	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/db/$(PACKAGE)/groups
+	$(mkinstalldirs) $(DESTDIR)$(bindir)
+	cd $(DESTDIR)$(bindir) ; ln -s eselect users-update

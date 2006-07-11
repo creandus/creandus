@@ -4,3 +4,10 @@ then to maintain them later on.
 
 Right now they're not at all ready for use, but any feedback, test 
 cases, etc would be very much appreciated.
+
+An ebuild for this package can be found in my overlay.
+ ViewVC: http://svn.pioto.org/viewvc/portage-pioto/sys-apps/dynusers
+ AnonSVN: svn co svn://svn.pioto.org/pioto-portage/sys-apps/dynusers
+
+A tarball of the latest release may be found in:
+ http://www.pioto.org/~pioto/gentoo/distfiles/

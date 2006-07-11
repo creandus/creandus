@@ -16,7 +16,7 @@ AC_SUBST([VERSION_MINOR])
 AC_SUBST([VERSION_MICRO])
 AC_SUBST([VERSION_FULL])
 
-AM_INIT_AUTOMAKE(glep0027, [$VERSION_FULL])
+AM_INIT_AUTOMAKE(dynusers, [$VERSION_FULL])
 dnl }}}
 
 dnl {{{ basic toolchain checks
