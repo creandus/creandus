@@ -4,6 +4,8 @@ High Priority:
 
  Create some test cases.
 
+ Integrate with package managers (e.g. portage, paludis, etc).
+
 Medium Priority:
 
  bash/common/read{user,group}data.sh:
