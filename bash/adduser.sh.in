@@ -6,6 +6,7 @@
 # $Id: adduser.sh 32 2006-06-22 04:16:52Z pioto $
 
 prefix=@prefix@
+datarootdir=@datarootdir@
 scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration.

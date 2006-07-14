@@ -6,6 +6,7 @@
 # $Id: addgroup.sh 33 2006-06-22 20:21:23Z pioto $
 
 prefix=@prefix@
+datarootdir=@datarootdir@
 scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration.

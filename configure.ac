@@ -7,7 +7,7 @@ AC_CONFIG_AUX_DIR(config)
 
 VERSION_MAJOR=0
 VERSION_MINOR=1
-VERSION_MICRO=0
+VERSION_MICRO=1
 VERSION_FULL="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
 VERSION="$VERSION_FULL"
 
@@ -30,7 +30,9 @@ AC_PATH_PROGS(BASH, bash)
 if test x$BASH = "x" ; then
     AC_MSG_ERROR([bash is required])
 fi
+dnl }}}
 
+dnl {{{ Generate our final Makefiles as well as some scripts
 AC_OUTPUT(
 	Makefile
 	bash/Makefile
