@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in users.eselect
-CLEANFILES = *~ gmon.out *.gcov *.gcno *.gcda .keep
+CLEANFILES = *~
 SUBDIRS = .
 
 installeselectdir = $(datadir)/eselect/modules/
