@@ -16,7 +16,7 @@ Medium Priority:
    Make these nsswitch.conf parsing regexps better, more general.
 
  bash/adduser.sh:
-   Check that the user is in all the proper groups (line 64).
+   Check that the user is in all the proper groups.
 
 Low Priority:
 
@@ -28,5 +28,5 @@ Low Priority:
    modification is done automatically.
 
  bash/common/read{user,group}data.sh:
-   Split this file up in such a way as to be automatically done
+   Split these files up in such a way as to be automatically done
    correctly for various distros.
