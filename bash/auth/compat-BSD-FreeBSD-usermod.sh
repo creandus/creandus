@@ -9,6 +9,6 @@
 # NEWUSER: the username to be added
 # ...
 # Expects a valid userid to have already been determined
-usermod -d "${userhome}" -G "${usergroups}" \
+pw usermod -d "${userhome}" -G "${usergroups}" \
 	-s "${usershell}" -u "${userid}" \
 	-c "${usercomment}" "${NEWUSER}"
