@@ -5,6 +5,10 @@ SUBDIRS = .
 installauthdir = $(datadir)/$(PACKAGE)/auth/
 
 installauth_SCRIPTS = \
+	compat-BSD-groupadd.sh \
+	compat-BSD-groupmod.sh \
+	compat-BSD-useradd.sh \
+	compat-BSD-usermod.sh \
 	compat-GNU-groupadd.sh \
 	compat-GNU-groupmod.sh \
 	compat-GNU-useradd.sh \
@@ -15,4 +19,3 @@ installauth_SCRIPTS = \
 	files-GNU-usermod.sh
 
 EXTRA_DIST = $(installauth_SCRIPTS)
-

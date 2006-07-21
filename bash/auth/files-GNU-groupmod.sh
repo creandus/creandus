@@ -3,4 +3,4 @@
 # $Id$
 
 # Expects a valid groupid to have already been determined
-usermod -g "${groupid}" "${NEWGROUP}"
+groupmod -g "${groupid}" "${NEWGROUP}"
