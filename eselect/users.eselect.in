@@ -6,7 +6,12 @@ SVN_DATE='$Date$'
 VERSION=$(svn_date_to_version "${SVN_DATE}" )
 
 prefix=@prefix@
-DBDIR=@localstatedir@/db/@PACKAGE@
+datarootdir=@datarootdir@
+package=@PACKAGE@
+scriptdir=@datadir@/${package}
+
+# Read the common config stuff
+. "${scriptdir}/common/config.sh"
 
 ### show action
 
