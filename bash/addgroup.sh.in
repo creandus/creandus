@@ -21,7 +21,7 @@ NEWGROUP="${1}"
 PKGNAME="${2}"
 USERSPACE="${3}"
 
-if [[ -z "${3}" || -z "${2}" || -z "${1}" ]] ; then
+if [[ -z "${NEWGROUP}" || -z "${PKGNAME}" || -z "${USERSPACE}" ]] ; then
 	echo "Script expects 3 arguments: groupname pkgname userspace" >&2
 	exit 1
 fi
@@ -71,12 +71,12 @@ then
 		echo -n "We already have a group named ${NEWGROUP}." >&2
 		echo " Nothing to do." >&2
 
-		echo "${PKGNAME}" >> "${DBDIR}/groups/${NEWGROUP}"
+		echo "${PKGNAME}" >> "${DBDIR}/group/${NEWGROUP}"
 		exit 0
 	fi
 fi
 
-if [[ -f "${DBDIR}/groups/${NEWGROUP}" ]] ; then
+if [[ -f "${DBDIR}/group/${NEWGROUP}" ]] ; then
 	echo "Group ${NEWGROUP} was previously added by this script," >&2
 	echo "but it no longer exists on the system. We'll re-add" >&2
 	echo "them now, but you should have used the users-config" >&2
@@ -99,4 +99,4 @@ for i in ${GROUP_BACKENDS}; do
 done
 
 # Properly update the dynamic groups database
-echo "${PKGNAME}" >> "${DBDIR}/groups/${NEWGROUP}"
+echo "${PKGNAME}" >> "${DBDIR}/group/${NEWGROUP}"

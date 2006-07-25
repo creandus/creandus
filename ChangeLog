@@ -1,3 +1,7 @@
+2006-07-24  Michael Kelly  <pioto@pioto.org>
+
+	* Drop the s from the user and group DBDIR subdirs.
+
 2006-07-20  Michael Kelly  <pioto@pioto.org>
 
 	* New version - 0.1.3

@@ -6,7 +6,7 @@ EXTRA_DIST = autogen.bash
 SUBDIRS = . bash eselect
 
 install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/db/users
-	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/db/groups
+	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/db/user
+	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/db/group
 	$(mkinstalldirs) $(DESTDIR)$(bindir)
 	cd $(DESTDIR)$(bindir) ; ln -s eselect users-update

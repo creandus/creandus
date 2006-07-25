@@ -33,25 +33,25 @@ do_show() {
 
 	case ${mode} in
 		users)
-			for i in $(ls "${DBDIR}/users") ; do
+			for i in $(ls "${DBDIR}/user") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/users/${i}"
+				cat "${DBDIR}/user/${i}"
 			done
 			;;
 		groups)
-			for i in $(ls "${DBDIR}/groups") ; do
+			for i in $(ls "${DBDIR}/group") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/groups/${i}"
+				cat "${DBDIR}/group/${i}"
 			done
 			;;
 		*)
-			for i in $(ls "${DBDIR}/users") ; do
+			for i in $(ls "${DBDIR}/user") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/users/${i}"
+				cat "${DBDIR}/user/${i}"
 			done
-			for i in $(ls "${DBDIR}/groups") ; do
+			for i in $(ls "${DBDIR}/group") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/groups/${i}"
+				cat "${DBDIR}/group/${i}"
 			done
 			;;
 	esac
@@ -143,8 +143,8 @@ do_update() {
 	done
 
 	# Find all the data files which are empty
-	deadusers_=$(find "${DBDIR}/users" -size 0 -print)
-	deadgroups_=$(find "${DBDIR}/groups" -size 0 -print)
+	deadusers_=$(find "${DBDIR}/user" -size 0 -print)
+	deadgroups_=$(find "${DBDIR}/group" -size 0 -print)
 
 	for i in ${deadusers_} ; do 
 		deadusers="${deadusers} $(basename ${i})"
