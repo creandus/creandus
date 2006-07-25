@@ -1,5 +1,9 @@
 2006-07-24  Michael Kelly  <pioto@pioto.org>
 
+	* bash/db.sh.in: Create a script for accessing the user 
+	database, so that external things don't need to know the 
+	implementation-specifics.
+
 	* Drop the s from the user and group DBDIR subdirs.
 
 2006-07-20  Michael Kelly  <pioto@pioto.org>

@@ -1,0 +1,57 @@
+#!/bin/sh
+# Manage the @PACKAGE@ database
+#
+# $Id: addgroup.sh 33 2006-06-22 20:21:23Z pioto $
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+scriptdir=@datadir@/@PACKAGE@
+
+# Load the basic configuration.
+. "${scriptdir}/common/config.sh"
+
+case "${1}" in
+	add)
+		# Read our remaining args
+		# Options: [user|group] [pkgname] [newname]
+		DBTYPE=${2}
+		PKGNAME=${3}
+		NEWNAME=${4}
+
+		if [[ -z "${DBTYPE}" || -z "${PKGNAME}" 
+			|| -z "${NEWNAME}"]] ; then
+			echo -n "Add action expects 3 arguments:  " >&2
+			echo "[user/group] [pkgname] [user/group name]" >&2
+			exit 1
+		fi
+
+
+		if [[ "${DBTYPE}" != "user" || "${DBTYPE}" != "group" ]]
+		then
+			echo "Invalid DBTYPE. Use user or group." >&2
+			exit 1
+		fi
+
+		echo "${PKGNAME}" >> "${DBDIR}/${DBTYPE}/${NEWNAME}"
+		;;
+	del)
+		# Read our remaining args
+		PKGNAME=${2}
+		
+		if [[ -z "${PKGNAME}" ]] ; then
+			echo "Del option expects a package name." >&2
+			exit 1
+		fi
+
+		# Replace any /s with \/s so as to not mess up sed
+		PKGNAME=${PKGNAME/\//\\/}
+
+		# Remove only the first instance of PKGNAME from the db files
+		sed -i /^${PKGNAME}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\} \
+			"${DBDIR}"/{user,group}/*
+		;;
+	*)
+		echo "Invalid action. Valid actions are add, del." >&2
+		exit 1
+		;;
+esac

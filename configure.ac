@@ -38,6 +38,9 @@ AC_OUTPUT(
 	bash/Makefile
 	bash/addgroup.sh
 	bash/adduser.sh
+	bash/db.sh
+	bash/add.sh
+	bash/del.sh
 	bash/auth/Makefile
 	bash/common/Makefile
 	bash/common/config.sh
