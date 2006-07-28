@@ -40,7 +40,7 @@ AC_OUTPUT(
 	bash/adduser.sh
 	bash/db.sh
 	bash/add.sh
-	bash/del.sh
+	bash/install_fail.sh
 	bash/auth/Makefile
 	bash/common/Makefile
 	bash/common/config.sh
