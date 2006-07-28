@@ -3,7 +3,7 @@
 # This script is called when an install fails. It rolls back the changes made
 # by the add.sh script.
 #
-# $Id $
+# $ Id: $
 
 prefix=@prefix@
 datarootdir=@datarootdir@
