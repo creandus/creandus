@@ -1,3 +1,35 @@
 #!/bin/sh
 # Add all the provided users and groups to the system.
+#
+# $Id$
 
+prefix=@prefix@
+datarootdir=@datarootdir@
+scriptdir=@datadir@/@PACKAGE@
+
+# Load the basic configuration
+. "${scriptdir}/common/config.sh"
+
+# Read the command line arguments.
+
+# Currently, we expect the following:
+ENEWUSERS=${1}
+ENEWGROUPS=${2}
+PKGNAME=${3}
+USERSPACE=${4}
+ROOT=${5:-/}
+
+if [[ -z "${ENEWUSERS}" || -z "${ENEWGROUPS}" || -z "${PKGNAME}" 
+	|| -z "${USERSPACE}" ]] ; then
+	echo "Script expects 4 arguments:" >&2
+	echo "  \"new users list\" \"new groups list\" pkgname userspace" >&2
+	exit 1
+fi
+
+for i in ${ENEWGROUPS} ; do
+	"${scriptdir}/addgroup.sh" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+done
+
+for i in ${ENEWUSERS} ; do
+	"${scriptdir}/adduser.sh" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+done

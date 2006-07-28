@@ -1,7 +1,7 @@
 #!/bin/sh
 # Manage the @PACKAGE@ database
 #
-# $Id: addgroup.sh 33 2006-06-22 20:21:23Z pioto $
+# $Id$
 
 prefix=@prefix@
 datarootdir=@datarootdir@

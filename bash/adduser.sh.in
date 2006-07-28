@@ -3,7 +3,7 @@
 # adduser.sh - intelligently adds a new user for the system package
 # manager.
 #
-# $Id: adduser.sh 32 2006-06-22 04:16:52Z pioto $
+# $Id$
 
 prefix=@prefix@
 datarootdir=@datarootdir@
@@ -17,12 +17,14 @@ scriptdir=@datadir@/@PACKAGE@
 # The only options recognized now are the user to be added, the 
 # package which is asking for the adding, and the userspace type (e.g. 
 # GNU, fbsd, etc)
-NEWUSER="${1}"
-PKGNAME="${2}"
-USERSPACE="${3}"
+NEWUSER=${1}
+PKGNAME=${2}
+USERSPACE=${3}
+ROOT=${4}
 
-if [[ -z "${NEWUSER}" || -z "${PKGNAME}" || -z "${USERSPACE}" ]] ; then
-	echo "Script expects 3 arguments: username pkgname userspace" >&2
+if [[ -z "${NEWUSER}" || -z "${PKGNAME}" || -z "${USERSPACE}" \ 
+|| -z "${ROOT}" ]] ; then
+	echo "Script expects 4 arguments: username pkgname userspace root" >&2
 	exit 1
 fi
 

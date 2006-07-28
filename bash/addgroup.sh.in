@@ -3,7 +3,7 @@
 # addgroup.sh - intelligently adds a new group for the system package
 # manager.
 #
-# $Id: addgroup.sh 33 2006-06-22 20:21:23Z pioto $
+# $Id$
 
 prefix=@prefix@
 datarootdir=@datarootdir@
@@ -17,12 +17,14 @@ scriptdir=@datadir@/@PACKAGE@
 # The only options recognized now are the group to be added, the 
 # package which is asking for the adding, and the userspace type (e.g. 
 # GNU, fbsd, etc)
-NEWGROUP="${1}"
-PKGNAME="${2}"
-USERSPACE="${3}"
+NEWGROUP=${1}
+PKGNAME=${2}
+USERSPACE=${3}
+ROOT=${4}
 
-if [[ -z "${NEWGROUP}" || -z "${PKGNAME}" || -z "${USERSPACE}" ]] ; then
-	echo "Script expects 3 arguments: groupname pkgname userspace" >&2
+if [[ -z "${NEWGROUP}" || -z "${PKGNAME}" || -z "${USERSPACE}"
+|| -z "${ROOT}" ]] ; then
+	echo "Script expects 4 arguments: groupname pkgname userspace root" >&2
 	exit 1
 fi
 

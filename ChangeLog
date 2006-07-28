@@ -1,27 +1,51 @@
-2006-07-24  Michael Kelly  <pioto@pioto.org>
+2006-07-27  Mike Kelly  <pioto@pioto.org>
+
+	* bash/add.sh.in, bash/db.sh.in, bash/addgroup.sh.in,
+	bash/adduser.sh.in: Add stub ROOT parameter. Not yet really
+	implemented anywhere, but it's part of the API.
+
+	* API: Create a writeup of the API specs for dynusers.
+
+2006-07-26  Mike Kelly  <pioto@pioto.org>
+
+	* bash/auth/compat-{BSD-FreeBSD,GNU-glibc}-{user,group}del.sh,
+	bash/auth/files-GNU-glibc-{user-group}del.sh: Create user/group
+	deletion helper scripts.
+
+	* bash/add.sh.in: Create a wrapper script which eats full
+	ENEW{USER,GROUP}S for breakfast and does what it's supposed to do.
+	Let's call this part of the dynusers "API".
+
+2006-07-24  Mike Kelly  <pioto@pioto.org>
 
 	* bash/db.sh.in: Create a script for accessing the user 
 	database, so that external things don't need to know the 
 	implementation-specifics.
 
-	* Drop the s from the user and group DBDIR subdirs.
+	* Makefile.am, bash/addgroup.sh.in, bash/adduser.sh.in,
+	eselect/users.eselect.in: Drop the s from the user and group DBDIR
+	subdirs.
 
-2006-07-20  Michael Kelly  <pioto@pioto.org>
+2006-07-20  Mike Kelly  <pioto@pioto.org>
 
-	* New version - 0.1.3
+	+ Release: 0.1.3
 	
-	* bash/auth/: Change naming scheme to ${USERLAND}-${ELIBC} 
+	* bash/auth/: Change naming scheme to ${USERLAND}-${ELIBC}
 	instead of simply ${USERLAND}. Add BSD auth modules.
 
-2006-07-19  Michael Kelly  <pioto@pioto.org>
+2006-07-19  Mike Kelly  <pioto@pioto.org>
 
-	* eselect/: Fix eselect module to use proper DBDIR, etc. by 
-	sourcing $scriptdir/common/config.sh
+	* eselect/users.eselect.in: Fix eselect module to use proper DBDIR,
+	etc. by sourcing $scriptdir/common/config.sh.
 
-2006-07-18  Michael Kelly  <pioto@pioto.org>
+2006-07-18  Mike Kelly  <pioto@pioto.org>
 
-	* New version - 0.1.2
+	+ Release: 0.1.2
 
-2006-07-10  Michael Kelly  <pioto@pioto.org>
+2006-07-15  Mike Kelly  <pioto@pioto.org>
 
-	* Initial build - version 0.1.0
+	+ Release: 0.1.1
+
+2006-07-10  Mike Kelly  <pioto@pioto.org>
+
+	+ Release: 0.1.0
