@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# This script is called when an install fails. It rolls back the changes made
+# by the add.sh script.
+#
+# $Id $
+
+prefix=@prefix@
+datarootdir=@datarootdir@
+scriptdir=@datadir@/@PACKAGE@
+
+# Load the basic configuration
+. "${scriptdir}/common/config.sh"
+
+# Read the command line arguments.
+# Currently, we expect the following:
+ENEWUSERS=${1}
+ENEWGROUPS=${2}
+PKGNAME=${3}
+USERSPACE=${4}
+ROOT=${5:-/}
+
+if [[ -z "${ENEWUSERS}" || -z "${ENEWGROUPS}" || -z "${PKGNAME}" 
+	|| -z "${USERSPACE}" ]] ; then
+	echo "Script expects 4 arguments:" >&2
+	echo "  \"new users list\" \"new groups list\" pkgname userspace" >&2
+	exit 1
+fi
+
+# Remove this instance of PKGNAME from the database
+"${scriptdir}/db.sh" del "${PKGNAME}" "${ROOT}"
+
+# TODO: If this install process created any users, then we should now remove
+# them.
+

@@ -1,5 +1,9 @@
 2006-07-27  Mike Kelly  <pioto@pioto.org>
 
+	* bash/install_fail.sh.in: Add the install_fail script, which is
+	called by the package manager when an install fails. It rolls back
+	anything which may have been done by the add script.
+
 	* bash/add.sh.in, bash/db.sh.in, bash/addgroup.sh.in,
 	bash/adduser.sh.in: Add stub ROOT parameter. Not yet really
 	implemented anywhere, but it's part of the API.

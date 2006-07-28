@@ -2,9 +2,9 @@ This is a sketch of the basic "API" for interfacing with the dynusers scripts.
 
 There are several different tasks which these scripts must do:
 
-  1. Maintain a database of users and groups which have been added by the
+  1. Maintain a database of users and groups that have been added by the
      scripts. These databases contain a newline separated list of package
-     identifiers (name and version, usually), which mainly serve to tell the
+     identifiers (name and version, usually), which mainly serves to tell the
      scripts when a user is no longer used by any package on the system.
      Database actions should all go through the db.sh script.
 
@@ -13,9 +13,9 @@ There are several different tasks which these scripts must do:
        db.sh add dbtype pkgname newname [root]
 
          Adds an entry to the database. dbtype is one of user or group, pkgname
-         is a unique package identifier (name and version), newname is the name
-         of the user or group to be added. The optional parameter, root, 
-         defines the system root to install into. If not provided, it is
+         is a unique package identifier (category, name, and version), newname
+	 is the name of the user or group to be added. The optional parameter,
+	 root, defines the system root to install into. If not provided, it is
          assumed to be /.
 
        db.sh del pkgname [root]
@@ -38,7 +38,7 @@ There are several different tasks which these scripts must do:
        "new groups list" - same as above, only for groups.
 
        pkgname - a unique identifier for the package about to be installed
-       (name and version).
+       (category, name, and version).
 
        userspace - a unique identifier of the userspace we are running in. This
        is something of the form USERLAND-ELIBC. For example, most GNU/Linux
