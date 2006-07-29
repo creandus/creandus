@@ -1,3 +1,7 @@
+2006-07-29  Mike Kelly  <pioto@pioto.org>
+
+	* bash/db.sh.in: Fix a typo, line 21,22 (missing \).
+
 2006-07-28  Mike Kelly  <pioto@pioto.org>
 
 	+ Release: 0.2.0

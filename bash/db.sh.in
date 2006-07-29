@@ -18,8 +18,8 @@ case "${1}" in
 		PKGNAME=${3}
 		NEWNAME=${4}
 
-		if [[ -z "${DBTYPE}" || -z "${PKGNAME}" 
-			|| -z "${NEWNAME}"]] ; then
+		if [[ -z "${DBTYPE}" || -z "${PKGNAME}"	\
+		|| -z "${NEWNAME}"]] ; then
 			echo -n "Add action expects 3 arguments:  " >&2
 			echo "[user/group] [pkgname] [user/group name]" >&2
 			exit 1
