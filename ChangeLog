@@ -1,3 +1,7 @@
+2006-07-28  Mike Kelly  <pioto@pioto.org>
+
+	+ Release: 0.2.0
+
 2006-07-27  Mike Kelly  <pioto@pioto.org>
 
 	* bash/install_fail.sh.in: Add the install_fail script, which is
