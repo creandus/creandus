@@ -1,17 +1,21 @@
+# Copyright 1999-2006 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
 # $Id$
+
+inherit config output
 
 DESCRIPTION="Maintain the system users added by the package manager"
 MAINTAINER="pioto@pioto.org"
 SVN_DATE='$Date$'
-VERSION=$(svn_date_to_version "${SVN_DATE}" )
+VERSION=$(svn_date_to_version "${SVN_DATE}")
 
 prefix=@prefix@
 datarootdir=@datarootdir@
-package=@PACKAGE@
-scriptdir=@datadir@/${package}
+scriptdir=${ROOT}@datadir@/@PACKAGE@
 
 # Read the common config stuff
-. "${scriptdir}/common/config.sh"
+DBDIR=${ROOT}$(load_config "${scriptdir}/common/config.sh" DBDIR)
+DATADIR=${ROOT}$(load_config "${scriptdir}/common/config.sh" DATADIR)
 
 ### show action
 
@@ -61,7 +65,7 @@ do_show() {
 
 describe_scan() {
 	echo "Scans the system for any files owned by the given user and,"
-	echo "optionally, removes them. This operation is SLOW."
+	echo "optionally, removes them. ($(highlight slow))"
 }
 
 describe_scan_parameters() {
@@ -76,23 +80,24 @@ describe_scan_options() {
 
 do_scan() {
 	# Parse our commandline args
-	local params="/"
-	local params2=
-	local gotNecessary=
+	local target="${ROOT}"
+	target=${target:-"/"}
+	local remove=
+	local params_valid=
 	while [[ ${1#--} != ${1} ]] ; do
 		if [[ "--user" == ${1} ]] ; then
 			shift
-			params="${params} -user ${1}"
-			gotNecessary="yes"
+			target="${target} -user ${1}"
+			params_valid="yes"
 			shift
 		elif [[ "--group" == "${1}" ]] ; then
 			shift
-			params="${params} -group ${1}"
-			gotNecessary="yes"
+			target="${target} -group ${1}"
+			params_valid="yes"
 			shift
 		elif [[ "--remove" == "${1}" ]] ; then
 			shift
-			params2="${params2} | xargs -0 rm -rf"
+			remove="${remove} | xargs -0 rm -rf"
 		elif [[ "--" == "${1}" ]] ; then
 			break
 		else
@@ -100,20 +105,20 @@ do_scan() {
 		fi
 	done
 
-	if [[ ! ${gotNecessary} ]] ; then
+	if [[ ! ${params_valid} ]] ; then
 		echo "You didn't provide one of the required paramenters."
-		die -q "You must provide either a user or group."
+		die -q "You must provide either a user or group for the scan action."
 	fi
 
-	params="${params} -print0"
+	target="${target} -print0"
 
-	find ${params} ${params2}
+	find ${target} ${remove}
 }
 
 ### update action
 
 describe_update() {
-	echo "Removes any users from the system which no longer are"
+	echo "Removes any users from the system that are no longer"
 	echo "required by any installed package, but were once"
 	echo "installed by a package."
 }
@@ -123,18 +128,22 @@ describe_update_parameters() {
 }
 
 describe_update_options() {
-	echo -n "--pretend|-p : don't actually remove any users or "
-	echo " groups, just show what would be done."
+	echo -n "--pretend|-p : Don't actually remove. List candidates only."
 }
 
 do_update() {
+	local pretend=
+	local deadusers=
+	local deadusers_=
+	local deadgroups=
+	local deadgroups_=
+
 	# Parse our commandline args
-	local PRETEND=
 	while [[ ${1#--} != ${1} ]] ; do
 		if [[ "--pretend" == "${1}" ]] \
 		|| [[ "-p" == "${1}" ]] ; then
 			shift
-			PRETEND="yes"
+			pretend="yes"
 		elif [[ "--" == "${1}" ]] ; then
 			break
 		else
@@ -152,27 +161,28 @@ do_update() {
 	for i in ${deadgroups_} ; do 
 		deadgroups="${deadgroups} $(basename ${i})"
 	done
-	unset deadusers_ deadgroups_
 
-	echo "Removing users:"
-	for i in ${deadusers} ; do
-		echo -n "  ${i} : "
-		# TODO: Make this more general.
-		# e.g. use ../bash/auth/compat-GNU-userdel.sh
-		if [[ ! ${PRETEND} ]] ; then
-			userdel ${i} && echo "done" || die -q "failed"
+	if [[ -z ${pretend} ]] ; then
+		echo "Removing users:"
+		for i in ${deadusers} ; do
+			echo -n "  ${i} : "
+			"${scriptdir}/deluser.sh" ${i} ${ROOT} \
+				&& echo "done" || die -q "failed"
 			rm "${DATADIR}/users/${i}"
-		fi
-	done
+		done
 
-	echo "Removing groups:"
-	for i in ${deadgroups} ; do
-		echo -n "  ${i} : "
-		# TODO: Make this more general.
-		# e.g. use ../bash/auth/compat-GNU-groupdel.sh
-		if [[ ! ${PRETEND} ]] ; then
-			groupdel ${i} && echo "done" || die -q "failed"
+		echo "Removing groups:"
+		for i in ${deadgroups} ; do
+			echo -n "  ${i} : "
+			"${scriptdir}/delgroup.sh" ${i} ${ROOT} \
+				&& echo "done" || die -q "failed"
 			rm "${DATADIR}/groups/${i}"
-		fi
-	done
+		done
+	else
+		echo "We would have removed:"
+		echo "  Users: ${deadusers}"
+		echo "  Groups: ${deadgroups}"
+	fi
 }
+
+# vim: set ft=eselect :

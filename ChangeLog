@@ -1,3 +1,8 @@
+2006-07-30  Mike Kelly  <pioto@pioto.org>
+
+	* eselect/users.eselect.in: Improve the eselect module, per advice from
+	Kugelfang. Should now respect ROOT and have better style.
+
 2006-07-29  Mike Kelly  <pioto@pioto.org>
 
 	* bash/db.sh.in: Fix a typo, line 21,22 (missing \).

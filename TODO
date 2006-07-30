@@ -1,19 +1,20 @@
 High Priority:
 
- Add backend scripts for other systems, e.g. gentoo-fbsd.
-
  Create some test cases.
 
- Integrate with package managers (e.g. portage, paludis, etc).
+ Integrate with package managers (e.g. portage, paludis, etc). Do this by
+ making a solid API.
 
 Medium Priority:
+
+ Add backend scripts for other systems, e.g. gentoo-fbsd.
 
  bash/common/read{user,group}data.sh:
    Build {USER,GROUP}FILE dynamically based upon the currently selected
    profile.
 
  bash/common/config.sh:
-   Make these nsswitch.conf parsing regexps better, more general.
+   Make the nsswitch.conf parsing regexps better, more general.
 
  bash/adduser.sh:
    Check that the user is in all the proper groups.
