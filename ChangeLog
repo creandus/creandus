@@ -1,5 +1,10 @@
 2006-07-30  Mike Kelly  <pioto@pioto.org>
 
+	* eselect/users.eselect.in: More improvements from Kugelfang and
+	ciaranm on IRC.
+
+2006-07-30  Mike Kelly  <pioto@pioto.org>
+
 	* eselect/users.eselect.in: Improve the eselect module, per advice from
 	Kugelfang. Should now respect ROOT and have better style.
 

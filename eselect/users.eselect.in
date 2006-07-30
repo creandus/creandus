@@ -2,20 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-inherit config output
+inherit config
 
 DESCRIPTION="Maintain the system users added by the package manager"
 MAINTAINER="pioto@pioto.org"
 SVN_DATE='$Date$'
 VERSION=$(svn_date_to_version "${SVN_DATE}")
-
-prefix=@prefix@
-datarootdir=@datarootdir@
-scriptdir=${ROOT}@datadir@/@PACKAGE@
-
-# Read the common config stuff
-DBDIR=${ROOT}$(load_config "${scriptdir}/common/config.sh" DBDIR)
-DATADIR=${ROOT}$(load_config "${scriptdir}/common/config.sh" DATADIR)
 
 ### show action
 
@@ -32,30 +24,35 @@ describe_show_options() {
 }
 
 do_show() {
+	local prefix=@prefix@
+	local datarootdir=@datarootdir@
+	local scriptdir=${ROOT}@datadir@/@PACKAGE@
+
+	local dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.sh\" dbdir)"
 	local mode=all
 	mode=${mode:-${1}}
 
 	case ${mode} in
 		users)
-			for i in $(ls "${DBDIR}/user") ; do
+			for i in $(ls "${dbdir}/user") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/user/${i}"
+				cat "${dbdir}/user/${i}"
 			done
 			;;
 		groups)
-			for i in $(ls "${DBDIR}/group") ; do
+			for i in $(ls "${dbdir}/group") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/group/${i}"
+				cat "${dbdir}/group/${i}"
 			done
 			;;
 		*)
-			for i in $(ls "${DBDIR}/user") ; do
+			for i in $(ls "${dbdir}/user") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/user/${i}"
+				cat "${dbdir}/user/${i}"
 			done
-			for i in $(ls "${DBDIR}/group") ; do
+			for i in $(ls "${dbdir}/group") ; do
 				echo "* ${i}:"
-				cat "${DBDIR}/group/${i}"
+				cat "${dbdir}/group/${i}"
 			done
 			;;
 	esac
@@ -79,21 +76,24 @@ describe_scan_options() {
 }
 
 do_scan() {
+	local prefix=@prefix@
+	local datarootdir=@datarootdir@
+	local scriptdir=${ROOT}@datadir@/@PACKAGE@
+
 	# Parse our commandline args
-	local target="${ROOT}"
-	target=${target:-"/"}
+	local target="${ROOT:-/}"
 	local remove=
-	local params_valid=
+	local valid_params=
 	while [[ ${1#--} != ${1} ]] ; do
 		if [[ "--user" == ${1} ]] ; then
 			shift
 			target="${target} -user ${1}"
-			params_valid="yes"
+			valid_params="yes"
 			shift
 		elif [[ "--group" == "${1}" ]] ; then
 			shift
 			target="${target} -group ${1}"
-			params_valid="yes"
+			valid_params="yes"
 			shift
 		elif [[ "--remove" == "${1}" ]] ; then
 			shift
@@ -105,7 +105,7 @@ do_scan() {
 		fi
 	done
 
-	if [[ ! ${params_valid} ]] ; then
+	if [[ ! ${valid_params} ]] ; then
 		echo "You didn't provide one of the required paramenters."
 		die -q "You must provide either a user or group for the scan action."
 	fi
@@ -132,11 +132,13 @@ describe_update_options() {
 }
 
 do_update() {
-	local pretend=
-	local deadusers=
-	local deadusers_=
-	local deadgroups=
-	local deadgroups_=
+	local pretend deadusers deadusers_ deadgroups deadgroups_
+	local prefix=@prefix@
+	local datarootdir=@datarootdir@
+	local scriptdir=${ROOT}@datadir@/@PACKAGE@
+
+	dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.sh\" dbdir)"
+	datadir="${ROOT}$(load_config \"${scriptdir}/common/config.sh\" datadir)"
 
 	# Parse our commandline args
 	while [[ ${1#--} != ${1} ]] ; do
@@ -152,8 +154,8 @@ do_update() {
 	done
 
 	# Find all the data files which are empty
-	deadusers_=$(find "${DBDIR}/user" -size 0 -print)
-	deadgroups_=$(find "${DBDIR}/group" -size 0 -print)
+	deadusers_=$(find "${dbdir}/user" -size 0 -print)
+	deadgroups_=$(find "${dbdir}/group" -size 0 -print)
 
 	for i in ${deadusers_} ; do 
 		deadusers="${deadusers} $(basename ${i})"
@@ -168,7 +170,7 @@ do_update() {
 			echo -n "  ${i} : "
 			"${scriptdir}/deluser.sh" ${i} ${ROOT} \
 				&& echo "done" || die -q "failed"
-			rm "${DATADIR}/users/${i}"
+			rm "${datadir}/users/${i}"
 		done
 
 		echo "Removing groups:"
@@ -176,7 +178,7 @@ do_update() {
 			echo -n "  ${i} : "
 			"${scriptdir}/delgroup.sh" ${i} ${ROOT} \
 				&& echo "done" || die -q "failed"
-			rm "${DATADIR}/groups/${i}"
+			rm "${datadir}/groups/${i}"
 		done
 	else
 		echo "We would have removed:"
