@@ -5,17 +5,17 @@ SUBDIRS = .
 installauthdir = $(datadir)/$(PACKAGE)/auth/
 
 installauth_SCRIPTS = \
-	compat-BSD-FreeBSD-groupadd.sh \
-	compat-BSD-FreeBSD-groupmod.sh \
-	compat-BSD-FreeBSD-useradd.sh \
-	compat-BSD-FreeBSD-usermod.sh \
-	compat-GNU-glibc-groupadd.sh \
-	compat-GNU-glibc-groupmod.sh \
-	compat-GNU-glibc-useradd.sh \
-	compat-GNU-glibc-usermod.sh \
-	files-GNU-glibc-groupadd.sh \
-	files-GNU-glibc-groupmod.sh \
-	files-GNU-glibc-useradd.sh \
-	files-GNU-glibc-usermod.sh
+	compat-BSD-FreeBSD-groupadd.bash \
+	compat-BSD-FreeBSD-groupmod.bash \
+	compat-BSD-FreeBSD-useradd.bash \
+	compat-BSD-FreeBSD-usermod.bash \
+	compat-GNU-glibc-groupadd.bash \
+	compat-GNU-glibc-groupmod.bash \
+	compat-GNU-glibc-useradd.bash \
+	compat-GNU-glibc-usermod.bash \
+	files-GNU-glibc-groupadd.bash \
+	files-GNU-glibc-groupmod.bash \
+	files-GNU-glibc-useradd.bash \
+	files-GNU-glibc-usermod.bash
 
 EXTRA_DIST = $(installauth_SCRIPTS)

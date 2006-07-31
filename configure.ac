@@ -2,12 +2,12 @@ dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}}
 
 dnl {{{ program, version
 AC_PREREQ(2.59)
-AC_INIT([bash/adduser.sh.in])
+AC_INIT([bash/adduser.bash.in])
 AC_CONFIG_AUX_DIR(config)
 
 VERSION_MAJOR=0
-VERSION_MINOR=2
-VERSION_MICRO=1
+VERSION_MINOR=3
+VERSION_MICRO=0
 VERSION_FULL="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
 VERSION="$VERSION_FULL"
 
@@ -36,14 +36,14 @@ dnl {{{ Generate our final Makefiles as well as some scripts
 AC_OUTPUT(
 	Makefile
 	bash/Makefile
-	bash/addgroup.sh
-	bash/adduser.sh
-	bash/db.sh
-	bash/add.sh
-	bash/install_fail.sh
+	bash/addgroup.bash
+	bash/adduser.bash
+	bash/db.bash
+	bash/add.bash
+	bash/install_fail.bash
 	bash/auth/Makefile
 	bash/common/Makefile
-	bash/common/config.sh
+	bash/common/config.bash
 	eselect/Makefile
 	eselect/users.eselect
 	)

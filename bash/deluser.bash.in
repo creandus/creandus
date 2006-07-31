@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 # $Id: $
@@ -7,7 +7,7 @@ datarootdir=@datarootdir@
 scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration
-. "${scriptdir}/common/config.sh"
+. "${scriptdir}/common/config.bash"
 
 # Read the command line arguments.
 # Currently, we expect the following:
@@ -26,9 +26,9 @@ if [[ -s ${DBDIR}/user/${DEADUSER} ]] ; then
 fi
 
 for x in ${PASSWD_BACKENDS} ; do
-	if [[ -e "${scriptdir}/auth/${x}-${USERSPACE}-userdel.sh" ]] ; then
+	if [[ -e "${scriptdir}/auth/${x}-${USERSPACE}-userdel.bash" ]] ; then
 		echo "Running ${i}-${USERSPACE}-userdel..."
-		. "${scriptdir}/auth/${x}-${USERSPACE}-userdel.sh"
+		. "${scriptdir}/auth/${x}-${USERSPACE}-userdel.bash"
 	else
 		echo -n "Auth backend ${x} with userspace ${USERSPACE} not" >&2
 		echo " supported by this script." >&2

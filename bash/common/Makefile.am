@@ -1,17 +1,17 @@
-MAINTAINERCLEANFILES = Makefile.in
-CLEANFILES = *~ config.sh
+MAINTAINERCLEANFILES = Makefile.in config.bash
+CLEANFILES = *~
 SUBDIRS = .
 
 installcommonbackenddir = $(datadir)/$(PACKAGE)/common/
 
 installcommonbackend_SCRIPTS = \
-	config.sh \
-	getent.sh \
-	read_groupdata.sh \
-	read_userdata.sh
+	config.bash \
+	getent.bash \
+	read_groupdata.bash \
+	read_userdata.bash
 
 EXTRA_DIST = \
-	getent.sh \
-	read_groupdata.sh \
-	read_userdata.sh \
-	config.sh.in
+	getent.bash \
+	read_groupdata.bash \
+	read_userdata.bash \
+	config.bash.in

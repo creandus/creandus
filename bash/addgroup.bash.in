@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# addgroup.sh - intelligently adds a new group for the system package
+# addgroup.bash - intelligently adds a new group for the system package
 # manager.
 #
 # $Id$
@@ -10,7 +10,7 @@ datarootdir=@datarootdir@
 scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration.
-. "${scriptdir}/common/config.sh"
+. "${scriptdir}/common/config.bash"
 
 # Read the command line arguments.
 
@@ -34,11 +34,11 @@ ACTION="add"
 ###
 
 # Read the proper data file for the desired group
-. "${scriptdir}/common/read_groupdata.sh"
+. "${scriptdir}/common/read_groupdata.bash"
 
 # Determine a free uid
 # We make use of egetent:
-. "${scriptdir}/common/getent.sh"
+. "${scriptdir}/common/getent.bash"
 
 # TODO: allow for more sophisticated range specifications
 gidmin=${groupid%-*}
@@ -89,10 +89,10 @@ fi
 # Finally, we take take the necessary action, either via groupmod 
 # or groupadd [or it's comparable friends]
 for i in ${GROUP_BACKENDS}; do
-	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.sh" ]] ; 
+	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.bash" ]] ; 
 	then
 		echo "Running ${i}-${USERSPACE}-group${ACTION}..."
-		. "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.sh"
+		. "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.bash"
 	else
 		echo -n "Auth backend ${i} with " >&2
 		echo -n "userspace ${USERSPACE} " >&2

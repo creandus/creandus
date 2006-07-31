@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Manage the @PACKAGE@ database
 #
 # $Id$
@@ -8,7 +8,7 @@ datarootdir=@datarootdir@
 scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration.
-. "${scriptdir}/common/config.sh"
+. "${scriptdir}/common/config.bash"
 
 case "${1}" in
 	add)

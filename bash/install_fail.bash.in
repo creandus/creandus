@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This script is called when an install fails. It rolls back the changes made
-# by the add.sh script.
+# by the add.bash script.
 #
 # $Id$
 
@@ -10,7 +10,7 @@ datarootdir=@datarootdir@
 scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration
-. "${scriptdir}/common/config.sh"
+. "${scriptdir}/common/config.bash"
 
 # Read the command line arguments.
 # Currently, we expect the following:
@@ -28,13 +28,13 @@ if [[ -z "${ENEWUSERS}" || -z "${ENEWGROUPS}" || -z "${PKGNAME}"
 fi
 
 # Remove this instance of PKGNAME from the database
-"${scriptdir}/db.sh" del "${PKGNAME}" "${ROOT}"
+"${scriptdir}/db.bash" del "${PKGNAME}" "${ROOT}"
 
 # If this install process created any users, then we should now remove them.
 for x in ${ENEWUSERS} ; do
-	"${scriptdir}/deluser.sh" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+	"${scriptdir}/deluser.bash" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
 done
 
 for x in ${ENEWGROUPS} ; do
-	"${scriptdir}/delgroup.sh" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+	"${scriptdir}/delgroup.bash" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
 done

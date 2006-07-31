@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Add all the provided users and groups to the system.
 #
 # $Id$
@@ -8,7 +8,7 @@ datarootdir=@datarootdir@
 scriptdir=@datadir@/@PACKAGE@
 
 # Load the basic configuration
-. "${scriptdir}/common/config.sh"
+. "${scriptdir}/common/config.bash"
 
 # Read the command line arguments.
 
@@ -27,9 +27,9 @@ if [[ -z "${ENEWUSERS}" || -z "${ENEWGROUPS}" || -z "${PKGNAME}"
 fi
 
 for i in ${ENEWGROUPS} ; do
-	"${scriptdir}/addgroup.sh" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+	"${scriptdir}/addgroup.bash" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
 done
 
 for i in ${ENEWUSERS} ; do
-	"${scriptdir}/adduser.sh" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+	"${scriptdir}/adduser.bash" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
 done

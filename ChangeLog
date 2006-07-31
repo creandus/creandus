@@ -1,5 +1,10 @@
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 
+	* (Everything): Switch everything to explicitly use bash. Rename all
+	scripts from .sh to .bash, use #!/bin/bash, etc.
+
+2006-07-31  Mike Kelly  <pioto@pioto.org>
+
 	* eselect/users.eselect.in: Fix some load_config lines, remove an
 	unnecessary one.
 
