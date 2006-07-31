@@ -1,3 +1,8 @@
+2006-07-31  Mike Kelly  <pioto@pioto.org>
+
+	* -API, doc/API.txt, doc/Makefile: RST-ize the API specifications.
+	Provide a Makefile for them.
+
 2006-07-30  Mike Kelly  <pioto@pioto.org>
 
 	* bash/delgroup.sh.in, bash/deluser.sh.in,
