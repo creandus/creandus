@@ -1,5 +1,12 @@
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 
+	+ Release: 0.3.1
+
+	* Makefile.am: Add doc to EXTRA_DIST, so we actually distribute our
+	documentation.
+
+2006-07-31  Mike Kelly  <pioto@pioto.org>
+
 	+ Release: 0.3.0
 
 2006-07-31  Mike Kelly  <pioto@pioto.org>
