@@ -3,4 +3,4 @@
 # $Id$
 
 # XXX Get this to work with non-/ ROOTs
-pw groupdel "${NEWGROUP}"
+pw groupdel "${DEADGROUP}"

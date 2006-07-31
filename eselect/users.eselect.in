@@ -170,7 +170,6 @@ do_update() {
 			echo -n "  ${i} : "
 			"${scriptdir}/deluser.sh" ${i} ${ROOT} \
 				&& echo "done" || die -q "failed"
-			rm "${datadir}/users/${i}"
 		done
 
 		echo "Removing groups:"
@@ -178,7 +177,6 @@ do_update() {
 			echo -n "  ${i} : "
 			"${scriptdir}/delgroup.sh" ${i} ${ROOT} \
 				&& echo "done" || die -q "failed"
-			rm "${datadir}/groups/${i}"
 		done
 	else
 		echo "We would have removed:"

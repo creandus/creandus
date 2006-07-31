@@ -2,4 +2,4 @@
 #
 # $Id$
 
-groupdel "${NEWGROUP}"
+groupdel "${DEADGROUP}"

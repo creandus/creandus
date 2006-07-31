@@ -30,6 +30,11 @@ fi
 # Remove this instance of PKGNAME from the database
 "${scriptdir}/db.sh" del "${PKGNAME}" "${ROOT}"
 
-# TODO: If this install process created any users, then we should now remove
-# them.
+# If this install process created any users, then we should now remove them.
+for x in ${ENEWUSERS} ; do
+	"${scriptdir}/deluser.sh" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+done
 
+for x in ${ENEWGROUPS} ; do
+	"${scriptdir}/delgroup.sh" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
+done

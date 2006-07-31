@@ -1,5 +1,13 @@
 2006-07-30  Mike Kelly  <pioto@pioto.org>
 
+	* bash/delgroup.sh.in, bash/deluser.sh.in,
+	bash/auth/{compat,files}-{GNU-glibc,BSD-FreeBSD}-{user,group}del.sh,
+	bash/install_fail.sh.in, eselect/users.eselect.in: Add new user and
+	group deletion scripts, which are called by the eselect script, and by
+	the install_fail.sh.
+
+2006-07-30  Mike Kelly  <pioto@pioto.org>
+
 	* eselect/users.eselect.in: More improvements from Kugelfang and
 	ciaranm on IRC.
 

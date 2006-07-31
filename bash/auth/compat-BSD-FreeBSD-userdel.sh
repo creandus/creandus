@@ -2,4 +2,4 @@
 #
 # $Id$
 
-pw userdel "${NEWUSER}"
+pw userdel "${DEADUSER}"
