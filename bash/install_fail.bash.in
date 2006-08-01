@@ -20,8 +20,7 @@ PKGNAME=${3}
 USERSPACE=${4}
 ROOT=${5:-/}
 
-if [[ -z "${ENEWUSERS}" || -z "${ENEWGROUPS}" || -z "${PKGNAME}" 
-	|| -z "${USERSPACE}" ]] ; then
+if [[ -z "${PKGNAME}" || -z "${USERSPACE}" ]] ; then
 	echo "Script expects 4 arguments:" >&2
 	echo "  \"new users list\" \"new groups list\" pkgname userspace" >&2
 	exit 1

@@ -1,5 +1,13 @@
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 
+	* bash/add.bash.in, bash/install_fail.bash.in: We shouldn't fail if
+	ENEWUSERS or ENEWGROUPS are empty.
+
+	* Makefile.am: Put a .keep file in the dbdirs, so they always exist
+	properly.
+
+2006-07-31  Mike Kelly  <pioto@pioto.org>
+
 	+ Release: 0.3.1
 
 	* Makefile.am: Add doc to EXTRA_DIST, so we actually distribute our
