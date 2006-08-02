@@ -1,3 +1,7 @@
+2006-08-02  Mike Kelly  <pioto@pioto.org>
+
+	* doc/API.txt: Clean up the API spec some more.
+
 2006-08-01  Mike Kelly  <pioto@pioto.org>
 
 	* (Everything): Begin a big 'ol rewrite of stuff, putting most code
