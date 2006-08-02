@@ -22,8 +22,7 @@ PKGNAME=${2}
 USERSPACE=${3}
 ROOT=${4}
 
-if [[ -z "${NEWUSER}" || -z "${PKGNAME}" || -z "${USERSPACE}" \ 
-|| -z "${ROOT}" ]] ; then
+if [[ -z "${NEWUSER}" || -z "${PKGNAME}" || -z "${USERSPACE}" || -z "${ROOT}" ]]then
 	echo "Script expects 4 arguments: username pkgname userspace root" >&2
 	exit 1
 fi
@@ -95,7 +94,7 @@ fi
 # Finally, we take take the necessary action, either via usermod 
 # or useradd [or it's comparable friends]
 for i in ${PASSWD_BACKENDS}; do
-	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-user${ACTION}.bash" ]] ; 
+	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-user${ACTION}.bash" ]] 
 	then
 		echo "Running ${i}-${USERSPACE}-user${ACTION}..."
 		. "${scriptdir}/auth/${i}-${USERSPACE}-user${ACTION}.bash"
@@ -107,4 +106,4 @@ for i in ${PASSWD_BACKENDS}; do
 done
 
 # Properly update the dynamic users database
-echo "${PKGNAME}" >> "${DBDIR}/user/${NEWUSER}"
+"${scriptdir}/db.bash" add user "${PKGNAME}" "${NEWUSER}"

@@ -10,12 +10,10 @@ egetent() {
 	*-darwin*)
 		case "$2" in
 		*[!0-9]*) # Non numeric
-			nidump $1 . | awk -F":" "{ if (\$1 ~ /^$2$/) 
-{print \$0;exit;} }"
+			nidump $1 . | awk -F":" "{ if (\$1 ~ /^$2$/) {print \$0;exit;} }"
 			;;
 		*)	# Numeric
-			nidump $1 . | awk -F":" "{ if (\$3 == $2) {print 
-\$0;exit;} }"
+			nidump $1 . | awk -F":" "{ if (\$3 == $2) {print \$0;exit;} }"
 			;;
 		esac
 		;;
@@ -25,8 +23,7 @@ egetent() {
 
 		# lookup by uid/gid
 		if [[ $2 == [[:digit:]]* ]] ; then
-			[[ ${action} == "user" ]] && opts="-u" || 
-opts="-g"
+			[[ ${action} == "user" ]] && opts="-u" || opts="-g"
 		fi
 
 		pw show ${action} ${opts} "$2" -q

@@ -1,57 +1,61 @@
 #!/bin/bash
-# Manage the @PACKAGE@ database
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# Manage the dynusers database
 #
 # $Id$
 
 prefix=@prefix@
 datarootdir=@datarootdir@
-scriptdir=@datadir@/@PACKAGE@
+scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
 
 # Load the basic configuration.
 . "${scriptdir}/common/config.bash"
+. "${scriptdir}/common/functions.bash"
 
-case "${1}" in
-	add)
-		# Read our remaining args
-		# Options: [user|group] [pkgname] [newname]
-		DBTYPE=${2}
-		PKGNAME=${3}
-		NEWNAME=${4}
+main() {
+	case "${1}" in
+		add)
+			# Read our remaining args
+			# Options: [user|group] [pkgname] [newname]
+			local dbtype="${2}" pkgname="${3}"
+			local newname="${4}" userland="${5}"
 
-		if [[ -z "${DBTYPE}" || -z "${PKGNAME}"	\
-		|| -z "${NEWNAME}"]] ; then
-			echo -n "Add action expects 3 arguments:  " >&2
-			echo "[user/group] [pkgname] [user/group name]" >&2
-			exit 1
-		fi
+			[[ -z "${dbtype}" || -z "${pkgname}" \
+				|| -z "${newname}" ]] \
+				&& die "Add action expects 3 arguments:" \
+				"[user/group] [pkgname] [user/group name]"
 
+			[[ "${dbtype}" != "user" || "${dbtype}" != "group" ]] \
+				&& die "Invalid DBTYPE. Use user or group."
 
-		if [[ "${DBTYPE}" != "user" || "${DBTYPE}" != "group" ]]
-		then
-			echo "Invalid DBTYPE. Use user or group." >&2
-			exit 1
-		fi
+			echo "${pkgname}" >> "${DBDIR}/${dbtype}/${newname}"
+			;;
+		del)
+			# Read our remaining args
+			pkgname=${2}
+	
+			[[ -z "${pkgname}" ]] \
+				&& die "Del option expects a package name."
 
-		echo "${PKGNAME}" >> "${DBDIR}/${DBTYPE}/${NEWNAME}"
-		;;
-	del)
-		# Read our remaining args
-		PKGNAME=${2}
-		
-		if [[ -z "${PKGNAME}" ]] ; then
-			echo "Del option expects a package name." >&2
-			exit 1
-		fi
+			# Replace any /s with \/s so as to not mess up sed
+			pkgname=${pkgname/\//\\/}
 
-		# Replace any /s with \/s so as to not mess up sed
-		PKGNAME=${PKGNAME/\//\\/}
+			# Remove only the first instance of pkgname from the 
+			# db files
+			sed -i /^${pkgname}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\}\
+				"${DBDIR}"/{user,group}/*
+			;;
+		*)
+			die "Invalid action. Valid actions are add, del."
+			;;
+	esac
+}
 
-		# Remove only the first instance of PKGNAME from the db files
-		sed -i /^${PKGNAME}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\} \
-			"${DBDIR}"/{user,group}/*
-		;;
-	*)
-		echo "Invalid action. Valid actions are add, del." >&2
-		exit 1
-		;;
-esac
+if [[ "${1}" == "--test" ]] ; then
+	echo "Syntax OK."
+	exit 0
+fi
+
+main $@

@@ -1,34 +1,43 @@
 #!/bin/bash
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
 # Add all the provided users and groups to the system.
 #
 # $Id$
 
 prefix=@prefix@
 datarootdir=@datarootdir@
-scriptdir=@datadir@/@PACKAGE@
+scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
 
 # Load the basic configuration
 . "${scriptdir}/common/config.bash"
+# Load things like die()
+. "${scriptdir}/common/functions.bash"
 
-# Read the command line arguments.
+main() {
+	# Read the command line arguments.
+	local enewusers=${1} enewgroups=${2}
+	local pkgname=${3} userspace=${4} root=${5:-/}
 
-# Currently, we expect the following:
-ENEWUSERS=${1}
-ENEWGROUPS=${2}
-PKGNAME=${3}
-USERSPACE=${4}
-ROOT=${5:-/}
+	[[ -z "${pkgname}" || -z "${userspace}" ]] \
+		|| die "Script expects 4 arguments: \"new users\"" \
+			"\"new groups\" pkgname userspace"
 
-if [[ -z "${PKGNAME}" || -z "${USERSPACE}" ]] ; then
-	echo "Script expects 4 arguments:" >&2
-	echo "  \"new users list\" \"new groups list\" pkgname userspace" >&2
-	exit 1
+	for i in ${enewgroups} ; do
+		"${scriptdir}/addgroup.bash" "${i}" "${pkgname}" \
+			"${userspace}" "${root}"
+	done
+
+	for i in ${enewusers} ; do
+		"${scriptdir}/adduser.bash" "${i}" "${pkgname}" \
+			"${userspace}" "${root}"
+	done
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	echo "Syntax OK."
+	exit 0
 fi
 
-for i in ${ENEWGROUPS} ; do
-	"${scriptdir}/addgroup.bash" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
-done
-
-for i in ${ENEWUSERS} ; do
-	"${scriptdir}/adduser.bash" "${i}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
-done
+main $@

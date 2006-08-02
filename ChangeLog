@@ -1,3 +1,10 @@
+2006-08-01  Mike Kelly  <pioto@pioto.org>
+
+	* (Everything): Begin a big 'ol rewrite of stuff, putting most code
+	inside functions. This allows for variables to be kept out of the
+	global scope, and also allows for easy, automatic syntax checks. Added
+	some basic tests to Makefiles.
+
 2006-07-31  Mike Kelly  <pioto@pioto.org>
 
 	* bash/add.bash.in, bash/install_fail.bash.in: We shouldn't fail if

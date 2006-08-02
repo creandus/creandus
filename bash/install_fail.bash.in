@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
 #
 # This script is called when an install fails. It rolls back the changes made
 # by the add.bash script.
@@ -7,33 +9,44 @@
 
 prefix=@prefix@
 datarootdir=@datarootdir@
-scriptdir=@datadir@/@PACKAGE@
+scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
 
 # Load the basic configuration
 . "${scriptdir}/common/config.bash"
+. "${scriptdir}/common/functions.bash"
 
-# Read the command line arguments.
-# Currently, we expect the following:
-ENEWUSERS=${1}
-ENEWGROUPS=${2}
-PKGNAME=${3}
-USERSPACE=${4}
-ROOT=${5:-/}
+main() {
+	# Read the command line arguments.
+	# Currently, we expect the following:
+	ENEWUSERS=${1}
+	ENEWGROUPS=${2}
+	PKGNAME=${3}
+	USERSPACE=${4}
+	ROOT=${5:-/}
 
-if [[ -z "${PKGNAME}" || -z "${USERSPACE}" ]] ; then
-	echo "Script expects 4 arguments:" >&2
-	echo "  \"new users list\" \"new groups list\" pkgname userspace" >&2
-	exit 1
+	[[ -z "${PKGNAME}" || -z "${USERSPACE}" ]] \
+		&& die "Script expects 4 arguments: \"new users\" "\
+			"\"new groups\" pkgname userspace"
+
+	# Remove this instance of PKGNAME from the database
+	"${scriptdir}/db.bash" del "${PKGNAME}" "${ROOT}"
+
+	# If this install process created any users, then we should now remove
+	# them.
+	for x in ${ENEWUSERS} ; do
+		"${scriptdir}/deluser.bash" "${x}" "${PKGNAME}" \
+			"${USERSPACE}" "${ROOT}"
+	done
+
+	for x in ${ENEWGROUPS} ; do
+		"${scriptdir}/delgroup.bash" "${x}" "${PKGNAME}" \
+			"${USERSPACE}" "${ROOT}"
+	done
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	echo "Syntax OK."
+	exit 0
 fi
 
-# Remove this instance of PKGNAME from the database
-"${scriptdir}/db.bash" del "${PKGNAME}" "${ROOT}"
-
-# If this install process created any users, then we should now remove them.
-for x in ${ENEWUSERS} ; do
-	"${scriptdir}/deluser.bash" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
-done
-
-for x in ${ENEWGROUPS} ; do
-	"${scriptdir}/delgroup.bash" "${x}" "${PKGNAME}" "${USERSPACE}" "${ROOT}"
-done
+main $@

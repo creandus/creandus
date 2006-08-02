@@ -1,5 +1,7 @@
-# config.sh - loads the basic configuration, e.g. which authentication
-# system to use.
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# loads the basic configuration, e.g. which authentication system to use.
 #
 # $Id$
 
@@ -28,6 +30,13 @@ DATADIR=@localstatedir@/@PACKAGE@/data
 DBDIR=@localstatedir@/@PACKAGE@/db
 
 # Get a list of the backend databases we're going to use
-## TODO: Make these regexps better, more general
-PASSWD_BACKENDS=$(grep ^passwd: "${NSSWITCH_CONF}" |cut -d: -f2)
-GROUP_BACKENDS=$(grep ^group: "${NSSWITCH_CONF}" |cut -d: -f2)
+## XXX: Make these regexps better, more general
+if [[ -f "${NSSWITCH_CONF}" ]] ; then
+	PASSWD_BACKENDS=$(grep ^passwd: "${NSSWITCH_CONF}" |cut -d: -f2)
+	GROUP_BACKENDS=$(grep ^group: "${NSSWITCH_CONF}" |cut -d: -f2)
+fi
+
+# Have some sane fallbacks
+# XXX: Maybe have these defaults be determined somewhat by our USERSPACE?
+[[ -z "${PASSWD_BACKENDS}" ]] && PASSWD_BACKENDS="compat"
+[[ -z "${GROUP_BACKENDS}" ]] && GROUP_BACKENDS="compat"

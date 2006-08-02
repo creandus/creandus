@@ -8,10 +8,12 @@ installcommonbackend_SCRIPTS = \
 	config.bash \
 	getent.bash \
 	read_groupdata.bash \
-	read_userdata.bash
+	read_userdata.bash \
+	functions.bash
 
 EXTRA_DIST = \
 	getent.bash \
 	read_groupdata.bash \
 	read_userdata.bash \
-	config.bash.in
+	config.bash.in \
+	functions.bash

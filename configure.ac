@@ -6,8 +6,8 @@ AC_INIT([bash/adduser.bash.in])
 AC_CONFIG_AUX_DIR(config)
 
 VERSION_MAJOR=0
-VERSION_MINOR=3
-VERSION_MICRO=2
+VERSION_MINOR=4
+VERSION_MICRO=0
 VERSION_FULL="$VERSION_MAJOR.$VERSION_MINOR.$VERSION_MICRO"
 VERSION="$VERSION_FULL"
 
@@ -41,6 +41,8 @@ AC_OUTPUT(
 	bash/db.bash
 	bash/add.bash
 	bash/install_fail.bash
+	bash/delgroup.bash
+	bash/deluser.bash
 	bash/auth/Makefile
 	bash/common/Makefile
 	bash/common/config.bash

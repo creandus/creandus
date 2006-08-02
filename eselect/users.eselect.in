@@ -45,7 +45,7 @@ do_show() {
 				cat "${dbdir}/group/${i}"
 			done
 			;;
-		*)
+		all)
 			for i in $(ls "${dbdir}/user") ; do
 				echo "* ${i}:"
 				cat "${dbdir}/user/${i}"
@@ -54,6 +54,9 @@ do_show() {
 				echo "* ${i}:"
 				cat "${dbdir}/group/${i}"
 			done
+			;;
+		*)
+			die -q "Invalid mode specification. Use one of users, groups, or all."
 			;;
 	esac
 }
@@ -82,8 +85,7 @@ do_scan() {
 
 	# Parse our commandline args
 	local target="${ROOT:-/}"
-	local remove=
-	local valid_params=
+	local remove valid_params
 	while [[ ${1#--} != ${1} ]] ; do
 		if [[ "--user" == ${1} ]] ; then
 			shift
@@ -137,7 +139,7 @@ do_update() {
 	local datarootdir=@datarootdir@
 	local scriptdir=${ROOT}@datadir@/@PACKAGE@
 
-	dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.bash\" DBDIR)"
+	local dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.bash\" DBDIR)"
 
 	# Parse our commandline args
 	while [[ ${1#--} != ${1} ]] ; do

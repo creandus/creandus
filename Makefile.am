@@ -9,13 +9,11 @@ userdbdir = $(localstatedir)/$(PACKAGE)/db/user
 userdb_DATA = .keep
 
 groupdbdir = $(localstatedir)/$(PACKAGE)/db/group
-userdb_DATA = .keep
+groupdb_DATA = .keep
 
 .keep :
 	touch $@
 
 install-data-local:
-	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/db/user
-	$(mkinstalldirs) $(DESTDIR)$(localstatedir)/$(PACKAGE)/db/group
 	$(mkinstalldirs) $(DESTDIR)$(bindir)
 	cd $(DESTDIR)$(bindir) ; ln -s eselect users-update

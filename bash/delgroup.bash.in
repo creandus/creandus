@@ -1,39 +1,49 @@
 #!/bin/bash
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
+#
+# Delete a group managed by the dynusers scripts.
+#
 # $Id: $
+
 prefix=@prefix@
 datarootdir=@datarootdir@
-scriptdir=@datadir@/@PACKAGE@
+scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
 
 # Load the basic configuration
 . "${scriptdir}/common/config.bash"
+. "${scriptdir}/common/functions.bash"
 
-# Read the command line arguments.
-# Currently, we expect the following:
-DEADGROUP=${1}
-PKGNAME=${2}
-USERSPACE=${3}
-ROOT=${4:-/}
+main() {
+	# Read the command line arguments.
+	# Currently, we expect the following:
+	DEADGROUP=${1}
+	ROOT=${2:-/}
+	# XXX: Make sure we verify our command line args here.
 
-# XXX: Make sure we verify our command line args here.
+	# first, verify that the user to be deleted can be safely deleted
+	[[ -s ${DBDIR}/group/${DEADGROUP} ]] \
+		&& die "Group ${DEADGROUP} is still in use by some other" \
+			"package. Not removing."
 
-# first, verify that the user to be deleted can be safely deleted
-if [[ -s ${DBDIR}/group/${DEADGROUP} ]] ; then
-	echo -n "Group ${DEADGROUP} is still in use by some other package. " >&2
-	echo "Not removing." >&2
-	exit 1
+	for x in ${GROUP_BACKENDS} ; do
+		if [[ -e "${scriptdir}/auth/${x}-${userspace}-groupdel.bash" ]]
+		then
+			echo "Running ${i}-${userspace}-groupdel..."
+			. "${scriptdir}/auth/${x}-${userspace}-groupdel.bash"
+		else
+			echo "Auth backend ${x} with userspace ${userspace}" \
+				"not supported by this script." >&2
+		fi
+	done
+
+	# Remove the empty database file
+	rm ${DBDIR}/group/${DEADGROUP}
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	echo "Syntax OK."
+	exit 0
 fi
 
-for x in ${PASSWD_BACKENDS} ; do
-	if [[ -e "${scriptdir}/auth/${x}-${USERSPACE}-groupdel.bash" ]] ; then
-		echo "Running ${i}-${USERSPACE}-groupdel..."
-		. "${scriptdir}/auth/${x}-${USERSPACE}-groupdel.bash"
-	else
-		echo -n "Auth backend ${x} with userspace ${USERSPACE} not" >&2
-		echo " supported by this script." >&2
-	fi
-done
-
-# Remove the empty database file
-rm ${DBDIR}/group/${DEADGROUP}
+main $@

@@ -89,7 +89,7 @@ fi
 # Finally, we take take the necessary action, either via groupmod 
 # or groupadd [or it's comparable friends]
 for i in ${GROUP_BACKENDS}; do
-	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.bash" ]] ; 
+	if [[ -e "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.bash" ]] 
 	then
 		echo "Running ${i}-${USERSPACE}-group${ACTION}..."
 		. "${scriptdir}/auth/${i}-${USERSPACE}-group${ACTION}.bash"
@@ -101,4 +101,4 @@ for i in ${GROUP_BACKENDS}; do
 done
 
 # Properly update the dynamic groups database
-echo "${PKGNAME}" >> "${DBDIR}/group/${NEWGROUP}"
+"${scriptdir}/db.bash" add group "${PKGNAME}" "${NEWGROUP}"
