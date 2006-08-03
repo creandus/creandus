@@ -1,9 +1,9 @@
 Dynusers API
 ============
 
-Written by: Mike Kelly <pioto@pioto.org>
+**Written by:** Mike Kelly <pioto@pioto.org>
 
-Last updated: $Date$
+**Last updated:** $Date$
 
 Outline
 -------

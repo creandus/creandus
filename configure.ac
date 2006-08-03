@@ -32,17 +32,24 @@ if test x$BASH = "x" ; then
 fi
 dnl }}}
 
+dnl {{{ substitution macros
+SCRIPTDIR=${datadir}/${PACKAGE}
+AC_SUBST(SCRIPTDIR)
+
+
+dnl }}}
+
 dnl {{{ Generate our final Makefiles as well as some scripts
 AC_OUTPUT(
 	Makefile
 	bash/Makefile
-	bash/addgroup.bash
-	bash/adduser.bash
-	bash/db.bash
-	bash/add.bash
-	bash/install_fail.bash
-	bash/delgroup.bash
-	bash/deluser.bash
+dnl	bash/addgroup.bash
+dnl	bash/adduser.bash
+dnl	bash/db.bash
+dnl	bash/add.bash
+dnl	bash/install_fail.bash
+dnl	bash/delgroup.bash
+dnl	bash/deluser.bash
 	bash/auth/Makefile
 	bash/common/Makefile
 	bash/common/config.bash

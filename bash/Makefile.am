@@ -31,3 +31,8 @@ EXTRA_DIST = \
 	run_test.bash \
 	delgroup.bash.in \
 	deluser.bash.in
+
+SUBST = $(top_srcdir)/tools/subst.bash
+
+%.bash : %.bash.in
+	$(SUBST) $(top_srcdir) $< $@

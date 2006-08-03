@@ -6,9 +6,7 @@
 #
 # $Id$
 
-prefix=@prefix@
-datarootdir=@datarootdir@
-scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
+scriptdir=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration
 . "${scriptdir}/common/config.bash"

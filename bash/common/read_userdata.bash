@@ -1,3 +1,6 @@
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
 # read_userdata.sh - Read the proper data file for the desired user
 # $Id$
 

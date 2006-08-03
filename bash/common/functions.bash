@@ -1,5 +1,8 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
+#
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
 # $Id: $
 
 # This is a collection of functions for use in these scripts. Things like

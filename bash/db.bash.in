@@ -20,21 +20,24 @@ main() {
 			# Read our remaining args
 			# Options: [user|group] [pkgname] [newname]
 			local dbtype="${2}" pkgname="${3}"
-			local newname="${4}" userland="${5}"
+			local newname="${4}" userspace="${5}"
+			local root="${6:-/}"
 
 			[[ -z "${dbtype}" || -z "${pkgname}" \
 				|| -z "${newname}" ]] \
-				&& die "Add action expects 3 arguments:" \
-				"[user/group] [pkgname] [user/group name]"
+				&& die "Add action expects 4 or 5 arguments:" \
+				"<user/group> <pkgname> <user/group name>" \
+				"<userspace> [root]"
 
 			[[ "${dbtype}" != "user" || "${dbtype}" != "group" ]] \
 				&& die "Invalid DBTYPE. Use user or group."
 
-			echo "${pkgname}" >> "${DBDIR}/${dbtype}/${newname}"
+			echo "${pkgname}" >> \
+				"${root}${DBDIR}/${dbtype}/${newname}"
 			;;
 		del)
 			# Read our remaining args
-			pkgname=${2}
+			local pkgname="${2}" root="${3:-/}"
 	
 			[[ -z "${pkgname}" ]] \
 				&& die "Del option expects a package name."
@@ -45,7 +48,7 @@ main() {
 			# Remove only the first instance of pkgname from the 
 			# db files
 			sed -i /^${pkgname}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\}\
-				"${DBDIR}"/{user,group}/*
+				"${root}${DBDIR}"/{user,group}/*
 			;;
 		*)
 			die "Invalid action. Valid actions are add, del."

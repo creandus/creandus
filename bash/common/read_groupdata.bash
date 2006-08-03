@@ -1,3 +1,6 @@
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
 # read_groupdata.sh - Read the proper data file for the desired group
 # $Id$
 
@@ -12,12 +15,19 @@
 # TODO: Split this file up in such a way as to be automatically done
 # correctly for various distros.
 
-GROUPFILE="${DATADIR}/group/${NEWUSER} ${DATADIR}/accounts"
+# read_groupdata()
+# Inputs:
+#  $1 - name of group to be added
+# Outputs:
+#  $groupid - 
+read_groupdata() {
+	local groupfile="${DATADIR}/group/${1} ${DATADIR}/accounts"
+	local groupid_=
+	export groupid=
 
-for i in ${GROUPFILE}; do
-	groupid_=$(grep ^gid: ${i} |cut -d: -f2)
-	groupid_=${userid_## }
-	groupid=${userid:-${userid_}}
-
-	unset groupid_
-done
+	for i in ${groupfile}; do
+		groupid_=$(grep ^gid: ${i} |cut -d: -f2)
+		groupid_=${userid_## }
+		groupid=${userid:-${userid_}}
+	done
+}

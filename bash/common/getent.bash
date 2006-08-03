@@ -1,3 +1,6 @@
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
 # Based upon the egetent function from eutils.eclass
 # Small wrapper for getent (Linux), nidump (Mac OS X),
 # and pw (FreeBSD) used in enewuser()/enewgroup()
