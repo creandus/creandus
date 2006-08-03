@@ -25,16 +25,16 @@ main() {
         # This will take only the part of the config.log which has the output
         # variables in it, then replace the "'"s around every variable
         # definition with '"'s, so that we actually evaluate all the variables
-        # in there when we source it. Then, we cut out any lines with $(foo)
-        # style statements, since we don't wanna actually run anything
-        # (although, really, we should just replace the ()s with {}s, since the
-        # only place i see the $() syntax used it seems to refer to another
-        # variable (probably it is just that way to match Makefile syntax).
+	# in there when we source it. Then, we replace the ()s with {}s, since
+	# the only place i see the $() syntax used it seems to refer to another
+	# variable (probably it is just that way to match Makefile syntax).
 	sed -n -e ${topline},${bottomline}p\
 		"${top_srcdir}/config.log" \
-		| sed s/\'/\"/g \
-		| grep -v '$[(]' \
+		|sed -e s/\'/\"/g \
+		|sed -e 's/\$[(]\([^)]*\)[)]/${\1}/g' \
 		>"${confvars}" || exit 1
+	. "${confvars}" || exit 1
+	. "${confvars}" || exit 1
 	. "${confvars}" || exit 1
 	rm "${confvars}"
 

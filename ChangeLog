@@ -1,5 +1,13 @@
 2006-08-03  Mike Kelly  <pioto@pioto.org>
 
+	* tools/get_autoconf_macros.sed: _'s are legal in variable names, too.
+
+	* tools/subst.bash: Make the seds a little less harsh. Figured the
+	only real way to get this stuff right is to source the confvars file
+	several times in a row... But this seems bad...
+
+2006-08-03  Mike Kelly  <pioto@pioto.org>
+
 	* tools/get_autoconf_macros.sed, tools/subst.bash: Add a script,
 	subst.bash, which will, given a file with @foo@ style autoconf
 	substition markers, replace them. The difference between this and just
