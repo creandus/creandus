@@ -1,12 +1,13 @@
-Dynusers API
-============
+==============
+ Dynusers API
+==============
 
-**Written by:** Mike Kelly <pioto@pioto.org>
-
-**Last updated:** $Date$
+:Author: Mike Kelly <pioto@pioto.org>
+:Date: $Date$
+:Revision: $Revision$
 
 Outline
--------
+=======
 
 This is a sketch of the basic API for interfacing with the dynusers
 scripts.
@@ -29,10 +30,10 @@ There are several different tasks which these scripts must do:
    the system). This is handled by the ``users.eselect`` script.
 
 Specifications
---------------
+==============
 
 Database
-''''''''
+--------
 
 These databases contain a newline separated list of package identifiers (name
 and version, usually), which mainly serves to tell the scripts when a user is
@@ -66,7 +67,7 @@ The arguments are:
     provided, it is assumed to be /.
 
 Adding Users and Groups
-'''''''''''''''''''''''
+-----------------------
 
 This action is performed by the add.bash script. It should be run once, before
 the package is unpacked, compiled, or installed. It is invoked as follows::

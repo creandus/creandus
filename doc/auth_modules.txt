@@ -1,0 +1,14 @@
+=======================
+ Dynusers Auth Modules
+=======================
+:Author: Mike Kelly <pioto@pioto.org>
+:Date: $Date$
+:Revision: $Revision$
+
+Introduction
+============
+
+This is the note called middle C...
+
+
+.. vim: set ft=glep tw=80 spell spelllang=en et :
