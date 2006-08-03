@@ -40,4 +40,3 @@ egetent() {
 		;;
 	esac
 }
-
