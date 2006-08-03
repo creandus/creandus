@@ -7,6 +7,5 @@
 #
 # $Id: $
 
-export SCRIPTDIR=`dirname ${1}`
-echo "Testing ${1}:"
+echo "Testing \"${1}\":"
 bash ${1} --test

@@ -1,7 +1,5 @@
-MAINTAINERCLEANFILES = Makefile.in addgroup.bash adduser.sh db.sh add.sh \
-	install_fail.bash
-CLEANFILES = *~
-SUBDIRS = . auth common
+MAINTAINERCLEANFILES = Makefile.in
+SUBDIRS = auth common .
 
 installbackenddir = $(datadir)/$(PACKAGE)/
 
@@ -14,12 +12,15 @@ installbackend_SCRIPTS = \
 	delgroup.bash \
 	deluser.bash
 
+CLEANFILES = *~ $(installbackend_SCRIPTS)
+
 TESTS_ENVIRONMENT = env \
-	bash $(top_srcdir)/bash/run_test.bash
+	SCRIPTDIR="$(top_builddir)/bash/" \
+	bash $(top_srcdir)/tools/run_test.bash
 
 TESTS = $(installbackend_SCRIPTS)
 
-check_SCRIPTS = run_test.bash
+check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
 check_PROGRAMS = 
 
 EXTRA_DIST = \
@@ -28,11 +29,10 @@ EXTRA_DIST = \
 	db.bash.in \
 	add.bash.in \
 	install_fail.bash.in \
-	run_test.bash \
 	delgroup.bash.in \
 	deluser.bash.in
 
 SUBST = $(top_srcdir)/tools/subst.bash
 
-%.bash : %.bash.in
-	$(SUBST) $(top_srcdir) $< $@
+% : %.in
+	$(SUBST) $(top_srcdir) $(top_builddir) $< $@

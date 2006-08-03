@@ -32,28 +32,25 @@ if test x$BASH = "x" ; then
 fi
 dnl }}}
 
+dnl {{{ check for sed
+unset SED
+AC_PATH_PROGS(SED, sed)
+if test x$SED = "x" ; then
+	AC_MSG_ERROR([sed is required])
+fi
+dnl }}}
+
 dnl {{{ substitution macros
 SCRIPTDIR=${datadir}/${PACKAGE}
 AC_SUBST(SCRIPTDIR)
-
-
 dnl }}}
 
-dnl {{{ Generate our final Makefiles as well as some scripts
+dnl {{{ Generate our Makefiles
 AC_OUTPUT(
 	Makefile
 	bash/Makefile
-dnl	bash/addgroup.bash
-dnl	bash/adduser.bash
-dnl	bash/db.bash
-dnl	bash/add.bash
-dnl	bash/install_fail.bash
-dnl	bash/delgroup.bash
-dnl	bash/deluser.bash
 	bash/auth/Makefile
 	bash/common/Makefile
-	bash/common/config.bash
 	eselect/Makefile
-	eselect/users.eselect
 	)
 dnl }}}

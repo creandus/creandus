@@ -1,5 +1,4 @@
 MAINTAINERCLEANFILES = Makefile.in
-CLEANFILES = *~
 SUBDIRS = .
 
 installauthdir = $(datadir)/$(PACKAGE)/auth/
@@ -18,9 +17,23 @@ installauth_SCRIPTS = \
 	files-GNU-glibc-useradd.bash \
 	files-GNU-glibc-usermod.bash
 
-EXTRA_DIST = $(installauth_SCRIPTS)
+CLEANFILES = *~ $(installauth_SCRIPTS)
+
+EXTRA_DIST = \
+	compat-BSD-FreeBSD-groupadd.bash.in \
+	compat-BSD-FreeBSD-groupmod.bash.in \
+	compat-BSD-FreeBSD-useradd.bash.in \
+	compat-BSD-FreeBSD-usermod.bash.in \
+	compat-GNU-glibc-groupadd.bash.in \
+	compat-GNU-glibc-groupmod.bash.in \
+	compat-GNU-glibc-useradd.bash.in \
+	compat-GNU-glibc-usermod.bash.in \
+	files-GNU-glibc-groupadd.bash.in \
+	files-GNU-glibc-groupmod.bash.in \
+	files-GNU-glibc-useradd.bash.in \
+	files-GNU-glibc-usermod.bash.in
 
 SUBST = $(top_srcdir)/tools/subst.bash
 
 % : %.in
-	$(SUBST) $(top_srcdir) $< $@
+	$(SUBST) $(top_srcdir) $(top_builddir) $< $@
