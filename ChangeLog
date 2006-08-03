@@ -1,3 +1,12 @@
+2006-08-03  Mike Kelly  <pioto@pioto.org>
+
+	* tools/get_autoconf_macros.sed, tools/subst.bash: Add a script,
+	subst.bash, which will, given a file with @foo@ style autoconf
+	substition markers, replace them. The difference between this and just
+	using ./configure to do the job is that it'll fully evaluate any shell
+	variables before substituting them, removing the need to do things
+	like prefix=@prefix@ before the variable you actually care about.
+
 2006-08-02  Mike Kelly  <pioto@pioto.org>
 
 	* doc/API.txt: Clean up the API spec some more.
