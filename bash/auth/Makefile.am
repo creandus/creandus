@@ -19,3 +19,8 @@ installauth_SCRIPTS = \
 	files-GNU-glibc-usermod.bash
 
 EXTRA_DIST = $(installauth_SCRIPTS)
+
+SUBST = $(top_srcdir)/tools/subst.bash
+
+% : %.in
+	$(SUBST) $(top_srcdir) $< $@
