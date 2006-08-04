@@ -43,7 +43,23 @@ Dynusers modules follow this naming scheme:
    OS X) systems. For consistency, if the nsswitch.conf file cannot be found,
    this value should be assumed to be ``compat``.
 
+..
+
   *userland*
-    The userland is.
+    The userland is the general style of unix utilities provided in the system,
+    *e.g.* "GNU", "BSD", or "Darwin"[#]_.
+
+.. [#] Darwin is the underlying userland for Mac OS X.
+
+..
+
+  *elibc*
+    Similar to *userland*, this specifies the libc implementation. This is how
+    various flavors of BSD, for example, are distinguished. Some samples:
+    "glibc" (for GNU/Linux), "FreeBSD", "OpenBSD", "NetBSD", "Darwin".
+
+  *action*
+    The action to be performed. This is one of "useradd", "usermod", "userdel",
+    "groupadd", "groupmod", or "groupdel".
 
 .. vim: set ft=glep tw=80 spell spelllang=en et :
