@@ -1,17 +1,15 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/files.sh - "files" backend functions
+# @AUTHREADME@
 #
 # $Id$
 
-# adduser_files() - adds a user to the system using the "files" backend.
-#
-# Expects the following variables to already be set:
-#
-# NEWUSER: the username to be added
-# 
-# Expects a valid userid to have already been determined
-useradd -d "${userhome}" -G "${usergroups}" \
-	-s "${usershell}" -u "${userid}" \
-	-c "${usercomment}" "${NEWUSER}"
+files-GNU-glibc-useradd() {
+	local home="${1}" groups="${2}" shell="${3}"
+	local uid="${4}" comment="${5}" name="${6}"
+
+	useradd -d "${userhome}" -G "${usergroups}" \
+		-s "${usershell}" -u "${userid}" \
+		-c "${usercomment}" "${newuser}"
+}
