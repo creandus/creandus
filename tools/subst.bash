@@ -5,7 +5,7 @@
 # Substitutes any @foo@ type words in the given file with the proper shell
 # variable.
 #
-# $Id: $
+# $Id$
 
 main() {
 	local top_srcdir=${1} top_builddir=${2} infile=${3} outfile=${4}
@@ -49,7 +49,10 @@ main() {
 		# This eval is 'safe' since the value of x is guaranteed to
 		# contain nothing but [[:alnum:]]*
 		eval val_of_x='$'${x}
-		sed -i -e "s,@${x}@,${val_of_x},g" "${tmpfile}" || exit 1
+		echo val_of_x is :: ${val_of_x}
+		val_of_x=`echo ${val_of_x} |sed 's/\//\\\\\//g'` || exit 1
+		echo val_of_x is :: ${val_of_x}
+		sed -i -e "s/@${x}@/${val_of_x}/g" "${tmpfile}" || exit 1
 	done
 
 	mv "${tmpfile}" "${outfile}"

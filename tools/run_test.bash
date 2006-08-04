@@ -5,7 +5,7 @@
 # Runs tests on all the frontend scripts, mainly intending to catch syntax
 # errors.
 #
-# $Id: $
+# $Id$
 
 echo "Testing \"${1}\":"
 bash ${1} --test

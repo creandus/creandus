@@ -4,7 +4,7 @@
 #
 # Returns a list of @foo@-like variables in the given file(s).
 #
-# $Id: $
+# $Id$
  
 /@[A-Za-z0-9_]*@/!d
 s//\
