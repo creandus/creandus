@@ -8,7 +8,42 @@
 Introduction
 ============
 
-This is the note called middle C...
+One of the main design features of dynusers is that it is easy to add in
+additional modules for authentication systems in different operating systems.
+This document defines the necessary features of any module.
 
+Naming
+======
+
+Dynusers modules follow this naming scheme:
+
+  *nss*-*userland*-*elibc*-*action*
+
+  *nss*
+    The name of the `Name Service Switch`_ module being used [#]_. Usually,
+    this is either ``compat`` or ``files``, although it could also be something
+    like ``ldap``. This is determined by the contents of your
+    `/etc/nsswitch.conf`_ file. For example::
+
+      # /etc/nsswitch.conf:
+
+      passwd:   compat
+      shadow:   compat
+      group:    compat
+
+      # passwd: db files nis
+      # shadow: db files nis
+      # group:  db files nis
+
+.. _Name Service Switch: http://www.gnu.org/software/libc/manual/html_node/Name-Service-Switch.html
+
+.. _/etc/nsswitch.conf: http://www.gnu.org/software/libc/manual/html_node/NSS-Configuration-File.html
+
+.. [#] NSS exists on most GNU, BSD, and Solaris systems, but not on Darwin (Mac
+   OS X) systems. For consistency, if the nsswitch.conf file cannot be found,
+   this value should be assumed to be ``compat``.
+
+  *userland*
+    The userland is.
 
 .. vim: set ft=glep tw=80 spell spelllang=en et :

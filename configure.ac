@@ -41,8 +41,11 @@ fi
 dnl }}}
 
 dnl {{{ substitution macros
-SCRIPTDIR=${datadir}/${PACKAGE}
+SCRIPTDIR="${datadir}/${PACKAGE}"
 AC_SUBST(SCRIPTDIR)
+
+AUTHREADME="See docs/AUTH.{txt,html} for more information on these files."
+AC_SUBST(AUTHREADME)
 dnl }}}
 
 dnl {{{ Generate our Makefiles
