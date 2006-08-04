@@ -20,9 +20,9 @@ Dynusers modules follow this naming scheme:
   *nss*-*userland*-*elibc*-*action*
 
   *nss*
-    The name of the `Name Service Switch`_ module being used [#]_. Usually,
+    The name of the `Name Service Switch`_ [#]_ module being used. Usually,
     this is either ``compat`` or ``files``, although it could also be something
-    like ``ldap``. This is determined by the contents of your
+    like ``nis`` or ``ldap``. This is determined by the contents of your
     `/etc/nsswitch.conf`_ file. For example::
 
       # /etc/nsswitch.conf:
@@ -35,23 +35,18 @@ Dynusers modules follow this naming scheme:
       # shadow: db files nis
       # group:  db files nis
 
+    Of main interest to these scripts are the ``passwd`` and ``group`` lines,
+    which define the backend used for users and groups, respectively.
+
 .. _Name Service Switch: http://www.gnu.org/software/libc/manual/html_node/Name-Service-Switch.html
 
 .. _/etc/nsswitch.conf: http://www.gnu.org/software/libc/manual/html_node/NSS-Configuration-File.html
-
-.. [#] NSS exists on most GNU, BSD, and Solaris systems, but not on Darwin (Mac
-   OS X) systems. For consistency, if the nsswitch.conf file cannot be found,
-   this value should be assumed to be ``compat``.
 
 ..
 
   *userland*
     The userland is the general style of unix utilities provided in the system,
     *e.g.* "GNU", "BSD", or "Darwin"[#]_.
-
-.. [#] Darwin is the underlying userland for Mac OS X.
-
-..
 
   *elibc*
     Similar to *userland*, this specifies the libc implementation. This is how
@@ -61,5 +56,112 @@ Dynusers modules follow this naming scheme:
   *action*
     The action to be performed. This is one of "useradd", "usermod", "userdel",
     "groupadd", "groupmod", or "groupdel".
+
+.. [#] NSS exists on most GNU, BSD, and Solaris systems, but not on Darwin (Mac
+   OS X) systems. For consistency, if the nsswitch.conf file cannot be found,
+   this value should be assumed to be ``compat``.
+.. [#] Darwin is the underlying userland for Mac OS X.
+
+..
+
+Module File
+===========
+
+The module file consists of a header and a function. The header is just basic
+boilerplate; copy what you see in one of the other modules.
+
+The function must be named as discussed above (*e.g.*
+``compat-GNU-glibc-useradd()``). There should be no code run in the global
+scope; all your variables should be ``local``. Your file itself should be named
+as discussed above, with ``.bash`` appended (*e.g.*
+``compat-GNU-glibv-useradd.bash``). Each of the six possible actions can expect
+the following arguments:
+
+useradd
+-------
+
+Adds a user to the system.
+
+  home - ``${1}``
+    The home directory of the user to be added.
+
+  groups - ``${2}``
+    A comma-separated list of the groups this user should belong to.
+
+  shell - ``${3}``
+    The default shell for the user to be added.
+
+  uid - ``${4}``
+    The uid for the user to be added.
+
+  comment - ``${5}``
+    The GECOS comment field for the user.
+
+  name - ``${6}``
+    The name of the user to be added.
+
+usermod
+-------
+
+Modifies an existing user. Receives the same arguments as *useradd*.
+
+userdel
+-------
+
+Deletes an existing user.
+
+  name - ``${1}``
+    The name of the user to be removed.
+
+groupadd
+--------
+
+Adds a user to the system.
+
+  gid - ``${1}``
+    The gid for the group to be added.
+
+  name - ``${2}``
+    The name of the group to be added.
+
+groupmod
+--------
+
+Modifies an existing group. Receives the same arguments as *groupadd*.
+
+groupdel
+--------
+
+Deletes an existing group.
+
+  name - ``${1}``
+    The name of the user to be removed.
+
+Example
+=======
+
+Below is an example script, ``compat-BSD-FreeBSD-useradd.bash.in``::
+
+  # Copyright 2006 Mike Kelly
+  # Distributed under the terms of the GNU General Public License v2
+  #
+  # @AUTHREADME@
+  #
+  # $Id$
+
+  compat-BSD-FreeBSD-useradd() {
+          local home="${1}" groups="${2}" shell="${3}"
+          local uid="${4}" comment="${5}" name="${6}"
+
+          pw useradd -d "${home}" -G "${usergroups}" \
+                  -s "${usershell}" -u "${userid}" \
+                  -c "${usercomment}" "${newuser}"
+  }
+
+Further Reading
+===============
+
+For further reading, you may wish to consult the dynusers API, which you can
+find in the same place you found this document.
 
 .. vim: set ft=glep tw=80 spell spelllang=en et :

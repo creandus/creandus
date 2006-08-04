@@ -1,3 +1,7 @@
+2006-08-04  Mike Kelly  <pioto@pioto.org>
+
+	* doc/auth_modules.txt: Add documentation of the auth module format.
+
 2006-08-03  Mike Kelly  <pioto@pioto.org>
 
 	* tools/get_autoconf_macros.sed: _'s are legal in variable names, too.
