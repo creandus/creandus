@@ -1,3 +1,13 @@
+2006-08-06  Mike Kelly  <pioto@pioto.org>
+
+	* eselect/users.eselect.in: Add support to the eselect module's scan
+	mode to simply chown the files belonging to a found user or group to
+	0:0 (root), rather than removing them.
+
+	* doc/API.txt, doc/API_flowchart.dia, doc/API_flowchart.png,
+	doc/API_flowchart2.dia, doc/API_flowchart2.png: Add flowcharts of the
+	install and uninstall process to the API documentation.
+
 2006-08-04  Mike Kelly  <pioto@pioto.org>
 
 	* doc/auth_modules.txt: Add documentation of the auth module format.

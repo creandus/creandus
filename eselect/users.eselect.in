@@ -34,25 +34,25 @@ do_show() {
 
 	case ${mode} in
 		users)
-			for i in $(ls "${dbdir}/user") ; do
-				echo "* ${i}:"
-				cat "${dbdir}/user/${i}"
+			for x in $(ls "${dbdir}/user") ; do
+				echo "* ${x}:"
+				cat "${dbdir}/user/${x}"
 			done
 			;;
 		groups)
-			for i in $(ls "${dbdir}/group") ; do
-				echo "* ${i}:"
-				cat "${dbdir}/group/${i}"
+			for x in $(ls "${dbdir}/group") ; do
+				echo "* ${x}:"
+				cat "${dbdir}/group/${x}"
 			done
 			;;
 		all)
-			for i in $(ls "${dbdir}/user") ; do
-				echo "* ${i}:"
-				cat "${dbdir}/user/${i}"
+			for x in $(ls "${dbdir}/user") ; do
+				echo "* ${x}:"
+				cat "${dbdir}/user/${x}"
 			done
-			for i in $(ls "${dbdir}/group") ; do
-				echo "* ${i}:"
-				cat "${dbdir}/group/${i}"
+			for x in $(ls "${dbdir}/group") ; do
+				echo "* ${x}:"
+				cat "${dbdir}/group/${x}"
 			done
 			;;
 		*)
@@ -69,13 +69,15 @@ describe_scan() {
 }
 
 describe_scan_parameters() {
-	echo "[--user user|--group group] <--remove>"
+	echo "[--user user|--group group] [--remove|--chown|--show]"
 }
 
 describe_scan_options() {
 	echo "--user user : scan the filesystem for all files owned by user"
 	echo "--group group : scan the filesystem for all files owned by group"
 	echo "--remove : remove all files which are found"
+	echo "--chown : keep files found intact, but chown them to 0:0"
+	echo "--show : just show files found; do nothing to them"
 }
 
 do_scan() {
@@ -85,7 +87,7 @@ do_scan() {
 
 	# Parse our commandline args
 	local target="${ROOT:-/}"
-	local remove valid_params
+	local action valid_params
 	while [[ ${1#--} != ${1} ]] ; do
 		if [[ "--user" == ${1} ]] ; then
 			shift
@@ -99,7 +101,13 @@ do_scan() {
 			shift
 		elif [[ "--remove" == "${1}" ]] ; then
 			shift
-			remove="${remove} | xargs -0 rm -rf"
+			action="| xargs -0 rm -rf"
+		elif [[ "--chown" == "${1}" ]] ; then
+			shift
+			action="| xargs -0 chown 0:0"
+		elif [[ "--show" == "${1}" ]] ; then
+			shift
+			action=""
 		elif [[ "--" == "${1}" ]] ; then
 			break
 		else
@@ -109,12 +117,18 @@ do_scan() {
 
 	if [[ ! ${valid_params} ]] ; then
 		echo "You didn't provide one of the required paramenters."
+		echo "You can see a list of dead users and groups by running:"
+		if [[ "${0}" == "eselect" ]] ; then
+			echo "  \$ eselect users update --pretend"
+		else
+			echo "  \$ $0 update --pretend"
+		fi
 		die -q "You must provide either a user or group for the scan action."
 	fi
 
 	target="${target} -print0"
 
-	find ${target} ${remove}
+	find ${target} ${action}
 }
 
 ### update action
