@@ -1,33 +1,29 @@
 High Priority:
 
- Create some test cases.
-
- Integrate with package managers (e.g. portage, paludis, etc). Do this by
- making a solid API.
+ Nothing.
 
 Medium Priority:
 
- Add backend scripts for other systems, e.g. gentoo-fbsd.
-
- bash/common/read{user,group}data.sh:
+ bash/common/read{user,group}data.bash:
    Build {USER,GROUP}FILE dynamically based upon the currently selected
    profile.
 
- bash/common/config.sh:
-   Make the nsswitch.conf parsing regexps better, more general.
-
- bash/adduser.sh:
+ bash/adduser.bash:
    Check that the user is in all the proper groups.
+
+ Create some test cases.
 
 Low Priority:
 
- bash/add{user,group}.sh:
+ Add backend scripts for other systems, e.g. gentoo-obsd.
+
+ bash/add{user,group}.bash:
    Allow for more sophisticated range specifications for UID/GIDs.
 
    If there needs to be some change made, note it properly, for the
    operator to take care of later with the eselect tool. Right now the
    modification is done automatically.
 
- bash/common/read{user,group}data.sh:
+ bash/common/read{user,group}data.bash:
    Split these files up in such a way as to be automatically done
    correctly for various distros.
