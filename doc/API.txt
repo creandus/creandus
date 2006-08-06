@@ -14,7 +14,7 @@ scripts.
 
 There are several different tasks which these scripts must do:
 
-#. Maintain a database of users and groups that have been added by the scripts.
+1. Maintain a database of users and groups that have been added by the scripts.
 
 #. Add any users or groups requested by a new package to the system. At the
    same time, the database should be updated.
@@ -43,16 +43,16 @@ through the db.bash script.
 This can be invoked in 2 different modes, to add and remove an entry from the
 database::
 
-  db.bash add dbtype pkgname newname userspace [root]
+  db.bash add dbtype cpv newname userspace [root]
 
-  db.bash del pkgname [root]
+  db.bash del cpv [root]
 
 The arguments are:
 
   ``dbtype``
     The database to be affected (either "user" or "group").
 
-  ``pkgname``
+  ``cpv``
     A unique package identifier (category, name, and version).
       
   ``newname``
@@ -60,7 +60,8 @@ The arguments are:
 
   ``userspace``
     A unique specifier for the userspace being run under, of the form of
-    *USERLAND-ELIBC*. For GNU/Linux, for example, this would be ``GNU-glibc``.
+    *USERLAND-ELIBC*. For GNU/Linux, for example, this would be ``GNU-glibc``;
+    for FreeBSD, ``BSD-FreeBSD``.
 
   ``[root]``
     An optional parameter. Defines the system root to install into. If not
@@ -72,7 +73,7 @@ Adding Users and Groups
 This action is performed by the add.bash script. It should be run once, before
 the package is unpacked, compiled, or installed. It is invoked as follows::
 
-  add.bash "new users" "new groups" pkgname userspace [root]
+  add.bash "new users" "new groups" cpv userspace [root]
 
 The arguments it takes are:
 
@@ -83,7 +84,7 @@ The arguments it takes are:
   ``"new groups"``
     Same as above, only for groups.
 
-  ``pkgname``
+  ``cpv``
     A unique identifier for the package about to be installed (category, name,
     and version).
 
@@ -96,5 +97,12 @@ The arguments it takes are:
   ``[root]``
     An optional parameter, defines the system root to install into.  If not
     provided, assumes /.
+
+Flowchart
+=========
+
+.. figure:: ./API_flowchart.png
+
+   Dynusers API Flowchart
 
 .. vim: set ft=glep tw=80 spell spelllang=en et :
