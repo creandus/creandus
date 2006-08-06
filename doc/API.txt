@@ -103,6 +103,10 @@ Flowchart
 
 .. figure:: ./API_flowchart.png
 
-   Dynusers API Flowchart
+   Installing a package with Dynusers
+
+.. figure:: ./API_flowchart2.png
+
+   Uninstalling a package with Dynusers
 
 .. vim: set ft=glep tw=80 spell spelllang=en et :
