@@ -6,9 +6,7 @@
 #
 # $Id$
 
-prefix=@prefix@
-datarootdir=@datarootdir@
-scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration.
 . "${scriptdir}/common/config.bash"
@@ -62,3 +60,4 @@ if [[ "${1}" == "--test" ]] ; then
 fi
 
 main $@
+# vim: ts=4 :

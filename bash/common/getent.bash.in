@@ -40,3 +40,4 @@ egetent() {
 		;;
 	esac
 }
+# vim: ts=4 :

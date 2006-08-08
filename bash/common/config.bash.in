@@ -40,3 +40,4 @@ fi
 # XXX: Maybe have these defaults be determined somewhat by our USERSPACE?
 [[ -z "${PASSWD_BACKENDS}" ]] && PASSWD_BACKENDS="compat"
 [[ -z "${GROUP_BACKENDS}" ]] && GROUP_BACKENDS="compat"
+# vim: ts=4 :

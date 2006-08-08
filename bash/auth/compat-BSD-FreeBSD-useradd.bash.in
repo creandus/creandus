@@ -13,3 +13,4 @@ compat-BSD-FreeBSD-useradd() {
 		-s "${usershell}" -u "${userid}" \
 		-c "${usercomment}" "${newuser}"
 }
+# vim: ts=4 :

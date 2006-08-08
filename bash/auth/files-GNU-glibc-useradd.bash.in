@@ -13,3 +13,4 @@ files-GNU-glibc-useradd() {
 		-s "${usershell}" -u "${userid}" \
 		-c "${usercomment}" "${newuser}"
 }
+# vim: ts=4 :

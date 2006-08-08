@@ -7,3 +7,4 @@
 
 # This expects ${groupid} and ${NEWGROUP} to be set properly
 groupadd -g "${groupid}" "${NEWGROUP}"
+# vim: ts=4 :

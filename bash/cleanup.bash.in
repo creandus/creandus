@@ -4,33 +4,24 @@
 #
 # Add all the provided users and groups to the system.
 #
-# $Id$
+# $Id: add.bash.in 127 2006-08-03 05:20:37Z pioto $
 
-scriptdir=${SCRIPTDIR:-@SCRIPTDIR@}
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration
-. "${scriptdir}/common/config.bash"
+. "${SCRIPTDIR}/common/config.bash"
 # Load things like die()
-. "${scriptdir}/common/functions.bash"
+. "${SCRIPTDIR}/common/functions.bash"
 
 main() {
 	# Read the command line arguments.
-	local enewusers=${1} enewgroups=${2}
-	local pkgname=${3} userspace=${4} root=${5:-/}
+	local eusers=${1} egroups=${2} pkgname=${3} userspace=${4} root=${5:-/}
 
 	[[ -z "${pkgname}" || -z "${userspace}" ]] \
 		|| die "Script expects 4 arguments: \"new users\"" \
 			"\"new groups\" pkgname userspace"
 
-	for i in ${enewgroups} ; do
-		"${scriptdir}/addgroup.bash" "${i}" "${pkgname}" \
-			"${userspace}" "${root}"
-	done
-
-	for i in ${enewusers} ; do
-		"${scriptdir}/adduser.bash" "${i}" "${pkgname}" \
-			"${userspace}" "${root}"
-	done
+	"${SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
 }
 
 if [[ "${1}" == "--test" ]] ; then

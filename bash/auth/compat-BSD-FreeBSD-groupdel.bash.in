@@ -7,3 +7,4 @@
 
 # XXX Get this to work with non-/ ROOTs
 pw groupdel "${DEADGROUP}"
+# vim: ts=4 :

@@ -113,3 +113,4 @@ if [[ "${1}" == "--test" ]] ; then
 fi
 
 main $@
+# vim: ts=4 :

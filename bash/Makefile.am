@@ -10,7 +10,8 @@ installbackend_SCRIPTS = \
 	add.bash \
 	install_fail.bash \
 	delgroup.bash \
-	deluser.bash
+	deluser.bash \
+	cleanup.bash
 
 CLEANFILES = *~ $(installbackend_SCRIPTS)
 
@@ -30,7 +31,8 @@ EXTRA_DIST = \
 	add.bash.in \
 	install_fail.bash.in \
 	delgroup.bash.in \
-	deluser.bash.in
+	deluser.bash.in \
+	cleanup.bash.in
 
 SUBST = $(top_srcdir)/tools/subst.bash
 

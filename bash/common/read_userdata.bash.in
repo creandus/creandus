@@ -39,3 +39,4 @@ for i in ${USERFILE}; do
 
 	unset userid_ usershell_ userhome_ usergroups_ usercomment_
 done
+# vim: ts=4 :

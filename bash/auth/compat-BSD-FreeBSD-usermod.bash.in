@@ -15,3 +15,4 @@
 pw usermod -d "${userhome}" -G "${usergroups}" \
 	-s "${usershell}" -u "${userid}" \
 	-c "${usercomment}" "${NEWUSER}"
+# vim: ts=4 :

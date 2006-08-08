@@ -31,3 +31,4 @@ read_groupdata() {
 		groupid=${userid:-${userid_}}
 	done
 }
+# vim: ts=4 :

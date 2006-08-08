@@ -6,3 +6,4 @@
 # $Id$
 
 pw userdel "${DEADUSER}"
+# vim: ts=4 :

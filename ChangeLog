@@ -1,3 +1,9 @@
+2006-08-08  Mike Kelly  <pioto@pioto.org>
+
+	* bash/cleanup.bash.in: Add a cleanup script, to be called to do all
+	the proper database cleanup, etc, after a successful
+	re-build/un-install.
+
 2006-08-06  Mike Kelly  <pioto@pioto.org>
 
 	* eselect/users.eselect.in: Add support to the eselect module's scan
