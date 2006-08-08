@@ -24,13 +24,74 @@ There are several different tasks which these scripts must do:
    what needs to be done to clean up from itself (i.e. roll back the database,
    remove any unnecessary users or groups, etc).
 
+#. Clean up the database / etc when a package is uninstalled or up/down-graded
+   (``cleanup.bash``).
+
 #. Display information about the managed users and groups, including which
    ones may be safely removed, and offer the operator a way to remove them
    elegantly (meaning cleaning up the database as well as removing them from
    the system). This is handled by the ``users.eselect`` script.
 
-Specifications
-==============
+Public API (For Package Managers)
+=================================
+
+Adding Users and Groups
+-----------------------
+
+This action is performed by the add.bash script. It should be run once, before
+the package is unpacked, compiled, or installed. It is invoked as follows::
+
+  add.bash "new users" "new groups" cpv userspace [root]
+
+The arguments it takes are:
+
+  ``"new users"``
+    A single parameter, a space-separated list of new users to be added for this
+    package.
+
+  ``"new groups"``
+    Same as above, only for groups.
+
+  ``cpv``
+    A unique identifier for the package about to be installed (category, name,
+    and version).
+
+  ``userspace``
+    A unique identifier of the userspace we are running in.  This is something
+    of the form *USERLAND-ELIBC*. For example, most GNU/Linux systems would
+    specify ``GNU-glibc``, while FreeBSD-based systems would use
+    ``BSD-FreeBSD``.
+
+  ``[root]``
+    An optional parameter, defines the system root to install into.  If not
+    provided, assumes /.
+
+Cleanup
+-------
+
+Cleaning up from an install can be done in two different cases.
+
+1. The install failed. In this case, we call ``install_fail.bash`` with the same
+   arguments as ``add.bash`` (described above).
+
+2. The install succeeded, but there was a previously existing version of the
+   package (in the same SLOT, on Gentoo). Or, the package was uninstalled. In
+   either case, we call ``cleanup.bash`` with the same arguments as ``add.bash``
+   (described above).
+
+Public API Usage Flowchart
+==========================
+
+.. figure:: ./API_flowchart.png
+
+   Installing a package with Dynusers
+
+.. figure:: ./API_flowchart2.png
+
+   Uninstalling a package with Dynusers
+
+Non-Public API (Internal Use Only)
+==================================
 
 Database
 --------
@@ -66,47 +127,5 @@ The arguments are:
   ``[root]``
     An optional parameter. Defines the system root to install into. If not
     provided, it is assumed to be /.
-
-Adding Users and Groups
------------------------
-
-This action is performed by the add.bash script. It should be run once, before
-the package is unpacked, compiled, or installed. It is invoked as follows::
-
-  add.bash "new users" "new groups" cpv userspace [root]
-
-The arguments it takes are:
-
-  ``"new users"``
-    A single parameter, a space-separated list of new users to be added for this
-    package.
-
-  ``"new groups"``
-    Same as above, only for groups.
-
-  ``cpv``
-    A unique identifier for the package about to be installed (category, name,
-    and version).
-
-  ``userspace``
-    A unique identifier of the userspace we are running in.  This is something
-    of the form *USERLAND-ELIBC*. For example, most GNU/Linux systems would
-    specify ``GNU-glibc``, while FreeBSD-based systems would use
-    ``BSD-FreeBSD``.
-
-  ``[root]``
-    An optional parameter, defines the system root to install into.  If not
-    provided, assumes /.
-
-Flowchart
-=========
-
-.. figure:: ./API_flowchart.png
-
-   Installing a package with Dynusers
-
-.. figure:: ./API_flowchart2.png
-
-   Uninstalling a package with Dynusers
 
 .. vim: set ft=glep tw=80 spell spelllang=en et :

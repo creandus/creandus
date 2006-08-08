@@ -1,5 +1,13 @@
 2006-08-08  Mike Kelly  <pioto@pioto.org>
 
+	* doc/API.txt, doc/API_flowchart.dia, doc/API_flowchart.png,
+	doc/API_flowchart2.dia,	doc/API_flowchart2.png: Update API
+	documentation to reflect the addition of cleanup.bash. Now, all three
+	points of interaction with the package manager take the same
+	arguments.
+
+2006-08-08  Mike Kelly  <pioto@pioto.org>
+
 	* bash/cleanup.bash.in: Add a cleanup script, to be called to do all
 	the proper database cleanup, etc, after a successful
 	re-build/un-install.
