@@ -1,4 +1,4 @@
-dnl vim: set sw=4  sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}} :
+dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}} :
 
 dnl {{{ program, version
 AC_INIT([Dynusers], [0.4.0], [pioto@pioto.org])
