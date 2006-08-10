@@ -1,10 +1,13 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/compat.sh - "compat" backend functions
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
-# XXX Get this to work with non-/ ROOTs
-pw groupdel "${DEADGROUP}"
+compat-BSD-FreeBSD-groupdel() {
+	local name="${1}" root="${2}"
+
+	pw -V "${root}/etc" groupdel "${name}"
+}
 # vim: ts=4 :

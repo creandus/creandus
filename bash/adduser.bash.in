@@ -102,7 +102,7 @@ main() {
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash"
 			"${x}-${userspace}-user${action}" "${userhome}" "${usergroups}" \
 				"${usershell}" "${userid}" "${usercomment}" "${username}" \
-				|| die "user${action} failed"
+				"${root}" || die "user${action} failed"
 		else
 			echo "Auth backend ${x} with userspace ${userspace}" \
 			"not supported by this script." 1>&2

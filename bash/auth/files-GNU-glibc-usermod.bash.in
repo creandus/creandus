@@ -1,18 +1,19 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/files.sh - "files" backend functions
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
-# adduser_files() - adds a user to the system using the "files" backend.
-#
-# Expects the following variables to already be set:
-#
-# NEWUSER: the username to be added
-# 
-# Expects a valid userid to have already been determined
-usermod -d "${userhome}" -G "${usergroups}" \
-	-s "${usershell}" -u "${userid}" \
-	-c "${usercomment}" "${NEWUSER}"
+files-GNU-glibc-usermod() {
+	local home="${1}" groups="${2}" shell="${3}"
+	local uid="${4}" comment="${5}" name="${6}"
+	local root="${7}"
+
+	[[ "${root}" != "/" ]] && die "Linux currently can't modify users" \
+		"when ROOT != /"
+
+	usermod -d "${home}" -G "${groups}" -s "${shell}" \
+		-u "${uid}" -c "${comment}" "${name}"
+}
 # vim: ts=4 :

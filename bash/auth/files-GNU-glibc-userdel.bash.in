@@ -1,9 +1,16 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/files.sh - "files" backend functions
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
-userdel "${DEADUSER}"
+files-GNU-glibc-userdel() {
+	local name="${1}" root="${2}"
+
+	[[ "${root}" != "/" ]] && die "Linux currently can't modify users" \
+		"when ROOT != /"
+
+	userdel "${name}"
+}
 # vim: ts=4 :

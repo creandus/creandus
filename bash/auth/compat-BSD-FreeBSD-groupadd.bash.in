@@ -1,11 +1,13 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/compat.sh - "compat" backend functions
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
-# XXX Get this to work with non-/ ROOTs
-#pw -V ${ROOT}/etc groupadd -g "${groupid}" "${NEWGROUP}"
-pw groupadd "${NEWGROUP}" -g "${groupid}"
+compat-BSD-FreeBSD-groupadd() {
+	local gid="${1}" name="${2}" root="${3}"
+
+	pw -V "${root}/etc" groupadd "${name}" -g "${gid}"
+}
 # vim: ts=4 :

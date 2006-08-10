@@ -1,18 +1,16 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/compat.sh - "compat" backend functions
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
-# adduser_compat() - adds a user to the system using the "compat" backend.
-#
-# Expects the following variables to already be set:
-#
-# NEWUSER: the username to be added
-# ...
-# Expects a valid userid to have already been determined
-pw usermod -d "${userhome}" -G "${usergroups}" \
-	-s "${usershell}" -u "${userid}" \
-	-c "${usercomment}" "${NEWUSER}"
+compat-BSD-FreeBSD-usermod() {
+	local home="${1}" groups="${2}" shell="${3}"
+	local uid="${4}" comment="${5}" name="${6}"
+	local root="${7}"
+
+	pw -V "${root}/etc" usermod -d "${home}" -G "${groups}" \
+		-s "${shell}" -u "${uid}" -c "${comment}" "${name}"
+}
 # vim: ts=4 :

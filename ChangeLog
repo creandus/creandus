@@ -1,5 +1,29 @@
 2006-08-10  Mike Kelly  <pioto@pioto.org>
 
+	* bash/auth/files-GNU-glibc-groupmod.bash.in,
+	bash/auth/compat-BSD-FreeBSD-userdel.bash.in,
+	bash/auth/compat-GNU-glibc-usermod.bash.in,
+	bash/auth/compat-BSD-FreeBSD-groupadd.bash.in,
+	bash/auth/compat-GNU-glibc-groupdel.bash.in,
+	bash/auth/files-GNU-glibc-userdel.bash.in,
+	bash/auth/files-GNU-glibc-groupadd.bash.in,
+	bash/auth/compat-GNU-glibc-useradd.bash.in,
+	bash/auth/compat-BSD-FreeBSD-usermod.bash.in,
+	bash/auth/compat-BSD-FreeBSD-groupdel.bash.in,
+	bash/auth/compat-GNU-glibc-groupmod.bash.in,
+	bash/auth/files-GNU-glibc-usermod.bash.in,
+	bash/auth/compat-BSD-FreeBSD-useradd.bash.in,
+	bash/auth/files-GNU-glibc-groupdel.bash.in,
+	bash/auth/compat-GNU-glibc-userdel.bash.in,
+	bash/auth/compat-BSD-FreeBSD-groupmod.bash.in,
+	bash/auth/compat-GNU-glibc-groupadd.bash.in,
+	bash/auth/files-GNU-glibc-useradd.bash.in, bash/addgroup.bash.in,
+	bash/adduser.bash.in, bash/delgroup.bash.in, bash/deluser.bash.in:
+	Make all auth scripts match the new style (each contains a single
+	function). Update the {add,del}{user,group} scripts to match.
+
+2006-08-10  Mike Kelly  <pioto@pioto.org>
+
 	* bash/add.bash.in, bash/addgroup.bash.in, bash/adduser.bash.in,
 	bash/cleanup.bash.in, bash/db.bash.in, bash/delgroup.bash.in,
 	bash/deluser.bash.in, bash/install_fail.bash.in: Make sure that

@@ -1,9 +1,13 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/compat.sh - "compat" backend functions
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
-pw userdel "${DEADUSER}"
+compat-BSD-FreeBSD-userdel() {
+	local name="${1}" root="${2}"
+
+	pw -V "${root}/etc" userdel "${name}"
+}
 # vim: ts=4 :

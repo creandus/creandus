@@ -28,7 +28,7 @@ main() {
 		then
 			echo "Running ${x}-${userspace}-groupdel..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-groupdel.bash"
-			"${x}-${userspace}-groupdel" "${deadgroup}" \
+			"${x}-${userspace}-groupdel" "${deadgroup}" "${root}" \
 				|| die "groupdel failed"
 		else
 			echo "Auth backend ${x} with userspace ${userspace}" \

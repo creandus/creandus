@@ -1,16 +1,16 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# @AUTHREADME@
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
 compat-BSD-FreeBSD-useradd() {
 	local home="${1}" groups="${2}" shell="${3}"
 	local uid="${4}" comment="${5}" name="${6}"
+	local root="${7}"
 
-	pw useradd -d "${home}" -G "${usergroups}" \
-		-s "${usershell}" -u "${userid}" \
-		-c "${usercomment}" "${newuser}"
+	pw -V "${root}/etc" useradd -d "${home}" -G "${groups}" \
+		-s "${shell}" -u "${uid}" -c "${comment}" "${name}"
 }
 # vim: ts=4 :

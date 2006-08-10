@@ -90,8 +90,8 @@ main() {
 		then
 			echo "Running ${x}-${userspace}-group${action}..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash"
-			"${x}-${userspace}-group${action}" "${groupid}" \
-				|| die "group${action} failed"
+			"${x}-${userspace}-group${action}" "${groupid}" "${newgroup}" \
+				"${root}" || die "group${action} failed"
 		else
 			echo -n "Auth backend ${x} with " >&2
 			echo -n "userspace ${userspace} " >&2

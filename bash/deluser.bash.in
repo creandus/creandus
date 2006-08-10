@@ -28,7 +28,7 @@ main() {
 		then
 			echo "Running ${x}-${userspace}-userdel..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-userdel.bash"
-			"${x}-${userspace}-userdel" "${deaduser}" \
+			"${x}-${userspace}-userdel" "${deaduser}" "${root}" \
 				|| die "userdel failed"
 		else
 			echo "Auth backend ${x} with userspace ${userspace}" \

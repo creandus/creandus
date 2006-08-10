@@ -1,10 +1,13 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# auth/compat.sh - "compat" backend functions
+# See docs/auth_modules.{txt,html} for more information on these files.
 #
 # $Id$
 
-# Expects a valid groupid to have already been determined
-pw groupmod -g "${groupid}" "${NEWGROUP}"
+compat-BSD-FreeBSD-groupmod() {
+	local gid="${1}" name="${2}" root="${3}"
+
+	pw -V "${root}/etc" groupmod -g "${gid}" "${name}"
+}
 # vim: ts=4 :
