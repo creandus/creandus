@@ -9,3 +9,4 @@
 
 echo "Testing \"${1}\":"
 bash ${1} --test
+# vim: ts=4 :

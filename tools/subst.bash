@@ -24,9 +24,9 @@ main() {
 	bottomline=$((${bottomline}-2))
 
 	# About this sed mess:
-        # This will take only the part of the config.log which has the output
-        # variables in it, then replace the "'"s around every variable
-        # definition with '"'s, so that we actually evaluate all the variables
+	# This will take only the part of the config.log which has the output
+	# variables in it, then replace the "'"s around every variable
+	# definition with '"'s, so that we actually evaluate all the variables
 	# in there when we source it. Then, we replace the ()s with {}s, since
 	# the only place i see the $() syntax used it seems to refer to another
 	# variable (probably it is just that way to match Makefile syntax).
@@ -49,9 +49,7 @@ main() {
 		# This eval is 'safe' since the value of x is guaranteed to
 		# contain nothing but [[:alnum:]]*
 		eval val_of_x='$'${x}
-		echo val_of_x is :: ${val_of_x}
 		val_of_x=`echo ${val_of_x} |sed 's/\//\\\\\//g'` || exit 1
-		echo val_of_x is :: ${val_of_x}
 		sed -i -e "s/@${x}@/${val_of_x}/g" "${tmpfile}" || exit 1
 	done
 
@@ -64,3 +62,4 @@ if [[ "${1}" == "--test" ]] ; then
 fi
 
 main $@
+# vim: ts=4 :
