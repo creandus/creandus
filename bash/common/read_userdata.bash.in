@@ -14,29 +14,46 @@
 # TODO: Split this file up in such a way as to be automatically done
 # correctly for various distros.
 
-USERFILE="${DATADIR}/user/${NEWUSER} ${DATADIR}/accounts"
+# read_userdata()
+# Inputs:
+#  $1 - name of user to be added
+# Outputs:
+#  $userid - a range specification of valid user ids for the given user name
+#  $usershell - the user's default shell
+#  $userhome - the users's home directory
+#  $usergroups - a comma-separated list of groups the user belongs to
+#  $usercomment - the GECOS comment field for the user
+read_userdata() {
+	local userfile="${DATADIR}/user/${1} ${DATADIR}/accounts"
+	local userid userid_ usershell usershell_ userhome userhome_
+	local usergroups usergroups_ usercomment usercomment_
 
-for i in ${USERFILE}; do
-	userid_=$(grep ^uid: ${i} |cut -d: -f2)
-	userid_=${userid_## }
-	userid=${userid:-${userid_}}
+	for x in ${USERFILE}; do
+		userid_=$(grep ^uid: ${x} |cut -d: -f2)
+		userid_=${userid_## }
+		userid=${userid:-${userid_}}
 
-	usershell_=$(grep ^shell: "${i}" |cut -d: -f2)
-	usershell_=${usershell_## }
-	usershell=${usershell:-${usershell_}}
+		usershell_=$(grep ^shell: "${x}" |cut -d: -f2)
+		usershell_=${usershell_## }
+		usershell=${usershell:-${usershell_}}
 
-	userhome_=$(grep ^home: "${i}" |cut -d: -f2)
-	userhome_=${userhome_## }
-	userhome=${userhome:-${userhome_}}
+		userhome_=$(grep ^home: "${x}" |cut -d: -f2)
+		userhome_=${userhome_## }
+		userhome=${userhome:-${userhome_}}
 
-	usergroups_=$(grep ^groups: "${i}" |cut -d: -f2)
-	usergroups_=${usergroups_## }
-	usergroups=${usergroups:-${usergroups_}}
+		usergroups_=$(grep ^groups: "${x}" |cut -d: -f2)
+		usergroups_=${usergroups_## }
+		usergroups=${usergroups:-${usergroups_}}
 
-	usercomment_=$(grep ^comment: "${i}" |cut -d: -f2)
-	usercomment_=${usercomment_## }
-	usercomment=${usercomment:-${usercomment_}}
+		usercomment_=$(grep ^comment: "${x}" |cut -d: -f2)
+		usercomment_=${usercomment_## }
+		usercomment=${usercomment:-${usercomment_}}
+	done
 
-	unset userid_ usershell_ userhome_ usergroups_ usercomment_
-done
+	echo "local userid=\"${userid}\""
+	echo "local usershell=\"${usershell}\""
+	echo "local userhome=\"${userhome}\""
+	echo "local usergroups=\"${usergroups}\""
+	echo "local usercomment=\"${usercomment}\""
+}
 # vim: ts=4 :
