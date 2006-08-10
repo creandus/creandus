@@ -10,8 +10,8 @@
 SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration
-. "${SCRIPTDIR}/common/config.bash"
-. "${SCRIPTDIR}/common/functions.bash"
+. "${SCRIPTDIR}/common/config.bash" || exit 1
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	# Read the command line arguments.

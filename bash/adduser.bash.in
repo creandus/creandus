@@ -10,13 +10,13 @@
 SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration.
-. "${SCRIPTDIR}/common/config.bash"
-. "${SCRIPTDIR}/common/functions.bash"
+. "${SCRIPTDIR}/common/config.bash" || exit 1
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
 
 # Read the proper data file for the desired user
-. "${SCRIPTDIR}/common/read_userdata.bash"
+. "${SCRIPTDIR}/common/read_userdata.bash" || exit 1
 # We make use of egetent:
-. "${SCRIPTDIR}/common/getent.bash"
+. "${SCRIPTDIR}/common/getent.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -101,7 +101,8 @@ main() {
 			echo "Running ${x}-${userspace}-user${action}..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash"
 			"${x}-${userspace}-user${action}" "${userhome}" "${usergroups}" \
-				"${usershell}" "${userid}" "${usercomment}" "${username}"
+				"${usershell}" "${userid}" "${usercomment}" "${username}" \
+				|| die "user${action} failed"
 		else
 			echo "Auth backend ${x} with userspace ${userspace}" \
 			"not supported by this script." 1>&2

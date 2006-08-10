@@ -2,6 +2,14 @@
 
 	* bash/add.bash.in, bash/addgroup.bash.in, bash/adduser.bash.in,
 	bash/cleanup.bash.in, bash/db.bash.in, bash/delgroup.bash.in,
+	bash/deluser.bash.in, bash/install_fail.bash.in: Make sure that
+	failure to source any of our helper functions' scripts is fatal. Also,
+	make sure we die if calls to {user,group}{add,mod,del} functions fail.
+
+2006-08-10  Mike Kelly  <pioto@pioto.org>
+
+	* bash/add.bash.in, bash/addgroup.bash.in, bash/adduser.bash.in,
+	bash/cleanup.bash.in, bash/db.bash.in, bash/delgroup.bash.in,
 	bash/deluser.bash.in, bash/install_fail.bash.in: Cleaned up all our
 	main scripts. We now keep everything local that should be, use proper
 	capitalization, etc.

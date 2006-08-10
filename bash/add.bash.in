@@ -9,9 +9,9 @@
 SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration
-. "${SCRIPTDIR}/common/config.bash"
+. "${SCRIPTDIR}/common/config.bash" || exit 1
 # Load things like die()
-. "${SCRIPTDIR}/common/functions.bash"
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	# Read the command line arguments.

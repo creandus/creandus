@@ -9,8 +9,8 @@
 SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration
-. "${SCRIPTDIR}/common/config.bash"
-. "${SCRIPTDIR}/common/functions.bash"
+. "${SCRIPTDIR}/common/config.bash" || exit 1
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -26,8 +26,10 @@ main() {
 	for x in ${PASSWD_BACKENDS} ; do
 		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-userdel.bash" ]]
 		then
-			echo "Running ${i}-${userspace}-userdel..."
+			echo "Running ${x}-${userspace}-userdel..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-userdel.bash"
+			"${x}-${userspace}-userdel" "${deaduser}" \\
+				|| die "userdel failed"
 		else
 			echo "Auth backend ${x} with userspace ${userspace}" \
 				"not supported by this script." >&2
