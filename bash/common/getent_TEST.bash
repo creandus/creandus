@@ -19,13 +19,13 @@ if [[ "${1}" == "--test" ]] ; then
 
 	if [[ "`egetent passwd 10`" == "`egetent passwd root`" ]] ; then
 		echo 'ERROR! egetent passwd 10 == egetent group root!' 1>&2
-		exit 1
+		exit 77
 	fi
 	echo 'egetent passwd 10 != egetent passwd root'
 
 	if [[ "`egetent group 10`" == "`egetent group root`" ]] ; then
 		echo 'ERROR! egetent group 10 == egetent group root!' 1>&2
-		exit 1
+		exit 77
 	fi
 	echo 'egetent group 10 != egetent group root'
 

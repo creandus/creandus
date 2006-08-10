@@ -5,19 +5,17 @@
 #
 # $Id$
 
-prefix=@prefix@
-
 # NSSWITCH_CONF: The nsswitch.conf file, which contains the
 # configuration of which backends to use. See nsswitch.conf(5) for
 # more info.
-NSSWITCH_CONF=@sysconfdir@/nsswitch.conf
+NSSWITCH_CONF="${NSSWITCH_CONF:-@sysconfdir@/nsswitch.conf}"
 
 # DATADIR: The directory where the user and group data is contained.
 # In reality this should be the "accounts" directory of their portage
 # profile, at least in Gentoo. Other distros would use an appropriate
 # directory here.
 #DATADIR="/etc/make.profile/accounts"
-DATADIR=@localstatedir@/@PACKAGE@/data
+DATADIR="${DATADIR:-@localstatedir@/@PACKAGE@/data}"
 
 # DBDIR: The directory which contains the database of auto-added users. 
 # It is made up of a list of files in 2 subdirs, users and groups, named 
@@ -27,7 +25,7 @@ DATADIR=@localstatedir@/@PACKAGE@/data
 # files. Then, the userspace update-users [or similar] script can 
 # properly know when a dynamically-added user can be removed from the 
 # system.
-DBDIR=@localstatedir@/@PACKAGE@/db
+DBDIR="${DBDIR:-@localstatedir@/@PACKAGE@/db}"
 
 # Get a list of the backend databases we're going to use
 ## XXX: Make these regexps better, more general
