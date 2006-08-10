@@ -8,10 +8,7 @@ Medium Priority:
    Build {USER,GROUP}FILE dynamically based upon the currently selected
    profile.
 
- bash/adduser.bash:
-   Check that the user is in all the proper groups.
-
- Create some test cases.
+ Create some more test cases.
 
 Low Priority:
 
