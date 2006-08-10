@@ -10,9 +10,6 @@
 
 ## The following is taken from paludis :: ebuild/ebuild.bash.
 ## Copyright (c) 2006 Ciaran McCreesh <ciaran.mccreesh@blueyonder.co.uk>
-## And also from eselect :: libs/core.bash.
-## Copyright 2005 Gentoo Foundation.
-
 DYNUSERS_KILL_PID=$$
 alias die='diefunc "$FUNCNAME" "$LINENO"'
 alias assert='_pipestatus="${PIPESTATUS[*]}"; [[ -z "${_pipestatus//[ 0]/}" ]] || diefunc "$FUNCNAME" "$LINENO" "$_pipestatus"'
