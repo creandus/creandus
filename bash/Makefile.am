@@ -1,9 +1,8 @@
-MAINTAINERCLEANFILES = Makefile.in
 SUBDIRS = auth common .
 
-installbackenddir = $(datadir)/$(PACKAGE)/
-
-installbackend_SCRIPTS = \
+# Install our scripts in the proper place
+backenddir = $(datadir)/$(PACKAGE)/
+backend_SCRIPTS = \
 	addgroup.bash \
 	adduser.bash \
 	db.bash \
@@ -13,27 +12,19 @@ installbackend_SCRIPTS = \
 	deluser.bash \
 	cleanup.bash
 
-CLEANFILES = *~ $(installbackend_SCRIPTS)
-
+# Some basic tests, mostly just syntax verification at the moment
 TESTS_ENVIRONMENT = env \
 	SCRIPTDIR="$(top_builddir)/bash/" \
 	bash $(top_srcdir)/tools/run_test.bash
-
-TESTS = $(installbackend_SCRIPTS)
-
+TESTS = $(backend_SCRIPTS)
 check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
-check_PROGRAMS = 
 
-EXTRA_DIST = \
-	addgroup.bash.in \
-	adduser.bash.in \
-	db.bash.in \
-	add.bash.in \
-	install_fail.bash.in \
-	delgroup.bash.in \
-	deluser.bash.in \
-	cleanup.bash.in
+EXTRA_DIST = $(foreach f, $(backend_SCRIPTS), $(f).in)
 
+CLEANFILES = *~ $(backend_SCRIPTS)
+MAINTAINERCLEANFILES = Makefile.in
+
+# The script "compiler"
 SUBST = $(top_srcdir)/tools/subst.bash
 
 % : %.in

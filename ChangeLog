@@ -1,3 +1,9 @@
+2006-08-10  Mike Kelly  <pioto@pioto.org>
+
+	* Makefile.am, bash/Makefile.am, bash/auth/Makefile.am,
+	bash/common/Makefile.am, eselect/Makefile.am: Clean up our
+	Makefile.am's, make use of foreach to make things much tidier.
+
 2006-08-08  Mike Kelly  <pioto@pioto.org>
 
 	* doc/API.txt, doc/API_flowchart.dia, doc/API_flowchart.png,
