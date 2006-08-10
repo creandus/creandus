@@ -7,16 +7,16 @@
 #
 # $Id$
 
-prefix=@prefix@
-datarootdir=@datarootdir@
-scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration.
-. "${scriptdir}/common/config.bash"
-. "${scriptdir}/common/functions.bash"
+. "${SCRIPTDIR}/common/config.bash"
+. "${SCRIPTDIR}/common/functions.bash"
 
 # We make use of egetent. 
-. "${scriptdir}/common/getent.bash"
+. "${SCRIPTDIR}/common/getent.bash"
+# Reads the proper data file for the desired group
+. "${SCRIPTDIR}/common/read_groupdata.bash"
 
 main() {
 	# Read the command line arguments.
@@ -24,26 +24,20 @@ main() {
 	# The only options recognized now are the group to be added, the 
 	# package which is asking for the adding, and the userspace type (e.g. 
 	# GNU, fbsd, etc)
-	NEWGROUP=${1}
-	PKGNAME=${2}
-	USERSPACE=${3}
-	ROOT=${4}
+	local newgroup=${1} pkgname=${2} userspace=${3} root=${4:-/}
 
-	[[ -z "${NEWGROUP}" || -z "${PKGNAME}" || -z "${USERSPACE}" \
-	|| -z "${ROOT}" ]] \
+	[[ -z "${newgroup}" || -z "${pkgname}" || -z "${userspace}" \
+	|| -z "${root}" ]] \
 	&& die "Script expects 4 arguments: groupname pkgname userspace root"
 
 	# Set our default action. Will be either "add" or "mod" by the end.
-	ACTION="add"
+	action="add"
 
 	###
-
-	# Read the proper data file for the desired group
-	. "${scriptdir}/common/read_groupdata.bash"
+	eval `read_groupdata "${newgroup}"`
 
 	# TODO: allow for more sophisticated range specifications
-	gidmin=${groupid%-*}
-	gidmax=${groupid#*-}
+	local gidmin=${groupid%-*} gidmax=${groupid#*-}
 
 	groupid=${gidmin}
 	for i in $( seq ${groupid} ${gidmax} ) ; do
@@ -55,34 +49,34 @@ main() {
 	# at all), we take appropriate action
 
 	# See if the group already exists
-	if [[ ${NEWGROUP} == $(egetent group "${NEWGROUP}" | cut -d: -f1) ]]
+	if [[ ${newgroup} == $(egetent group "${newgroup}" | cut -d: -f1) ]]
 	then
 		# TODO: If there needs to be some change made, note it
 		# properly, for the operator to take care of later with
 		# the eselect tool
-		getentinfo=$(egetent group "${NEWGROUP}")
+		local getentinfo=$(egetent group "${newgroup}")
 		
-		currgid=$(echo ${getentinfo} | cut -d: -f3)
+		local currgid=$(echo ${getentinfo} | cut -d: -f3)
 		if [[ ${currgid} -ne ${groupid} ]] ; then
-			echo "The group ${NEWGROUP} needs some values changed."
+			echo "The group ${newgroup} needs some values changed."
 			echo "We're doing so now."
-			ACTION="mod"
+			action="mod"
 		else
 			# Now, since we've made the proper arrangements for any 
 			# possible changes, we now add the current package name 
 			# to the database and call it quits
-			echo "We already have a group named ${NEWGROUP}." \
+			echo "We already have a group named ${newgroup}." \
 				"Nothing to do." 1>&2
 
-			"${scriptdir}/db.bash" add group "${PKGNAME}" \
-				"${NEWGROUP}"
+			"${SCRIPTDIR}/db.bash" add group "${pkgname}" \
+				"${newgroup}" "${userspace}"
 
 			exit 0
 		fi
 	fi
 
-	if [[ -f "${DBDIR}/group/${NEWGROUP}" ]] ; then
-		echo "Group ${NEWGROUP} was previously added by this script," >&2
+	if [[ -f "${DBDIR}/group/${newgroup}" ]] ; then
+		echo "Group ${newgroup} was previously added by this script," >&2
 		echo "but it no longer exists on the system. We'll re-add" >&2
 		echo "them now, but you should have used the users-config" >&2
 		echo "tool to cleanly remove it." >&2
@@ -92,19 +86,20 @@ main() {
 	# Finally, we take take the necessary action, either via groupmod 
 	# or groupadd [or it's comparable friends]
 	for x in ${GROUP_BACKENDS}; do
-		if [[ -e "${scriptdir}/auth/${x}-${USERSPACE}-group${ACTION}.bash" ]] 
+		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash" ]] 
 		then
-			echo "Running ${x}-${USERSPACE}-group${ACTION}..."
-			. "${scriptdir}/auth/${x}-${USERSPACE}-group${ACTION}.bash"
+			echo "Running ${x}-${userspace}-group${action}..."
+			. "${SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash"
+			"${x}-${userspace}-group${action}" "${groupid}"
 		else
 			echo -n "Auth backend ${x} with " >&2
-			echo -n "userspace ${USERSPACE} " >&2
+			echo -n "userspace ${userspace} " >&2
 			echo "not supported by this script." >&2
 		fi
 	done
 
 	# Properly update the dynamic groups database
-	"${scriptdir}/db.bash" add group "${PKGNAME}" "${NEWGROUP}"
+	"${SCRIPTDIR}/db.bash" add group "${pkgname}" "${newgroup}" "${userspace}"
 }
 
 if [[ "${1}" == "--test" ]] ; then

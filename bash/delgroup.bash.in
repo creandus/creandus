@@ -4,33 +4,30 @@
 #
 # Delete a group managed by the dynusers scripts.
 #
-# $Id: $
+# $Id$
 
-prefix=@prefix@
-datarootdir=@datarootdir@
-scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration
-. "${scriptdir}/common/config.bash"
-. "${scriptdir}/common/functions.bash"
+. "${SCRIPTDIR}/common/config.bash"
+. "${SCRIPTDIR}/common/functions.bash"
 
 main() {
 	# Read the command line arguments.
 	# Currently, we expect the following:
-	DEADGROUP=${1}
-	ROOT=${2:-/}
+	local deadgroup=${1} userspace=${2} root=${3:-/}
 	# XXX: Make sure we verify our command line args here.
 
 	# first, verify that the user to be deleted can be safely deleted
-	[[ -s ${DBDIR}/group/${DEADGROUP} ]] \
-		&& die "Group ${DEADGROUP} is still in use by some other" \
+	[[ -s ${DBDIR}/group/${deadgroup} ]] \
+		&& die "Group ${deadgroup} is still in use by some other" \
 			"package. Not removing."
 
 	for x in ${GROUP_BACKENDS} ; do
-		if [[ -e "${scriptdir}/auth/${x}-${userspace}-groupdel.bash" ]]
+		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-groupdel.bash" ]]
 		then
 			echo "Running ${i}-${userspace}-groupdel..."
-			. "${scriptdir}/auth/${x}-${userspace}-groupdel.bash"
+			. "${SCRIPTDIR}/auth/${x}-${userspace}-groupdel.bash"
 		else
 			echo "Auth backend ${x} with userspace ${userspace}" \
 				"not supported by this script." >&2
@@ -38,7 +35,7 @@ main() {
 	done
 
 	# Remove the empty database file
-	rm ${DBDIR}/group/${DEADGROUP}
+	rm ${DBDIR}/group/${deadgroup}
 }
 
 if [[ "${1}" == "--test" ]] ; then

@@ -9,8 +9,8 @@
 SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration.
-. "${scriptdir}/common/config.bash"
-. "${scriptdir}/common/functions.bash"
+. "${SCRIPTDIR}/common/config.bash"
+. "${SCRIPTDIR}/common/functions.bash"
 
 main() {
 	case "${1}" in

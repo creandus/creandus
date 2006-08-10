@@ -7,40 +7,34 @@
 #
 # $Id$
 
-prefix=@prefix@
-datarootdir=@datarootdir@
-scriptdir=${SCRIPTDIR:-@datadir@/@PACKAGE@}
+SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
 # Load the basic configuration
-. "${scriptdir}/common/config.bash"
-. "${scriptdir}/common/functions.bash"
+. "${SCRIPTDIR}/common/config.bash"
+. "${SCRIPTDIR}/common/functions.bash"
 
 main() {
 	# Read the command line arguments.
 	# Currently, we expect the following:
-	ENEWUSERS=${1}
-	ENEWGROUPS=${2}
-	PKGNAME=${3}
-	USERSPACE=${4}
-	ROOT=${5:-/}
+	local eusers=${1} egroups=${2} pkgname=${3} userspace=${4} root=${5:-/}
 
-	[[ -z "${PKGNAME}" || -z "${USERSPACE}" ]] \
+	[[ -z "${pkgname}" || -z "${userspace}" ]] \
 		&& die "Script expects 4 arguments: \"new users\" "\
 			"\"new groups\" pkgname userspace"
 
-	# Remove this instance of PKGNAME from the database
-	"${scriptdir}/db.bash" del "${PKGNAME}" "${ROOT}"
+	# Remove this instance of pkgname from the database
+	"${SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
 
 	# If this install process created any users, then we should now remove
 	# them.
-	for x in ${ENEWUSERS} ; do
-		"${scriptdir}/deluser.bash" "${x}" "${PKGNAME}" \
-			"${USERSPACE}" "${ROOT}"
+	for x in ${eusers} ; do
+		"${SCRIPTDIR}/deluser.bash" "${x}" "${pkgname}" \
+			"${userspace}" "${root}"
 	done
 
-	for x in ${ENEWGROUPS} ; do
-		"${scriptdir}/delgroup.bash" "${x}" "${PKGNAME}" \
-			"${USERSPACE}" "${ROOT}"
+	for x in ${egroups} ; do
+		"${SCRIPTDIR}/delgroup.bash" "${x}" "${pkgname}" \
+			"${userspace}" "${root}"
 	done
 }
 

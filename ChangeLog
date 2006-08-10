@@ -1,5 +1,27 @@
 2006-08-10  Mike Kelly  <pioto@pioto.org>
 
+	* bash/add.bash.in, bash/addgroup.bash.in, bash/adduser.bash.in,
+	bash/cleanup.bash.in, bash/db.bash.in, bash/delgroup.bash.in,
+	bash/deluser.bash.in, bash/install_fail.bash.in: Cleaned up all our
+	main scripts. We now keep everything local that should be, use proper
+	capitalization, etc.
+
+	* bash/common/read_groupdata.bash.in,
+	bash/common/read_userdata.bash.in: Updated the data parsing scripts.
+	They now echo out bash code, meant to be exec'd within the calling
+	function. Note: all vars returned are scoped "local", meaning that
+	these functions *MUST* be called from within another function.
+
+	* configure.ac: "Modernized" our autotools stuff. We now use the
+	new-style syntax in here, defining a bug report email address, etc.
+	Removed one spurious macro (AUTHREADME).
+
+	* tools/run_test.bash, tools/subst.bash: Minor cleanup.
+
+	* doc/API.txt: Fix a typo.
+
+2006-08-10  Mike Kelly  <pioto@pioto.org>
+
 	* Makefile.am, bash/Makefile.am, bash/auth/Makefile.am,
 	bash/common/Makefile.am, eselect/Makefile.am: Clean up our
 	Makefile.am's, make use of foreach to make things much tidier.

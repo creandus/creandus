@@ -4,7 +4,7 @@
 #
 # Add all the provided users and groups to the system.
 #
-# $Id: add.bash.in 127 2006-08-03 05:20:37Z pioto $
+# $Id$
 
 SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 
