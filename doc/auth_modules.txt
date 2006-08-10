@@ -62,8 +62,6 @@ Dynusers modules follow this naming scheme:
    this value should be assumed to be ``compat``.
 .. [#] Darwin is the underlying userland for Mac OS X.
 
-..
-
 Module File
 ===========
 
@@ -100,6 +98,9 @@ Adds a user to the system.
   name - ``${6}``
     The name of the user to be added.
 
+  root - ``${7}``
+    The root of the system we're working in.
+
 usermod
 -------
 
@@ -113,6 +114,9 @@ Deletes an existing user.
   name - ``${1}``
     The name of the user to be removed.
 
+  root - ``${2}``
+    The root of the system we're working in.
+
 groupadd
 --------
 
@@ -123,6 +127,9 @@ Adds a user to the system.
 
   name - ``${2}``
     The name of the group to be added.
+
+  root - ``${3}``
+    The root of the system we're working in.
 
 groupmod
 --------
@@ -137,6 +144,9 @@ Deletes an existing group.
   name - ``${1}``
     The name of the user to be removed.
 
+  root - ``${2}``
+    The root of the system we're working in.
+
 Example
 =======
 
@@ -145,18 +155,38 @@ Below is an example script, ``compat-BSD-FreeBSD-useradd.bash.in``::
   # Copyright 2006 Mike Kelly
   # Distributed under the terms of the GNU General Public License v2
   #
-  # @AUTHREADME@
+  # See docs/auth_modules.{txt,html} for more information on these files.
   #
   # $Id$
 
   compat-BSD-FreeBSD-useradd() {
-          local home="${1}" groups="${2}" shell="${3}"
-          local uid="${4}" comment="${5}" name="${6}"
+      local home="${1}" groups="${2}" shell="${3}"
+      local uid="${4}" comment="${5}" name="${6}"
+      local root="${7}"
 
-          pw useradd -d "${home}" -G "${usergroups}" \
-                  -s "${usershell}" -u "${userid}" \
-                  -c "${usercomment}" "${newuser}"
+      pw -V "${root}/etc" useradd -d "${home}" -G "${groups}" \
+          -s "${shell}" -u "${uid}" -c "${comment}" "${name}"
   }
+  # vim: ts=4 :
+
+And here is another, ``compat-GNU-glibc-userdel.bash.in``::
+
+  # Copyright 2006 Mike Kelly
+  # Distributed under the terms of the GNU General Public License v2
+  #
+  # See docs/auth_modules.{txt,html} for more information on these files.
+  #
+  # $Id$
+
+  compat-GNU-glibc-userdel() {
+      local name="${1}" root="${2}"
+
+      [[ "${root}" != "/" ]] && die "Linux currently can't modify users" \
+          "when ROOT != /"
+
+      userdel "${name}"
+  }
+  # vim: ts=4 :
 
 Further Reading
 ===============
