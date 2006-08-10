@@ -21,7 +21,7 @@ There are several different tasks which these scripts must do:
 
 #. Revert any changes made if an install fails. This is done by calling
    ``install_fail.bash`` with the same arguments as ``add.bash``. It will know 
-   what needs to be done to clean up from itself (i.e. roll back the database,
+   what needs to be done to clean up from itself (e.g. roll back the database,
    remove any unnecessary users or groups, etc).
 
 #. Clean up the database / etc when a package is uninstalled or up/down-graded
