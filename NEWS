@@ -1,2 +1,14 @@
 This is just a testing version. It is FAR from ready for production use. 
 Feel free to send me some test cases to run everything through, though.
+
+This is a summary of what has changed between released versions. More detailed
+information may be found in the ChangeLog.
+
+0.4.0:
+    New Features:
+    - doc/ - Thorough documentation of the dynusers API, and of the format of
+      auth modules and the user/group data files.
+    - Tests - all the backend scripts now get basic syntax checking during make
+      check. Some also have more thorough tests of correctness.
+    - tools/ - script "compiler" written. Allows for much cleaner Makefile.am's
+      and configure.ac.

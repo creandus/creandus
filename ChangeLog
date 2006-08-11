@@ -1,5 +1,11 @@
 2006-08-11  Mike Kelly  <pioto@pioto.org>
 
+	+ Release: 0.4.0
+
+	* NEWS, README: Prepare for 0.4.0 release.
+
+2006-08-11  Mike Kelly  <pioto@pioto.org>
+
 	* bash/db.bash.in, eselect/users.eselect.in: Add a file in DBDIR
 	called "userspace". It is populated by db.bash add IFF it doesn't
 	exist. Used by the eselect module to determine the proper USERSPACE to

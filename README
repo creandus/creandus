@@ -11,3 +11,6 @@ An ebuild for this package can be found in my overlay.
 
 A tarball of the latest release may be found in:
  http://www.pioto.org/~pioto/gentoo/distfiles/
+
+More documentation can be found in the doc/ directory here. To generate nice
+html files from the documentation, you will need docutils.
