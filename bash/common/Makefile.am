@@ -11,7 +11,8 @@ commonbackend_DATA = \
 TESTS_ENVIRONMENT = env \
 	SCRIPTDIR="$(top_builddir)/bash/" \
 	bash $(top_srcdir)/tools/run_test.bash
-TESTS = getent_TEST.bash
+TESTS = getent_TEST.bash die_TEST.bash
+XFAIL_TESTS = die_TEST.bash
 check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
 check_PROGRAMS = 
 

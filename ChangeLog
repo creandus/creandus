@@ -1,5 +1,16 @@
 2006-08-10  Mike Kelly  <pioto@pioto.org>
 
+	* bash/addgroup.bash.in, bash/adduser.bash.in: Make sure we die if
+	no free uid/gid can be found.
+
+	* bash/common/functions.bash.in: Add some more bash voodoo to make die
+	actually... die.
+
+	* bash/common/die_TEST.bash.in bash/common/Makefile.am: Add a test for
+	die.
+
+2006-08-10  Mike Kelly  <pioto@pioto.org>
+
 	* doc/datafiles.txt, doc/Makefile: Add a document giving the
 	specifications of the dynusers data files (the files which tell
 	dynusers what uid, etc to use for an added user).

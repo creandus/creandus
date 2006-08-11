@@ -39,12 +39,19 @@ main() {
 	eval `read_userdata "${newuser}"`
 
 	# TODO: allow for more sophisticated range specifications
-	local uidmin=${userid%-*} uidmax=${userid#*-}
+	local uidmin="${userid%-*}" uidmax="${userid#*-}"
 
-	userid=${usermin}
-	for i in $( seq ${userid} ${uidmax} ) ; do
-		[[ -z $(egetent passwd ${i}) ]] && userid=${i} && break
+	userid="${usermin}"
+	local found
+	for i in $( seq "${userid}" "${uidmax}" ) ; do
+		if [[ -z $(egetent passwd "${i}") ]] ; then
+			userid="${i}"
+			found="yes"
+			break
+		fi
 	done
+
+	[[ -z "${found}" ]] && die "no available uid found"
 
 	# Now, we verify this information against our database, and if there
 	# isn't a match (either some value has changed, or there is no entry

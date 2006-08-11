@@ -10,6 +10,13 @@
 
 ## The following is taken from paludis :: ebuild/ebuild.bash.
 ## Copyright (c) 2006 Ciaran McCreesh <ciaran.mccreesh@blueyonder.co.uk>
+unalias -a
+unset GZIP BZIP BZIP2 CDPATH GREP_OPTIONS GREP_COLOR GLOBIGNORE
+eval unset LANG ${!LC_*}
+
+shopt -s expand_aliases
+shopt -s extglob
+
 DYNUSERS_KILL_PID=$$
 alias die='diefunc "$FUNCNAME" "$LINENO"'
 alias assert='_pipestatus="${PIPESTATUS[*]}"; [[ -z "${_pipestatus//[ 0]/}" ]] || diefunc "$FUNCNAME" "$LINENO" "$_pipestatus"'

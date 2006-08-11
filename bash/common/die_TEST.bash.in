@@ -1,0 +1,19 @@
+#!/bin/bash
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# $Id$
+
+. "${SCRIPTDIR}/common/functions.bash" || exit 1
+
+do_test() {
+	die "What a world, what a world..."
+	# We should never get here
+	exit 0
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	do_test
+fi
+
+exit 0

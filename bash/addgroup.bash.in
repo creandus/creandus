@@ -40,9 +40,16 @@ main() {
 	local gidmin=${groupid%-*} gidmax=${groupid#*-}
 
 	groupid=${gidmin}
+	local found
 	for i in $( seq ${groupid} ${gidmax} ) ; do
-		[[ -z $(egetent group ${i}) ]] && groupid=${i} && break
+		if [[ -z $(egetent group ${i}) ]] ; then 
+			groupid=${i}
+			found="yes"
+			break
+		fi
 	done
+
+	[[ -z "${found}" ]] && die "no available gid found"
 
 	# Now, we verify this information against our database, and if there
 	# isn't a match (either some value has changed, or there is no entry

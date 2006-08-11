@@ -1,6 +1,8 @@
 #!/bin/bash
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
+#
+# $Id$
 
 . "${SCRIPTDIR}/common/getent.bash" || exit 1
 
