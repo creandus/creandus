@@ -1,3 +1,10 @@
+2006-08-11  Mike Kelly  <pioto@pioto.org>
+
+	* bash/db.bash.in, eselect/users.eselect.in: Add a file in DBDIR
+	called "userspace". It is populated by db.bash add IFF it doesn't
+	exist. Used by the eselect module to determine the proper USERSPACE to
+	call {user,group}del.bash with.
+
 2006-08-10  Mike Kelly  <pioto@pioto.org>
 
 	* bash/addgroup.bash.in, bash/adduser.bash.in: Make sure we die if

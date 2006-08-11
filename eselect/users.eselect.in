@@ -154,6 +154,7 @@ do_update() {
 	local scriptdir=${ROOT}@datadir@/@PACKAGE@
 
 	local dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.bash\" DBDIR)"
+	local userspace="$(cat \"${DBDIR}/userspace\")"
 
 	# Parse our commandline args
 	while [[ ${1#--} != ${1} ]] ; do
@@ -181,16 +182,16 @@ do_update() {
 
 	if [[ -z ${pretend} ]] ; then
 		echo "Removing users:"
-		for i in ${deadusers} ; do
-			echo -n "  ${i} : "
-			"${scriptdir}/deluser.bash" ${i} ${ROOT} \
+		for x in ${deadusers} ; do
+			echo -n "  ${x} : "
+			"${scriptdir}/deluser.bash" "${x}" "${userspace}" "${ROOT}" \
 				&& echo "done" || die -q "failed"
 		done
 
 		echo "Removing groups:"
-		for i in ${deadgroups} ; do
-			echo -n "  ${i} : "
-			"${scriptdir}/delgroup.bash" ${i} ${ROOT} \
+		for x in ${deadgroups} ; do
+			echo -n "  ${x} : "
+			"${scriptdir}/delgroup.bash" "${x}" "${userspace}" "${ROOT}" \
 				&& echo "done" || die -q "failed"
 		done
 	else

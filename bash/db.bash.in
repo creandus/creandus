@@ -32,6 +32,10 @@ main() {
 
 			echo "${pkgname}" >> \
 				"${root}${DBDIR}/${dbtype}/${newname}"
+
+			# For the sake of users.eselect, save our current USERSPACE
+			[[ ! -f "${DBDIR}/userspace" ]] \
+				&& echo "${userspace}" >>"${DBDIR}/userspace"
 			;;
 		del)
 			# Read our remaining args
