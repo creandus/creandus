@@ -1,0 +1,104 @@
+=================================
+ Dynusers Data Files Format Spec
+=================================
+:Author: Mike Kelly <pioto@pioto.org>
+:Date: $Date$
+:Revision: $Revision$
+
+Introduction
+============
+
+One of the main points of dynusers is to provide an easy way for package
+maintainers to manage the users and groups their packages need. This is done
+by creating the proper *data files*. This document describes their format, and
+provides some examples.
+
+Specifications
+==============
+
+All the description files follow a simple format. Lines beginning with a hash
+mark ("#"), or blank lines are comments. Other lines are of the format::
+
+  key: value
+
+When looking for the data for a user, first the file
+``${DATADIR}/user/${USERNAME}`` is checked, where *DATADIR* is the location of
+the top-level data tree and USERNAME is the name of the user being searched for.
+Any keys which are not specified in this file will then be looked up in the
+top-level file, ``${DATADIR}/accounts``, which contains all the default values
+for the keys.
+
+Users
+-----
+
+The users files contain the following keys: 
+
+  uid
+    The range specification for the numeric group id of the group. A range
+    specification consists of a lower and upper bound, like ``25-35``, or of a
+    single number, like ``1234``. Dynusers will use the first available number
+    in that range. If none in that range are available, it will exit with
+    failure.
+
+  shell
+    The default shell for the user. It would often be best to not specify this,
+    so that dynusers will use the proper default for your profile.
+
+  home
+    The home directory for the user. As with shell, it is sometimes best to not
+    specify this unless specifically needed, and to instead let dynusers use the
+    profile's defaults.
+
+  groups
+    A comma-separated list of groups this user should belong to, with the first
+    listed group being its default group.
+
+  comment
+    The GECOS comment field for the user. Should be something like "user for
+    running misc-apps/foo-server" (quotes unnecessary).
+
+Groups
+------
+
+The groups files contain only one key:
+
+  gid
+    The range specification for the numeric group id of the group. As with *uid*
+    above, a range specification consists of a lower and upper bound, like
+    ``25-35``, or of a single number, like ``1234``. Dynusers will use the first
+    available number in that range. If none in that range are available, it will
+    exit with failure.
+
+Examples
+========
+
+This is a sample users data file, for the user "foo"::
+
+  # A sample user config file, for user "foo"
+  uid: 1234-1250
+  #shell: unspecified
+  home: /var/empty
+  groups: foo
+  comment: foo's user
+
+Since the shell field is unspecified, the scripts will instead use a
+less-specific default (for now, that would just be the default file,
+``accounts``, although if this data gets placed into the portage tree, it will
+become part of the cascading profiles).
+
+And here is a sample file for foo's group, "foo"::
+
+  # A sample group config file, for group "foo"
+  gid: 1234
+
+Finally, here is a sample ``accounts`` file, which contains the default values::
+
+  # Default account settings for the glep27-user/group tools
+  uid: 1-999
+  shell: /bin/false
+  home: /dev/null
+  groups: 
+  comment: user created by portage
+  gid: 1-999
+
+.. vim: set ft=glep tw=80 spell spelllang=en et :

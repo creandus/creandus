@@ -2,7 +2,7 @@ DOCFLAGS=-g -d -t -s
 
 all : html
 
-docs = API auth_modules
+docs = API auth_modules datafiles
 
 html : $(foreach f,$(docs),$(f).html)
 
