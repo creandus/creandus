@@ -38,4 +38,8 @@ fi
 # XXX: Maybe have these defaults be determined somewhat by our USERSPACE?
 [[ -z "${PASSWD_BACKENDS}" ]] && PASSWD_BACKENDS="compat"
 [[ -z "${GROUP_BACKENDS}" ]] && GROUP_BACKENDS="compat"
+
+# This is necessary because a false evaluation above isn't cause for the
+# entire script to fail.
+true
 # vim: ts=4 :

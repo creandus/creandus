@@ -1,3 +1,13 @@
+2006-08-21  Mike Kelly  <pioto@pioto.org>
+
+	+ Release: 0.4.1
+
+	* NEWS, configure.ac: Prepare for 0.4.1 release.
+
+	* bash/common/config.bash.in: Fix a bug that caused all scripts to
+	fail if we actually found anything in NSSWITCH_CONF, due to a
+	misunderstanding on my part of how source works.
+
 2006-08-11  Mike Kelly  <pioto@pioto.org>
 
 	+ Release: 0.4.0
