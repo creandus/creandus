@@ -29,6 +29,9 @@ read_groupdata() {
 		groupid_=${userid_## }
 		groupid=${userid:-${userid_}}
 	done
+
+	[[ -z "${groupid}" ]] && die "couldn't determine a gid range"
+
 	echo "local groupid=\"${groupid}\""
 }
 # vim: ts=4 :

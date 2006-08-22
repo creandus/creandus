@@ -50,10 +50,15 @@ read_userdata() {
 		usercomment=${usercomment:-${usercomment_}}
 	done
 
+	[[ -z "${userid}" ]] && die "Couldn't determine a uid range"
 	echo "local userid=\"${userid}\""
+	[[ -z "${usershell}" ]] && die "Couldn't determine a shell"
 	echo "local usershell=\"${usershell}\""
+	[[ -z "${userhome}" ]] && die "Couldn't determine a home dir"
 	echo "local userhome=\"${userhome}\""
+	[[ -z "${usergroups}" ]] && die "Couldn't determine any user groups"
 	echo "local usergroups=\"${usergroups}\""
+	[[ -z "${usercomment}" ]] && die "Couldn't determine a GECOS comment"
 	echo "local usercomment=\"${usercomment}\""
 }
 # vim: ts=4 :
