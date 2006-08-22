@@ -1,8 +1,5 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
-#
-# Copyright 2006 Mike Kelly
-# Distributed under the terms of the GNU General Public License v2
 # $Id: $
 
 # This is a collection of functions for use in these scripts. Things like
@@ -46,4 +43,12 @@ diefunc() {
 }
 
 ## END code from paludis
+
+# debug_msg - prints a message only if the variable DEBUG is set. Useful for
+# getting some debugging info sometimes but keeping our output relatively
+# silent normally
+debug_msg() {
+	[[ -n "${DEBUG}" ]] && echo "$@"
+}
+
 # vim: ts=4 :

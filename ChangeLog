@@ -1,5 +1,11 @@
 2006-08-22  Mike Kelly  <pioto@pioto.org>
 
+	* bash/common/functions.bash.in: Added debug_msg(), which is used for
+	displaying less-important messages only when the environment has DEBUG
+	set.
+
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
 	* eselect/users.eselect.in: Cleanup our eselect module to just use
 	@SCRIPTDIR@ instead of that other autotools cruft.
 
