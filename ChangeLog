@@ -1,5 +1,11 @@
 2006-08-22  Mike Kelly  <pioto@pioto.org>
 
+	* configure.ac, NEWS: Prepare for 0.4.2.
+
+	+ Release: 0.4.2
+
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
 	* bash/: Cleanup all our scripts here. Die in more places as
 	appropriate, such as if we are totally unable to complete an action
 	for all backends. Properly quote "$@" when calling the main()

@@ -4,6 +4,11 @@ Feel free to send me some test cases to run everything through, though.
 This is a summary of what has changed between released versions. More detailed
 information may be found in the ChangeLog.
 
+0.4.2:
+    New Features:
+    - Major code cleanup all around.
+    - Smoother build system.
+
 0.4.1:
     Bug Fixes:
     - Fix a bug that caused all the scripts to fail if anything was found in
