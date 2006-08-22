@@ -1,5 +1,10 @@
 2006-08-22  Mike Kelly  <pioto@pioto.org>
 
+	* eselect/users.eselect.in: Cleanup our eselect module to just use
+	@SCRIPTDIR@ instead of that other autotools cruft.
+
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
 	* Makefile.am, bash/Makefile.am, bash/auth/Makefile.am,
 	bash/common/Makefile.am, eselect/Makefile.am: Update our makefiles to
 	use sed instead of those nasty old build scripts.
