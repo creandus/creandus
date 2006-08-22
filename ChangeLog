@@ -1,3 +1,9 @@
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
+	* tools/find_substs.bash: Add a script for finding all occurrances of
+	@foo@ in the relevant files. A convenience script for the package
+	maintainer.
+
 2006-08-21  Mike Kelly  <pioto@pioto.org>
 
 	+ Release: 0.4.1
