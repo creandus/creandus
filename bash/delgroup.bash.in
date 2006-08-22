@@ -15,29 +15,37 @@ SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 main() {
 	# Read the command line arguments.
 	# Currently, we expect the following:
-	local deadgroup=${1} userspace=${2} root=${3:-/}
-	# XXX: Make sure we verify our command line args here.
+	local deadgroup=${1} userspace=${2} root=${3}
+	[[ -z "${deadgroup}" ]] && die "missing required arg: user_name"
+	[[ -z "${userspace}" ]] && die "missing required arg: userspace"
+	[[ -z "${root}" ]] && die "missing required arg: root"
 
 	# first, verify that the user to be deleted can be safely deleted
 	[[ -s ${DBDIR}/group/${deadgroup} ]] \
 		&& die "Group ${deadgroup} is still in use by some other" \
 			"package. Not removing."
 
+	# Now, we take the necessary action
+	local done_once
+
 	for x in ${GROUP_BACKENDS} ; do
 		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-groupdel.bash" ]]
 		then
-			echo "Running ${x}-${userspace}-groupdel..."
+			done_once="yes"
+			debug_msg "Running ${x}-${userspace}-groupdel..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-groupdel.bash"
 			"${x}-${userspace}-groupdel" "${deadgroup}" "${root}" \
 				|| die "groupdel failed"
 		else
-			echo "Auth backend ${x} with userspace ${userspace}" \
-				"not supported by this script." >&2
+			echo "$0: Auth backend ${x} with userspace ${userspace} not" \
+				"supported by this script." 1>&2
 		fi
 	done
 
+	[[ -z "${done_once}" ]] && die "Found no workable backends to run"
+
 	# Remove the empty database file
-	rm ${DBDIR}/group/${deadgroup}
+	rm "${DBDIR}"/group/${deadgroup}
 }
 
 if [[ "${1}" == "--test" ]] ; then
@@ -45,5 +53,5 @@ if [[ "${1}" == "--test" ]] ; then
 	exit 0
 fi
 
-main $@
+main "$@"
 # vim: ts=4 :

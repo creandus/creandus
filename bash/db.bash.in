@@ -21,11 +21,9 @@ main() {
 			local newname="${4}" userspace="${5}"
 			local root="${6:-/}"
 
-			[[ -z "${dbtype}" || -z "${pkgname}" \
-				|| -z "${newname}" ]] \
-				&& die "Add action expects 4 or 5 arguments:" \
-				"<user/group> <pkgname> <user/group name>" \
-				"<userspace> [root]"
+			[[ -z "${dbtype}" ]] && die "missing required arg: dbtype"
+			[[ -z "${pkgname}" ]] && die "missing required arg: pkgname"
+			[[ -z "${newname}" ]] && die "missing required arg: newname"
 
 			[[ "${dbtype}" != "user" || "${dbtype}" != "group" ]] \
 				&& die "Invalid DBTYPE. Use user or group."
@@ -63,5 +61,5 @@ if [[ "${1}" == "--test" ]] ; then
 	exit 0
 fi
 
-main $@
+main "$@"
 # vim: ts=4 :

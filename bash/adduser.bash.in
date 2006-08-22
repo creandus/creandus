@@ -13,24 +13,20 @@ SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 . "${SCRIPTDIR}/common/config.bash" || exit 1
 . "${SCRIPTDIR}/common/functions.bash" || exit 1
 
-# Read the proper data file for the desired user
-. "${SCRIPTDIR}/common/read_userdata.bash" || exit 1
-# We make use of egetent:
+# We make use of egetent.
 . "${SCRIPTDIR}/common/getent.bash" || exit 1
+# Reads the proper data file for the desired user
+. "${SCRIPTDIR}/common/read_userdata.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
-
-	# The only options recognized now are the user to be added, the 
-	# package which is asking for the adding, and the userspace type (e.g. 
-	# GNU, fbsd, etc)
+	# Currently, we expect the following:
 	local newuser=${1} pkgname=${2} userspace=${3} root=${4}
 
-	if [[ -z "${newuser}" || -z "${pkgname}" || -z "${userspace}" \
-	|| -z "${root}" ]] ; then
-		echo "Script expects 4 arguments: username pkgname userspace root" >&2
-		exit 1
-	fi
+	[[ -z "${newuser}" ]] && die "missing required arg: user_name"
+	[[ -z "${pkgname}" ]] && die "missing required arg: pkgname"
+	[[ -z "${userspace}" ]] && die "missing required arg: userspace"
+	[[ -z "${root}" ]] && die "missing required arg: root"
 
 	# Set our default action. Will be either "add" or "mod" by the end.
 	local action="add"
@@ -61,7 +57,7 @@ main() {
 	if [[ ${newuser} == $(egetent passwd "${newuser}" | cut -d: -f1) ]]
 	then
 		# TODO: If there needs to be some change made, note it
-		# properly, for the user to take care of later with
+		# properly, for the operator to take care of later with
 		# the eselect tool
 		local getentinfo=$(egetent passwd "${newuser}")
 		
@@ -71,20 +67,21 @@ main() {
 		local currgroups=$(id -Gn "${newuser}" |sed 's/ /\n/'| sort -u)
 		local usergroups_sort=$(echo "${usergroups}" |sed 's/,/\n/' |sort -u)
 		local currcomment=$(echo ${getentinfo} |cut -d: -f5)
+		
 		if [[ ${curruid} -ne ${userid} 
 		|| "${currshell}" != "${usershell}"
 		|| "${currhome}" != "${userhome}"
 		|| "${currgroups}" != "${usergroups_sort}"
 		|| "${currcomment}" != "${usercomment}" ]] ; then
-			echo "The user ${newuser} needs some values changed."
-			echo "We're doing so now."
+			debug_msg "The user ${newuser} needs some values changed." \
+				"We're doing so now."
 			action="mod"
 		else
 			# Now, since we've made the proper arrangements for any 
 			# possible changes, we now add the current package name 
 			# to the database and call it quits
-			echo -n "We already have a user named ${newuser}." >&2
-			echo " Nothing to do." >&2
+			debug_msg "We already have a user named ${newuser}." \
+				"Nothing to do." 1>&2
 
 			"${SCRIPTDIR}/db.bash" add user "${pkgname}" \
 				"${newuser}" "${userspace}"
@@ -92,29 +89,34 @@ main() {
 		fi
 	fi
 
-	if [[ -f "${DBDIR}/user/${newuser}" ]] ; then
+	if [[ -f "${DBDIR}/user/${newuser}" && -n "${DEBUG}" ]] ; then
 		echo "User ${newuser} was previously added by this script," \
 			"but it no longer exists" 1>&2
 		echo "on the system. We'll re-add them now, but you should" \
 			"have used the" 1>&2
-		echo "users-config tool to cleanly remove them." 1>&2
+		echo "users-config tool to cleanly remove it." 1>&2
 	fi
 
 	# Finally, we take take the necessary action, either via usermod 
 	# or useradd [or it's comparable friends]
+	local done_once
+
 	for x in ${PASSWD_BACKENDS}; do
 		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash" ]] 
 		then
-			echo "Running ${x}-${userspace}-user${action}..."
+			done_once="yes"
+			debug_msg "Running ${x}-${userspace}-user${action}..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash"
 			"${x}-${userspace}-user${action}" "${userhome}" "${usergroups}" \
 				"${usershell}" "${userid}" "${usercomment}" "${username}" \
 				"${root}" || die "user${action} failed"
 		else
-			echo "Auth backend ${x} with userspace ${userspace}" \
-			"not supported by this script." 1>&2
+			echo "$0: Auth backend ${x} with userspace ${userspace} not" \
+				"supported by this script." 1>&2
 		fi
 	done
+
+	[[ -z "${done_once}" ]] && die "Found no workable backends to run"
 
 	# Properly update the dynamic users database
 	"${SCRIPTDIR}/db.bash" add user "${pkgname}" "${newuser}" "${userspace}"
@@ -125,5 +127,5 @@ if [[ "${1}" == "--test" ]] ; then
 	exit 0
 fi
 
-main $@
+main "$@"
 # vim: ts=4 :

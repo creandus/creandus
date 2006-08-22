@@ -1,5 +1,12 @@
 2006-08-22  Mike Kelly  <pioto@pioto.org>
 
+	* bash/: Cleanup all our scripts here. Die in more places as
+	appropriate, such as if we are totally unable to complete an action
+	for all backends. Properly quote "$@" when calling the main()
+	function.  Make use of debug_msg(). 
+
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
 	* bash/common/read_userdata.bash.in
 	bash/common/read_groupdata.bash.in: Misc. cleanup. Make us die if we
 	can't find some value for one of the variables (we should normally at

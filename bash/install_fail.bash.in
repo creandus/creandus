@@ -18,9 +18,8 @@ main() {
 	# Currently, we expect the following:
 	local eusers=${1} egroups=${2} pkgname=${3} userspace=${4} root=${5:-/}
 
-	[[ -z "${pkgname}" || -z "${userspace}" ]] \
-		&& die "Script expects 4 arguments: \"new users\" "\
-			"\"new groups\" pkgname userspace"
+	[[ -z "${pkgname}" ]] && die "missing required arg: pkgname"
+	[[ -z "${userspace}" ]] && die "missing required arg: userspace"
 
 	# Remove this instance of pkgname from the database
 	"${SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
@@ -28,13 +27,19 @@ main() {
 	# If this install process created any users, then we should now remove
 	# them.
 	for x in ${eusers} ; do
-		"${SCRIPTDIR}/deluser.bash" "${x}" "${pkgname}" \
-			"${userspace}" "${root}"
+		if [[ ! -s "${DBDIR}/user/${x}" ]] ; then
+			"${SCRIPTDIR}/deluser.bash" "${x}" "${pkgname}" \
+				"${userspace}" "${root}" \
+				|| die "deluser ${x} failed"
+		fi
 	done
 
 	for x in ${egroups} ; do
-		"${SCRIPTDIR}/delgroup.bash" "${x}" "${pkgname}" \
-			"${userspace}" "${root}"
+		if [[ ! -s "${DBDIR}/user/${x}" ]] ; then
+			"${SCRIPTDIR}/delgroup.bash" "${x}" "${pkgname}" \
+				"${userspace}" "${root}" \
+				|| die "delgroup ${x} failed"
+		fi
 	done
 }
 
@@ -43,5 +48,5 @@ if [[ "${1}" == "--test" ]] ; then
 	exit 0
 fi
 
-main $@
+main "$@"
 # vim: ts=4 :

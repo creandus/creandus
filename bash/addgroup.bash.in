@@ -13,25 +13,23 @@ SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
 . "${SCRIPTDIR}/common/config.bash" || exit 1
 . "${SCRIPTDIR}/common/functions.bash" || exit 1
 
-# We make use of egetent. 
+# We make use of egetent.
 . "${SCRIPTDIR}/common/getent.bash" || exit 1
 # Reads the proper data file for the desired group
 . "${SCRIPTDIR}/common/read_groupdata.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
+	# Currently, we expect the following:
+	local newgroup=${1} pkgname=${2} userspace=${3} root=${4}
 
-	# The only options recognized now are the group to be added, the 
-	# package which is asking for the adding, and the userspace type (e.g. 
-	# GNU, fbsd, etc)
-	local newgroup=${1} pkgname=${2} userspace=${3} root=${4:-/}
-
-	[[ -z "${newgroup}" || -z "${pkgname}" || -z "${userspace}" \
-	|| -z "${root}" ]] \
-	&& die "Script expects 4 arguments: groupname pkgname userspace root"
+	[[ -z "${newgroup}" ]] && die "missing required arg: group_name"
+	[[ -z "${pkgname}" ]] && die "missing required arg: pkgname"
+	[[ -z "${userspace}" ]] && die "missing required arg: userspace"
+	[[ -z "${root}" ]] && die "missing required arg: root"
 
 	# Set our default action. Will be either "add" or "mod" by the end.
-	action="add"
+	local action="add"
 
 	###
 	eval `read_groupdata "${newgroup}"`
@@ -64,47 +62,51 @@ main() {
 		local getentinfo=$(egetent group "${newgroup}")
 		
 		local currgid=$(echo ${getentinfo} | cut -d: -f3)
+
 		if [[ ${currgid} -ne ${groupid} ]] ; then
-			echo "The group ${newgroup} needs some values changed."
-			echo "We're doing so now."
+			debug_msg "The group ${newgroup} needs some values changed." \
+				"We're doing so now."
 			action="mod"
 		else
 			# Now, since we've made the proper arrangements for any 
 			# possible changes, we now add the current package name 
 			# to the database and call it quits
-			echo "We already have a group named ${newgroup}." \
+			debug_msg "We already have a group named ${newgroup}." \
 				"Nothing to do." 1>&2
 
 			"${SCRIPTDIR}/db.bash" add group "${pkgname}" \
 				"${newgroup}" "${userspace}"
-
 			exit 0
 		fi
 	fi
 
-	if [[ -f "${DBDIR}/group/${newgroup}" ]] ; then
-		echo "Group ${newgroup} was previously added by this script," >&2
-		echo "but it no longer exists on the system. We'll re-add" >&2
-		echo "them now, but you should have used the users-config" >&2
-		echo "tool to cleanly remove it." >&2
-		echo >&2
+	if [[ -f "${DBDIR}/group/${newgroup}" && -n "${DEBUG}" ]] ; then
+		echo "Group ${newgroup} was previously added by this script," \
+			"but it no longer exists" 1>&2
+		echo "on the system. We'll re-add them now, but you should" \
+			"have used the" 1>&2
+		echo "users-config tool to cleanly remove it." 1>&2
 	fi
 
 	# Finally, we take take the necessary action, either via groupmod 
 	# or groupadd [or it's comparable friends]
+	local done_once
+
 	for x in ${GROUP_BACKENDS}; do
 		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash" ]] 
 		then
-			echo "Running ${x}-${userspace}-group${action}..."
+			done_once="yes"
+			debug_msg "Running ${x}-${userspace}-group${action}..."
 			. "${SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash"
 			"${x}-${userspace}-group${action}" "${groupid}" "${newgroup}" \
 				"${root}" || die "group${action} failed"
 		else
-			echo -n "Auth backend ${x} with " >&2
-			echo -n "userspace ${userspace} " >&2
-			echo "not supported by this script." >&2
+			echo "$0: Auth backend ${x} with userspace ${userspace} not" \
+				"supported by this script." 1>&2
 		fi
 	done
+
+	[[ -z "${done_once}" ]] && die "Found no workable backends to run"
 
 	# Properly update the dynamic groups database
 	"${SCRIPTDIR}/db.bash" add group "${pkgname}" "${newgroup}" "${userspace}"
@@ -115,5 +117,5 @@ if [[ "${1}" == "--test" ]] ; then
 	exit 0
 fi
 
-main $@
+main "$@"
 # vim: ts=4 :
