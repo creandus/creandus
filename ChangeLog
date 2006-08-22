@@ -1,5 +1,10 @@
 2006-08-22  Mike Kelly  <pioto@pioto.org>
 
+	* tools/subst.bash, tools/get_autoconf_macros.sed: These scripts suck,
+	so they're going the way of the dodo.
+
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
 	* tools/find_substs.bash: Add a script for finding all occurrances of
 	@foo@ in the relevant files. A convenience script for the package
 	maintainer.
