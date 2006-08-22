@@ -30,23 +30,23 @@ read_userdata() {
 
 	for x in ${USERFILE}; do
 		userid_=$(grep ^uid: ${x} |cut -d: -f2)
-		userid_=${userid_## }
+		userid_=`echo ${userid_} |sed 's,^[[:space:]]*,,'` 
 		userid=${userid:-${userid_}}
 
 		usershell_=$(grep ^shell: "${x}" |cut -d: -f2)
-		usershell_=${usershell_## }
+		usershell_=`echo ${usershell_} |sed 's,^[[:space:]]*,,'`
 		usershell=${usershell:-${usershell_}}
 
 		userhome_=$(grep ^home: "${x}" |cut -d: -f2)
-		userhome_=${userhome_## }
+		userhome_=`echo ${userhome_} |sed 's,^[[:space:]]*,,'`
 		userhome=${userhome:-${userhome_}}
 
 		usergroups_=$(grep ^groups: "${x}" |cut -d: -f2)
-		usergroups_=${usergroups_## }
+		usergroups_=`echo ${usergroups_} |sed 's,^[[:space:]]*,,'`
 		usergroups=${usergroups:-${usergroups_}}
 
 		usercomment_=$(grep ^comment: "${x}" |cut -d: -f2)
-		usercomment_=${usercomment_## }
+		usercomment_=`echo ${usercomment_} |sed 's,^[[:space:]]*,,'`
 		usercomment=${usercomment:-${usercomment_}}
 	done
 

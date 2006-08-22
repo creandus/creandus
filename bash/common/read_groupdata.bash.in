@@ -26,7 +26,7 @@ read_groupdata() {
 
 	for x in ${groupfile}; do
 		groupid_=$(grep ^gid: ${x} |cut -d: -f2)
-		groupid_=${userid_## }
+		groupid_=`echo ${userid} |sed 's,^[[:space:]]*,,'`
 		groupid=${userid:-${userid_}}
 	done
 

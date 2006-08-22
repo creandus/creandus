@@ -1,5 +1,11 @@
 2006-08-22  Mike Kelly  <pioto@pioto.org>
 
+	* bash/common/read_userdata.bash.in,
+	bash/common/read_groupdata.bash.in: Fix a bug that caused all the
+	values to end up being empty.
+
+2006-08-22  Mike Kelly  <pioto@pioto.org>
+
 	* configure.ac, NEWS: Prepare for 0.4.2.
 
 	+ Release: 0.4.2
