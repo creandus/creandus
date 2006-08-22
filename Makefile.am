@@ -15,4 +15,3 @@ groupdb_DATA = .keep
 CLEANFILES = *~ .keep done-check
 MAINTAINERCLEANFILES = Makefile.in configure config/* aclocal.m4 \
 	INSTALL COPYING
-

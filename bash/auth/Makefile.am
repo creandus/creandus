@@ -19,8 +19,14 @@ EXTRA_DIST = $(foreach f, $(authbackend_DATA), $(f).in)
 CLEANFILES = *~ $(authbackend_DATA)
 MAINTAINERCLEANFILES = Makefile.in
 
-# The "compiler"
-SUBST = $(top_srcdir)/tools/subst.bash
+# Do the proper substitutions in our scripts
+dosed=@SED@ \
+	-e 's,\@SED\@,@SED@,g' \
+	-e 's,\@BASH\@,@BASH@,g' \
+	-e 's,\@PACKAGE\@,@PACKAGE@,g' \
+	-e 's,\@SCRIPTDIR\@,@SCRIPTDIR@,g' \
+	-e 's,\@localstatedir\@,@localstatedir@,g' \
+	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(SUBST) $(top_srcdir) $(top_builddir) $< $@
+	$(dosed) $< > $@

@@ -16,14 +16,19 @@ XFAIL_TESTS = die_TEST.bash
 check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
 check_PROGRAMS = 
 
-EXTRA_DIST = $(foreach f, $(commonbackend_DATA), $(f).in) \
-	$(TESTS)
+EXTRA_DIST = $(foreach f, $(commonbackend_DATA) $(TESTS), $(f).in)
 
-CLEANFILES = *~ $(commonbackend_DATA)
+CLEANFILES = *~ $(commonbackend_DATA) $(TESTS)
 MAINTAINERCLEANFILES = Makefile.in
 
-# Our "compiler"
-SUBST = $(top_srcdir)/tools/subst.bash
+# Do the proper substitutions in our scripts
+dosed=@SED@ \
+	-e 's,\@SED\@,@SED@,g' \
+	-e 's,\@BASH\@,@BASH@,g' \
+	-e 's,\@PACKAGE\@,@PACKAGE@,g' \
+	-e 's,\@SCRIPTDIR\@,@SCRIPTDIR@,g' \
+	-e 's,\@localstatedir\@,@localstatedir@,g' \
+	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(SUBST) $(top_srcdir) $(top_builddir) $< $@
+	$(dosed) $< > $@

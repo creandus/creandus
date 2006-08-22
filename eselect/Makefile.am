@@ -1,18 +1,24 @@
 # Install our scripts in the proper place
-installeselectdir = $(datadir)/eselect/modules/
-installeselect_DATA = \
+eselectmoddir = $(datadir)/eselect/modules/
+eselectmod_DATA = \
 	users.eselect
 
-EXTRA_DIST = $(foreach f, $(installeselect_DATA), $(f).in)
+EXTRA_DIST = $(foreach f, $(eselectmod_DATA), $(f).in)
 
-CLEANFILES = *~ $(installeselect_DATA)
+CLEANFILES = *~ $(eselectmod_DATA)
 MAINTAINERCLEANFILES = Makefile.in
 
-# Our "compiler"
-SUBST = $(top_srcdir)/tools/subst.bash
+# Do the proper substitutions in our scripts
+dosed=@SED@ \
+	-e 's,\@SED\@,@SED@,g' \
+	-e 's,\@BASH\@,@BASH@,g' \
+	-e 's,\@PACKAGE\@,@PACKAGE@,g' \
+	-e 's,\@SCRIPTDIR\@,@SCRIPTDIR@,g' \
+	-e 's,\@localstatedir\@,@localstatedir@,g' \
+	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(SUBST) $(top_srcdir) $(top_builddir) $< $@
+	$(dosed) $< > $@
 
 # Create a users-update symlink to eselect
 install-data-local:
