@@ -26,8 +26,8 @@ read_groupdata() {
 
 	for x in ${groupfile}; do
 		groupid_=$(grep ^gid: ${x} |cut -d: -f2)
-		groupid_=`echo ${userid} |sed 's,^[[:space:]]*,,'`
-		groupid=${userid:-${userid_}}
+		groupid_=`echo ${groupid_} |sed 's,^[[:space:]]*,,'`
+		groupid=${groupid:-${groupid_}}
 	done
 
 	[[ -z "${groupid}" ]] && die "couldn't determine a gid range"
