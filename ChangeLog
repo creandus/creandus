@@ -1,5 +1,10 @@
 2006-08-23  Mike Kelly  <pioto@pioto.org>
 
+	* bash/db.bash.in: Error in my logic, should use && where I was using
+	||.
+
+2006-08-23  Mike Kelly  <pioto@pioto.org>
+
 	* bash/common/read_userdata.bash.in: Another "doh". ${USERFILE} !=
 	${userfile}...
 

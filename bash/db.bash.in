@@ -25,7 +25,7 @@ main() {
 			[[ -z "${pkgname}" ]] && die "missing required arg: pkgname"
 			[[ -z "${newname}" ]] && die "missing required arg: newname"
 
-			[[ "${dbtype}" != "user" || "${dbtype}" != "group" ]] \
+			[[ "${dbtype}" != "user" && "${dbtype}" != "group" ]] \
 				&& die "Invalid DBTYPE. Use user or group."
 
 			echo "${pkgname}" >> \
