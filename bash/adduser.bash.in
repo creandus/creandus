@@ -40,10 +40,17 @@ main() {
 	userid="${usermin}"
 	local found
 	for i in $( seq "${userid}" "${uidmax}" ) ; do
-		if [[ -z $(egetent passwd "${i}") ]] ; then
+		if [[ -z "$(egetent passwd ${i})" ]] ; then
 			userid="${i}"
 			found="yes"
 			break
+		elif [[ "$(egetent passwd ${i} |cut -d: -f1)" == "${newuser}" ]]
+		then
+			# We already have the user on the system, and they have the right
+			# uid. There's nothing to do.
+			debug_msg "User ${newuser} is already here with uid ${i}."
+			found="yes"
+			userid="${i}"
 		fi
 	done
 

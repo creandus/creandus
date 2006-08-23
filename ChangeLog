@@ -1,5 +1,12 @@
 2006-08-23  Mike Kelly  <pioto@pioto.org>
 
+	* bash/adduser.bash.in, bash/addgroup.bash.in: Add a check in the free
+	uid/gid search step to find out if we already have the user or group
+	with a uid/gid in the requested range. If so, we want to continue to
+	use that uid/gid.
+
+2006-08-23  Mike Kelly  <pioto@pioto.org>
+
 	* bash/db.bash.in: Error in my logic, should use && where I was using
 	||.
 

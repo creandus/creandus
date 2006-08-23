@@ -40,10 +40,16 @@ main() {
 	groupid=${gidmin}
 	local found
 	for i in $( seq ${groupid} ${gidmax} ) ; do
-		if [[ -z $(egetent group ${i}) ]] ; then 
+		if [[ -z "$(egetent group ${i})" ]] ; then 
 			groupid=${i}
 			found="yes"
 			break
+		elif [[ "$(egetent group ${i} |cut -d: -f1)" == "${newgroup}" ]]
+		then
+			# We already have the group on the system, and they have the right
+			# gid. There's nothing to do.
+			debug_msg "Nothing need be done. Group ${newgroup} is all good."
+			exit 0
 		fi
 	done
 
@@ -54,7 +60,7 @@ main() {
 	# at all), we take appropriate action
 
 	# See if the group already exists
-	if [[ ${newgroup} == $(egetent group "${newgroup}" | cut -d: -f1) ]]
+	if [[ ${newgroup} == "$(egetent group ${newgroup} | cut -d: -f1)" ]]
 	then
 		# TODO: If there needs to be some change made, note it
 		# properly, for the operator to take care of later with
@@ -74,7 +80,7 @@ main() {
 			debug_msg "We already have a group named ${newgroup}." \
 				"Nothing to do." 1>&2
 
-			"${SCRIPTDIR}/db.bash" add group "${pkgname}" \
+			"${SCRIPTDIR}/db.bash" "add" "group" "${pkgname}" \
 				"${newgroup}" "${userspace}"
 			exit 0
 		fi
@@ -109,7 +115,7 @@ main() {
 	[[ -z "${done_once}" ]] && die "Found no workable backends to run"
 
 	# Properly update the dynamic groups database
-	"${SCRIPTDIR}/db.bash" add group "${pkgname}" "${newgroup}" "${userspace}"
+	"${SCRIPTDIR}/db.bash" "add" "group" "${pkgname}" "${newgroup}" "${userspace}"
 }
 
 if [[ "${1}" == "--test" ]] ; then
