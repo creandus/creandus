@@ -1,5 +1,10 @@
 2006-08-23  Mike Kelly  <pioto@pioto.org>
 
+	* bash/common/read_userdata.bash.in: Another "doh". ${USERFILE} !=
+	${userfile}...
+
+2006-08-23  Mike Kelly  <pioto@pioto.org>
+
 	* bash/common/read_groupdata.bash.in: Major "doh!". userid !=
 	groupid...
 

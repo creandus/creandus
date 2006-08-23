@@ -28,7 +28,7 @@ read_userdata() {
 	local userid userid_ usershell usershell_ userhome userhome_
 	local usergroups usergroups_ usercomment usercomment_
 
-	for x in ${USERFILE}; do
+	for x in ${userfile}; do
 		userid_=$(grep ^uid: ${x} |cut -d: -f2)
 		userid_=`echo ${userid_} |sed 's,^[[:space:]]*,,'` 
 		userid=${userid:-${userid_}}
