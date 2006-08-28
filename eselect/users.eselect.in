@@ -32,23 +32,27 @@ do_show() {
 
 	case ${mode} in
 		users)
-			for x in $(ls "${dbdir}/user") ; do
+			for x in "${dbdir}"/user/* ; do
+				[[ -e "${x}" ]] || continue
 				echo "* ${x}:"
 				cat "${dbdir}/user/${x}"
 			done
 			;;
 		groups)
-			for x in $(ls "${dbdir}/group") ; do
+			for x in "${dbdir}"/group/* ; do
+				[[ -e "${x}" ]] || continue
 				echo "* ${x}:"
 				cat "${dbdir}/group/${x}"
 			done
 			;;
 		all)
-			for x in $(ls "${dbdir}/user") ; do
+			for x in "${dbdir}"/user/* ; do
+				[[ -e "${x}" ]] || continue
 				echo "* ${x}:"
 				cat "${dbdir}/user/${x}"
 			done
-			for x in $(ls "${dbdir}/group") ; do
+			for x in "${dbdir}"/group/* ; do
+				[[ -e "${x}" ]] || continue
 				echo "* ${x}:"
 				cat "${dbdir}/group/${x}"
 			done
@@ -144,7 +148,7 @@ describe_update_options() {
 }
 
 do_update() {
-	local pretend deadusers deadusers_ deadgroups deadgroups_
+	local pretend deadusers deadgroups
 	local scriptdir="${ROOT}""@SCRIPTDIR@"
 
 	local dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.bash\" DBDIR)"
@@ -164,29 +168,40 @@ do_update() {
 	done
 
 	# Find all the data files which are empty
-	deadusers_=$(find "${dbdir}/user" -size 0 -print)
-	deadgroups_=$(find "${dbdir}/group" -size 0 -print)
 
-	for i in ${deadusers_} ; do 
-		deadusers="${deadusers} $(basename ${i})"
+	for x in "${dbdir}"/user/* ; do
+		[[ -e "${x}" ]] || continue
+		[[ -s "${x}" ]] && continue
+		deadusers="${deadusers} $(basename ${x})"
 	done
-	for i in ${deadgroups_} ; do 
-		deadgroups="${deadgroups} $(basename ${i})"
+
+	for x in "${dbdir}"/group/* ; do
+		[[ -e "${x}" ]] || continue
+		[[ -s "${x}" ]] && continue
+		deadgroups="${deadgroups} $(basename ${x})"
 	done
 
 	if [[ -z ${pretend} ]] ; then
 		echo "Removing users:"
 		for x in ${deadusers} ; do
 			echo -n "  ${x} : "
-			"${scriptdir}/deluser.bash" "${x}" "${userspace}" "${ROOT}" \
-				&& echo "done" || die -q "failed"
+			if ("${scriptdir}/deluser.bash" "${x}" "${userspace}" "${ROOT}")
+			then
+				echo "done"
+			else
+				die -q "failed"
+			fi
 		done
 
 		echo "Removing groups:"
 		for x in ${deadgroups} ; do
 			echo -n "  ${x} : "
-			"${scriptdir}/delgroup.bash" "${x}" "${userspace}" "${ROOT}" \
-				&& echo "done" || die -q "failed"
+			if ("${scriptdir}/delgroup.bash" "${x}" "${userspace}" "${ROOT}")
+			then
+				echo "done"
+			else
+				die -q "failed"
+			fi
 		done
 	else
 		echo "We would have removed:"

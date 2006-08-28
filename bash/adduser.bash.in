@@ -37,7 +37,7 @@ main() {
 	# TODO: allow for more sophisticated range specifications
 	local uidmin="${userid%-*}" uidmax="${userid#*-}"
 
-	userid="${usermin}"
+	userid="${uidmin}"
 	local found
 	for i in $( seq "${userid}" "${uidmax}" ) ; do
 		if [[ -z "$(egetent passwd ${i})" ]] ; then

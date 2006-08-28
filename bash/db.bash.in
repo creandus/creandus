@@ -47,8 +47,10 @@ main() {
 
 			# Remove only the first instance of pkgname from the 
 			# db files
-			sed -i /^${pkgname}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\}\
-				"${root}${DBDIR}"/{user,group}/*
+			for x in "${root}${DBDIR}"/{user,group}/* ; do
+				[[ -d "${x}" ]] || continue
+				sed -i /^${pkgname}\$/\{x\;/Y/\!\{s/^/Y/\;h\;d\}\;x\;\}	"${x}"
+			done
 			;;
 		*)
 			die "Invalid action. Valid actions are add, del."
