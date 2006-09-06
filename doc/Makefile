@@ -1,13 +1,15 @@
 DOCFLAGS=-g -d -t -s
 
-all : html
-
 docs = API auth_modules datafiles
 
-html : $(foreach f,$(docs),$(f).html)
+txtfiles=$(foreach f,$(docs),$(f).txt)
+htmlfiles=$(foreach f,$(docs),$(f).html)
+
+EXTRA_DIST = $(txtfiles)
+
+doc : $(htmlfiles)
 
 %.html : %.txt
 	rst2html.py $(DOCFLAGS) $< $@
 
-clean :
-	rm -f *~ *.html || true
+CLEANFILES = *~ $(htmlfiles)
