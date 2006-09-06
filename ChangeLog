@@ -1,52 +1,52 @@
-2006-08-27  Mike Kelly  <pioto@pioto.org>
+2006-08-27  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/db.bash.in, eselect/users.eselect.in: Clean up the code that
 	loops over the database files.
 
 	* bash/adduser.bash.in: Fix a typo.
 
-2006-08-23  Mike Kelly  <pioto@pioto.org>
+2006-08-23  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/adduser.bash.in, bash/addgroup.bash.in: Add a check in the free
 	uid/gid search step to find out if we already have the user or group
 	with a uid/gid in the requested range. If so, we want to continue to
 	use that uid/gid.
 
-2006-08-23  Mike Kelly  <pioto@pioto.org>
+2006-08-23  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/db.bash.in: Error in my logic, should use && where I was using
 	||.
 
-2006-08-23  Mike Kelly  <pioto@pioto.org>
+2006-08-23  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/common/read_userdata.bash.in: Another "doh". ${USERFILE} !=
 	${userfile}...
 
-2006-08-23  Mike Kelly  <pioto@pioto.org>
+2006-08-23  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/common/read_groupdata.bash.in: Major "doh!". userid !=
 	groupid...
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/common/read_userdata.bash.in,
 	bash/common/read_groupdata.bash.in: Fix a bug that caused all the
 	values to end up being empty.
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* configure.ac, NEWS: Prepare for 0.4.2.
 
 	+ Release: 0.4.2
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/: Cleanup all our scripts here. Die in more places as
 	appropriate, such as if we are totally unable to complete an action
 	for all backends. Properly quote "$@" when calling the main()
 	function.  Make use of debug_msg(). 
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/common/read_userdata.bash.in
 	bash/common/read_groupdata.bash.in: Misc. cleanup. Make us die if we
@@ -56,35 +56,35 @@
 	* bash/common/getent_TEST.bash: Rename with a .in suffix, to keep
 	things consistent.
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/common/functions.bash.in: Added debug_msg(), which is used for
 	displaying less-important messages only when the environment has DEBUG
 	set.
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* eselect/users.eselect.in: Cleanup our eselect module to just use
 	@SCRIPTDIR@ instead of that other autotools cruft.
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* Makefile.am, bash/Makefile.am, bash/auth/Makefile.am,
 	bash/common/Makefile.am, eselect/Makefile.am: Update our makefiles to
 	use sed instead of those nasty old build scripts.
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* tools/subst.bash, tools/get_autoconf_macros.sed: These scripts suck,
 	so they're going the way of the dodo.
 
-2006-08-22  Mike Kelly  <pioto@pioto.org>
+2006-08-22  Mike Kelly  <pioto@gentoo.org>
 
 	* tools/find_substs.bash: Add a script for finding all occurrances of
 	@foo@ in the relevant files. A convenience script for the package
 	maintainer.
 
-2006-08-21  Mike Kelly  <pioto@pioto.org>
+2006-08-21  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.4.1
 
@@ -94,20 +94,20 @@
 	fail if we actually found anything in NSSWITCH_CONF, due to a
 	misunderstanding on my part of how source works.
 
-2006-08-11  Mike Kelly  <pioto@pioto.org>
+2006-08-11  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.4.0
 
 	* NEWS, README: Prepare for 0.4.0 release.
 
-2006-08-11  Mike Kelly  <pioto@pioto.org>
+2006-08-11  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/db.bash.in, eselect/users.eselect.in: Add a file in DBDIR
 	called "userspace". It is populated by db.bash add IFF it doesn't
 	exist. Used by the eselect module to determine the proper USERSPACE to
 	call {user,group}del.bash with.
 
-2006-08-10  Mike Kelly  <pioto@pioto.org>
+2006-08-10  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/addgroup.bash.in, bash/adduser.bash.in: Make sure we die if
 	no free uid/gid can be found.
@@ -118,13 +118,13 @@
 	* bash/common/die_TEST.bash.in bash/common/Makefile.am: Add a test for
 	die.
 
-2006-08-10  Mike Kelly  <pioto@pioto.org>
+2006-08-10  Mike Kelly  <pioto@gentoo.org>
 
 	* doc/datafiles.txt, doc/Makefile: Add a document giving the
 	specifications of the dynusers data files (the files which tell
 	dynusers what uid, etc to use for an added user).
 
-2006-08-10  Mike Kelly  <pioto@pioto.org>
+2006-08-10  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/auth/files-GNU-glibc-groupmod.bash.in,
 	bash/auth/compat-BSD-FreeBSD-userdel.bash.in,
@@ -148,7 +148,7 @@
 	Make all auth scripts match the new style (each contains a single
 	function). Update the {add,del}{user,group} scripts to match.
 
-2006-08-10  Mike Kelly  <pioto@pioto.org>
+2006-08-10  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/add.bash.in, bash/addgroup.bash.in, bash/adduser.bash.in,
 	bash/cleanup.bash.in, bash/db.bash.in, bash/delgroup.bash.in,
@@ -156,7 +156,7 @@
 	failure to source any of our helper functions' scripts is fatal. Also,
 	make sure we die if calls to {user,group}{add,mod,del} functions fail.
 
-2006-08-10  Mike Kelly  <pioto@pioto.org>
+2006-08-10  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/add.bash.in, bash/addgroup.bash.in, bash/adduser.bash.in,
 	bash/cleanup.bash.in, bash/db.bash.in, bash/delgroup.bash.in,
@@ -178,13 +178,13 @@
 
 	* doc/API.txt: Fix a typo.
 
-2006-08-10  Mike Kelly  <pioto@pioto.org>
+2006-08-10  Mike Kelly  <pioto@gentoo.org>
 
 	* Makefile.am, bash/Makefile.am, bash/auth/Makefile.am,
 	bash/common/Makefile.am, eselect/Makefile.am: Clean up our
 	Makefile.am's, make use of foreach to make things much tidier.
 
-2006-08-08  Mike Kelly  <pioto@pioto.org>
+2006-08-08  Mike Kelly  <pioto@gentoo.org>
 
 	* doc/API.txt, doc/API_flowchart.dia, doc/API_flowchart.png,
 	doc/API_flowchart2.dia,	doc/API_flowchart2.png: Update API
@@ -192,13 +192,13 @@
 	points of interaction with the package manager take the same
 	arguments.
 
-2006-08-08  Mike Kelly  <pioto@pioto.org>
+2006-08-08  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/cleanup.bash.in: Add a cleanup script, to be called to do all
 	the proper database cleanup, etc, after a successful
 	re-build/un-install.
 
-2006-08-06  Mike Kelly  <pioto@pioto.org>
+2006-08-06  Mike Kelly  <pioto@gentoo.org>
 
 	* eselect/users.eselect.in: Add support to the eselect module's scan
 	mode to simply chown the files belonging to a found user or group to
@@ -208,11 +208,11 @@
 	doc/API_flowchart2.dia, doc/API_flowchart2.png: Add flowcharts of the
 	install and uninstall process to the API documentation.
 
-2006-08-04  Mike Kelly  <pioto@pioto.org>
+2006-08-04  Mike Kelly  <pioto@gentoo.org>
 
 	* doc/auth_modules.txt: Add documentation of the auth module format.
 
-2006-08-03  Mike Kelly  <pioto@pioto.org>
+2006-08-03  Mike Kelly  <pioto@gentoo.org>
 
 	* tools/get_autoconf_macros.sed: _'s are legal in variable names, too.
 
@@ -220,7 +220,7 @@
 	only real way to get this stuff right is to source the confvars file
 	several times in a row... But this seems bad...
 
-2006-08-03  Mike Kelly  <pioto@pioto.org>
+2006-08-03  Mike Kelly  <pioto@gentoo.org>
 
 	* tools/get_autoconf_macros.sed, tools/subst.bash: Add a script,
 	subst.bash, which will, given a file with @foo@ style autoconf
@@ -229,18 +229,18 @@
 	variables before substituting them, removing the need to do things
 	like prefix=@prefix@ before the variable you actually care about.
 
-2006-08-02  Mike Kelly  <pioto@pioto.org>
+2006-08-02  Mike Kelly  <pioto@gentoo.org>
 
 	* doc/API.txt: Clean up the API spec some more.
 
-2006-08-01  Mike Kelly  <pioto@pioto.org>
+2006-08-01  Mike Kelly  <pioto@gentoo.org>
 
 	* (Everything): Begin a big 'ol rewrite of stuff, putting most code
 	inside functions. This allows for variables to be kept out of the
 	global scope, and also allows for easy, automatic syntax checks. Added
 	some basic tests to Makefiles.
 
-2006-07-31  Mike Kelly  <pioto@pioto.org>
+2006-07-31  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/add.bash.in, bash/install_fail.bash.in: We shouldn't fail if
 	ENEWUSERS or ENEWGROUPS are empty.
@@ -248,33 +248,33 @@
 	* Makefile.am: Put a .keep file in the dbdirs, so they always exist
 	properly.
 
-2006-07-31  Mike Kelly  <pioto@pioto.org>
+2006-07-31  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.3.1
 
 	* Makefile.am: Add doc to EXTRA_DIST, so we actually distribute our
 	documentation.
 
-2006-07-31  Mike Kelly  <pioto@pioto.org>
+2006-07-31  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.3.0
 
-2006-07-31  Mike Kelly  <pioto@pioto.org>
+2006-07-31  Mike Kelly  <pioto@gentoo.org>
 
 	* (Everything): Switch everything to explicitly use bash. Rename all
 	scripts from .sh to .bash, use #!/bin/bash, etc.
 
-2006-07-31  Mike Kelly  <pioto@pioto.org>
+2006-07-31  Mike Kelly  <pioto@gentoo.org>
 
 	* eselect/users.eselect.in: Fix some load_config lines, remove an
 	unnecessary one.
 
-2006-07-31  Mike Kelly  <pioto@pioto.org>
+2006-07-31  Mike Kelly  <pioto@gentoo.org>
 
 	* -API, doc/API.txt, doc/Makefile: RST-ize the API specifications.
 	Provide a Makefile for them.
 
-2006-07-30  Mike Kelly  <pioto@pioto.org>
+2006-07-30  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/delgroup.sh.in, bash/deluser.sh.in,
 	bash/auth/{compat,files}-{GNU-glibc,BSD-FreeBSD}-{user,group}del.sh,
@@ -282,25 +282,25 @@
 	group deletion scripts, which are called by the eselect script, and by
 	the install_fail.sh.
 
-2006-07-30  Mike Kelly  <pioto@pioto.org>
+2006-07-30  Mike Kelly  <pioto@gentoo.org>
 
 	* eselect/users.eselect.in: More improvements from Kugelfang and
 	ciaranm on IRC.
 
-2006-07-30  Mike Kelly  <pioto@pioto.org>
+2006-07-30  Mike Kelly  <pioto@gentoo.org>
 
 	* eselect/users.eselect.in: Improve the eselect module, per advice from
 	Kugelfang. Should now respect ROOT and have better style.
 
-2006-07-29  Mike Kelly  <pioto@pioto.org>
+2006-07-29  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/db.sh.in: Fix a typo, line 21,22 (missing \).
 
-2006-07-28  Mike Kelly  <pioto@pioto.org>
+2006-07-28  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.2.0
 
-2006-07-27  Mike Kelly  <pioto@pioto.org>
+2006-07-27  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/install_fail.sh.in: Add the install_fail script, which is
 	called by the package manager when an install fails. It rolls back
@@ -312,7 +312,7 @@
 
 	* API: Create a writeup of the API specs for dynusers.
 
-2006-07-26  Mike Kelly  <pioto@pioto.org>
+2006-07-26  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/auth/compat-{BSD-FreeBSD,GNU-glibc}-{user,group}del.sh,
 	bash/auth/files-GNU-glibc-{user-group}del.sh: Create user/group
@@ -322,7 +322,7 @@
 	ENEW{USER,GROUP}S for breakfast and does what it's supposed to do.
 	Let's call this part of the dynusers "API".
 
-2006-07-24  Mike Kelly  <pioto@pioto.org>
+2006-07-24  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/db.sh.in: Create a script for accessing the user 
 	database, so that external things don't need to know the 
@@ -332,26 +332,26 @@
 	eselect/users.eselect.in: Drop the s from the user and group DBDIR
 	subdirs.
 
-2006-07-20  Mike Kelly  <pioto@pioto.org>
+2006-07-20  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.1.3
 	
 	* bash/auth/: Change naming scheme to ${USERLAND}-${ELIBC}
 	instead of simply ${USERLAND}. Add BSD auth modules.
 
-2006-07-19  Mike Kelly  <pioto@pioto.org>
+2006-07-19  Mike Kelly  <pioto@gentoo.org>
 
 	* eselect/users.eselect.in: Fix eselect module to use proper DBDIR,
 	etc. by sourcing $scriptdir/common/config.sh.
 
-2006-07-18  Mike Kelly  <pioto@pioto.org>
+2006-07-18  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.1.2
 
-2006-07-15  Mike Kelly  <pioto@pioto.org>
+2006-07-15  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.1.1
 
-2006-07-10  Mike Kelly  <pioto@pioto.org>
+2006-07-10  Mike Kelly  <pioto@gentoo.org>
 
 	+ Release: 0.1.0

@@ -1,7 +1,7 @@
 =================================
  Dynusers Data Files Format Spec
 =================================
-:Author: Mike Kelly <pioto@pioto.org>
+:Author: Mike Kelly <pioto@gentoo.org>
 :Date: $Date$
 :Revision: $Revision$
 
