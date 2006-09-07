@@ -1,3 +1,11 @@
+2006-09-07  Mike Kelly  <pioto@gentoo.org>
+
+	* bash/common/read_groupdata.bash.in,
+	bash/common/read_userdata.bash.in,
+	bash/common/get_profiledirs.bash.in: Add support for reading our data
+	from cascading portage profiles, rather than just
+	/var/lib/dynusers/data.
+
 2006-08-27  Mike Kelly  <pioto@gentoo.org>
 
 	* bash/db.bash.in, eselect/users.eselect.in: Clean up the code that

@@ -8,12 +8,10 @@
 # profiles in proper order, but for now we're just parsing these 2
 # config files
 
-# XXX: Build groupfile dynamically based upon the currently selected 
-# profile. Work from the profile up to its parents, etc, to build this 
-# list.
-
 # XXX: Split this file up in such a way as to be automatically done
 # correctly for various distros.
+
+. "${SCRIPTDIR}/common/get_profiledirs.bash" || exit 1
 
 # read_groupdata()
 # Inputs:
@@ -21,7 +19,25 @@
 # Outputs:
 #  $groupid - a range specification of valid group ids for the given group name
 read_groupdata() {
-	local groupfile="${DATADIR}/group/${1} ${DATADIR}/accounts"
+	local groupfile="" profile_dirs="" d d_
+
+	if [[ -n "${PALUDIS_PROFILE_DIRS}" ]] ; then
+		profile_dirs="${PALUDIS_PROFILE_DIRS}"
+	elif [[ -e "/etc/make.profile" ]] ; then
+		profile_dirs="/etc/make.profile"
+	else
+		die "Could not determine the profile directory."
+	fi
+	
+	local all_profile_dirs="$(get_profiledirs "${profile_dirs}")"
+
+	for d in "group/${1}" "accounts" ; do
+		for d_ in ${all_profile_dirs} ; do
+			[[ -f "${d_}/accounts/${d}" ]] \
+				&& groupfile="${groupfile} ${d_}/accounts/${d}"
+		done
+	done
+
 	local groupid_ groupid
 
 	for x in ${groupfile}; do

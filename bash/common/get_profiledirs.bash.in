@@ -1,0 +1,38 @@
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# get_profiledirs.bash - Prints a list of all the profile dirs from the current
+# profile (e.g. default-linux/x86/2006.1, default-linux/x86, default-linux,
+# base).
+# $Id: read_userdata.bash.in 186 2006-08-23 19:44:14Z pioto $
+
+# get_parents - gets the parent profiles of a given profile dir
+get_parents() {
+	local profile_dir="${1}" d
+
+	[[ ! -d "${profile_dir}" ]] && die "${profile_dir} is not a directory!"
+
+	[[ ! -f "${profile_dir}/parent" ]] && return 0
+
+
+	pushd "${profile_dir}" >/dev/null
+	for d in $(cat "${profile_dir}/parent") ; do
+		echo $(readlink -f "${d}")
+	done
+	popd >/dev/null
+}
+
+# get_profile_dirs - spits out all the dirs that are part of the given
+# profile(s).
+get_profiledirs() {
+	local profile_dirs="${1}" d= d_=
+
+	for d in ${profile_dirs} ; do
+		echo ${d}
+		for d_ in $(get_parents "${d}") ; do
+			get_profiledirs "${d_}"
+		done
+	done
+}
+
+# vim: ts=4 :
