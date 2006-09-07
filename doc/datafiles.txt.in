@@ -23,11 +23,13 @@ mark ("#"), or blank lines are comments. Other lines are of the format::
   key: value
 
 When looking for the data for a user, first the file
-``${DATADIR}/user/${USERNAME}`` is checked, where *DATADIR* is the location of
-the top-level data tree and USERNAME is the name of the user being searched for.
-Any keys which are not specified in this file will then be looked up in the
-top-level file, ``${DATADIR}/accounts``, which contains all the default values
-for the keys.
+``PROFILEDIR/accounts/user/${USERNAME}`` is checked, where *PROFILEDIR* is a
+directory in a cascading portage profile tree, and *USERNAME* is the name of the
+user being searched for. After cascading through all parents of *PROFILEDIR*
+looking for lower-priority ``acccounts/user/${USERNAME}`` file, any keys which
+are not yet determined then be looked up in the profile defaults file,
+``PROFILEDIR/accounts``, which contains all the default values for the keys.
+Again, it will be found by cascading through all parents of *PROFILEDIR*.
 
 Users
 -----
