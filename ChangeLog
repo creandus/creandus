@@ -1,5 +1,9 @@
 2006-09-07  Mike Kelly  <pioto@gentoo.org>
 
+	* bash/common/Makefile.am: Whoops, forgot to add get_profiledirs.bash.
+
+2006-09-07  Mike Kelly  <pioto@gentoo.org>
+
 	* configure.ac, doc/Makefile.am, Makefile.am: Update rules a bit for
 	making docs.
 

@@ -3,6 +3,7 @@ commonbackenddir = $(datadir)/$(PACKAGE)/common/
 commonbackend_DATA = \
 	config.bash \
 	getent.bash \
+	get_profiledirs.bash \
 	read_groupdata.bash \
 	read_userdata.bash \
 	functions.bash
