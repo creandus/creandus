@@ -4,10 +4,6 @@ High Priority:
 
 Medium Priority:
 
- bash/common/read{user,group}data.bash:
-   Build {USER,GROUP}FILE dynamically based upon the currently selected
-   profile.
-
  Create some more test cases.
 
 Low Priority:
