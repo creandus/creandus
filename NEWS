@@ -4,6 +4,11 @@ Feel free to send me some test cases to run everything through, though.
 This is a summary of what has changed between released versions. More detailed
 information may be found in the ChangeLog.
 
+0.5.0:
+    New Features:
+    - Read all user / group data from our portage profile, not the static
+      /var/lib/dynusers/data.
+
 0.4.3:
     Bug Fixes:
     - Fix a bug in the data file parsers which caused them to find no data for

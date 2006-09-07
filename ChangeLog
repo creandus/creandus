@@ -1,5 +1,11 @@
 2006-09-07  Mike Kelly  <pioto@gentoo.org>
 
+	* NEWS: Prepare for 0.5.0.
+
+	+ Release: 0.5.0
+
+2006-09-07  Mike Kelly  <pioto@gentoo.org>
+
 	* doc/: Restructure documentation.
 
 2006-09-07  Mike Kelly  <pioto@gentoo.org>
