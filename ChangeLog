@@ -1,5 +1,10 @@
 2006-09-07  Mike Kelly  <pioto@gentoo.org>
 
+	* configure.ac, doc/Makefile.am, Makefile.am: Update rules a bit for
+	making docs.
+
+2006-09-07  Mike Kelly  <pioto@gentoo.org>
+
 	* bash/common/read_groupdata.bash.in,
 	bash/common/read_userdata.bash.in,
 	bash/common/get_profiledirs.bash.in: Add support for reading our data

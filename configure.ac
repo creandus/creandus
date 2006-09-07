@@ -1,7 +1,7 @@
 dnl vim: set sw=4 sts=4 ts=4 noet ft=config foldmethod=marker foldmarker={{{,}}} :
 
 dnl {{{ program, version
-AC_INIT([dynusers], [0.4.3], [pioto@gentoo.org])
+AC_INIT([dynusers], [0.5.0], [pioto@gentoo.org])
 AC_PREREQ([2.59])
 AC_CONFIG_SRCDIR([bash/adduser.bash.in])
 AC_CONFIG_AUX_DIR([config])
@@ -11,6 +11,18 @@ dnl }}}
 dnl {{{ basic toolchain checks
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
+dnl }}}
+
+dnl {{{ check for docutils
+AC_MSG_CHECKING([whether to enable docutils])
+AC_ARG_ENABLE([docutils],
+			  [  --enable-docutils       Enable 'make doc' (developer docs)],
+			  [HAVE_DOCUTILS=$enableval
+			   AC_MSG_RESULT([$enableval])],
+			  [AC_MSG_RESULT([autodetect])
+			   AC_CHECK_PROG(HAVE_DOCUTILS, [rst2html.py], [yes], [no])])
+AC_SUBST([HAVE_DOCUTILS])
+AM_CONDITIONAL([HAVE_DOCUTILS], test "x$HAVE_DOCUTILS" = "xyes")
 dnl }}}
 
 dnl {{{ bash checks, stolen from eselect
@@ -40,6 +52,7 @@ AC_OUTPUT(
 	bash/Makefile
 	bash/auth/Makefile
 	bash/common/Makefile
+	doc/Makefile
 	eselect/Makefile
 	)
 dnl }}}
