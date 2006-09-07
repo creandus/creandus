@@ -1,5 +1,9 @@
 2006-09-07  Mike Kelly  <pioto@gentoo.org>
 
+	* doc/: Restructure documentation.
+
+2006-09-07  Mike Kelly  <pioto@gentoo.org>
+
 	* bash/common/Makefile.am: Whoops, forgot to add get_profiledirs.bash.
 
 2006-09-07  Mike Kelly  <pioto@gentoo.org>
