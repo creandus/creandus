@@ -14,12 +14,12 @@ eval unset LANG ${!LC_*}
 shopt -s expand_aliases
 shopt -s extglob
 
-DYNUSERS_KILL_PID=$$
+CREANDUS_KILL_PID=$$
 alias die='diefunc "$FUNCNAME" "$LINENO"'
 alias assert='_pipestatus="${PIPESTATUS[*]}"; [[ -z "${_pipestatus//[ 0]/}" ]] || diefunc "$FUNCNAME" "$LINENO" "$_pipestatus"'
 trap 'echo "die trap: exiting with error." 1>&2 ; exit 250' 15
 
-export DYNUSERS_PROGRAM_NAME="$0"
+export CREANDUS_PROGRAM_NAME="$0"
 
 diefunc() {
     local func="$1" line="$2" quiet=""
@@ -38,7 +38,7 @@ diefunc() {
     done
     echo 1>&2
 
-    kill ${DYNUSERS_KILL_PID}
+    kill ${CREANDUS_KILL_PID}
     exit 249
 }
 

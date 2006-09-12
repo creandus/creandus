@@ -1,5 +1,5 @@
 ==============
- Dynusers API
+ Creandus API
 ==============
 
 :Author: Mike Kelly <pioto@gentoo.org>
@@ -10,7 +10,7 @@
 Outline
 =======
 
-This is a sketch of the basic API for interfacing with the dynusers
+This is a sketch of the basic API for interfacing with the creandus
 scripts.
 
 There are several different tasks which these scripts must do:
@@ -85,11 +85,11 @@ Public API Usage Flowchart
 
 .. figure:: ./API_flowchart.png
 
-   Installing a package with Dynusers
+   Installing a package with Creandus
 
 .. figure:: ./API_flowchart2.png
 
-   Uninstalling a package with Dynusers
+   Uninstalling a package with Creandus
 
 Non-Public API (Internal Use Only)
 ==================================

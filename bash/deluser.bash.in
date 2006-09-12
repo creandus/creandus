@@ -2,7 +2,7 @@
 # Copyright 2006 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
-# Delete a user managed by the dynusers scripts.
+# Delete a user managed by the creandus scripts.
 #
 # $Id$
 

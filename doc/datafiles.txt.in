@@ -1,5 +1,5 @@
 =================================
- Dynusers Data Files Format Spec
+ Creandus Data Files Format Spec
 =================================
 :Author: Mike Kelly <pioto@gentoo.org>
 :Date: $Date$
@@ -9,7 +9,7 @@
 Introduction
 ============
 
-One of the main points of dynusers is to provide an easy way for package
+One of the main points of creandus is to provide an easy way for package
 maintainers to manage the users and groups their packages need. This is done
 by creating the proper *data files*. This document describes their format, and
 provides some examples.
@@ -39,17 +39,17 @@ The users files contain the following keys:
   uid
     The range specification for the numeric group id of the group. A range
     specification consists of a lower and upper bound, like ``25-35``, or of a
-    single number, like ``1234``. Dynusers will use the first available number
+    single number, like ``1234``. Creandus will use the first available number
     in that range. If none in that range are available, it will exit with
     failure.
 
   shell
     The default shell for the user. It would often be best to not specify this,
-    so that dynusers will use the proper default for your profile.
+    so that creandus will use the proper default for your profile.
 
   home
     The home directory for the user. As with shell, it is sometimes best to not
-    specify this unless specifically needed, and to instead let dynusers use the
+    specify this unless specifically needed, and to instead let creandus use the
     profile's defaults.
 
   groups
@@ -68,7 +68,7 @@ The groups files contain only one key:
   gid
     The range specification for the numeric group id of the group. As with *uid*
     above, a range specification consists of a lower and upper bound, like
-    ``25-35``, or of a single number, like ``1234``. Dynusers will use the first
+    ``25-35``, or of a single number, like ``1234``. Creandus will use the first
     available number in that range. If none in that range are available, it will
     exit with failure.
 

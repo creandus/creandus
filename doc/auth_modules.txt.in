@@ -1,5 +1,5 @@
 =======================
- Dynusers Auth Modules
+ Creandus Auth Modules
 =======================
 :Author: Mike Kelly <pioto@gentoo.org>
 :Date: $Date$
@@ -9,14 +9,14 @@
 Introduction
 ============
 
-One of the main design features of dynusers is that it is easy to add in
+One of the main design features of creandus is that it is easy to add in
 additional modules for authentication systems in different operating systems.
 This document defines the necessary features of any module.
 
 Naming
 ======
 
-Dynusers modules follow this naming scheme:
+Creandus modules follow this naming scheme:
 
   *nss*-*userland*-*elibc*-*action*
 
@@ -192,7 +192,7 @@ And here is another, ``compat-GNU-glibc-userdel.bash.in``::
 Further Reading
 ===============
 
-For further reading, you may wish to consult the dynusers API, which you can
+For further reading, you may wish to consult the creandus API, which you can
 find in the same place you found this document.
 
 .. vim: set ft=glep tw=80 spell spelllang=en et :
