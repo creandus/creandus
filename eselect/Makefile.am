@@ -18,7 +18,8 @@ dosed=@SED@ \
 	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(dosed) $< > $@
+	@echo DOSED $@
+	@$(dosed) $< > $@
 
 # Create a users-update symlink to eselect
 install-data-local:

@@ -29,4 +29,5 @@ dosed=@SED@ \
 	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(dosed) $< > $@
+	@echo DOSED $@
+	@$(dosed) $< > $@

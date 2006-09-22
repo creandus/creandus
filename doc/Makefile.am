@@ -16,7 +16,8 @@ if HAVE_DOCUTILS
 doc : $(htmlfiles)
 
 %.html : %.txt
-	rst2html.py $(DOCFLAGS) $< $@
+	@echo rst2html $@
+	@rst2html.py $(DOCFLAGS) $< $@
 
 else
 
@@ -38,4 +39,5 @@ dosed=@SED@ \
 	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 
 % : %.in
-	$(dosed) $< > $@
+	@echo DOSED $@
+	@$(dosed) $< > $@
