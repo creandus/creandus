@@ -31,7 +31,7 @@ read_groupdata() {
 	
 	local all_profile_dirs="$(get_profiledirs "${profile_dirs}")"
 
-	for d in "group/${1}" "accounts" ; do
+	for d in "group/${1}" "defaults" ; do
 		for d_ in ${all_profile_dirs} ; do
 			[[ -f "${d_}/accounts/${d}" ]] \
 				&& groupfile="${groupfile} ${d_}/accounts/${d}"

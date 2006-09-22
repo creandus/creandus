@@ -1,3 +1,12 @@
+Changelog for Creandus
+
+2006-09-22  Mike Kelly  <pioto@gentoo.org>
+
+	* docs/datafiles.txt, bash/common/read_groupdata.bash.in,
+	bash/common/read_userdata.bash.in: Switch the default settings file to
+	be called PROFILEDIR/accounts/defaults, and update documentation to
+	reflect this change.
+
 2006-09-07  Mike Kelly  <pioto@gentoo.org>
 
 	* NEWS: Prepare for 0.5.0.

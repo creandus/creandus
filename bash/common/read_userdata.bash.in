@@ -35,7 +35,7 @@ read_userdata() {
 	
 	local all_profile_dirs="$(get_profiledirs "${profile_dirs}")"
 
-	for d in "user/${1}" "accounts" ; do
+	for d in "user/${1}" "defaults" ; do
 		for d_ in ${all_profile_dirs} ; do
 			[[ -f "${d_}/accounts/${d}" ]] \
 				&& userfile="${groupfile} ${d_}/accounts/${d}"
