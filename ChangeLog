@@ -2,6 +2,12 @@ Changelog for Creandus
 
 2006-09-22  Mike Kelly  <pioto@gentoo.org>
 
+	* eselect/Makefile.am, doc/Makefile.am, bash/auth/Makefile.am,
+	bash/common/Makefile.am, bash/Makefile.am: Beautify the DOSED stuff a
+	bit.
+
+2006-09-22  Mike Kelly  <pioto@gentoo.org>
+
 	* docs/datafiles.txt, bash/common/read_groupdata.bash.in,
 	bash/common/read_userdata.bash.in: Switch the default settings file to
 	be called PROFILEDIR/accounts/defaults, and update documentation to
