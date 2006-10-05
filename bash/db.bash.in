@@ -6,11 +6,11 @@
 #
 # $Id$
 
-SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+CREANDUS_SCRIPTDIR=${CREANDUS_SCRIPTDIR:-@CREANDUS_SCRIPTDIR@}
 
 # Load the basic configuration.
-. "${SCRIPTDIR}/common/config.bash" || exit 1
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/config.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	case "${1}" in

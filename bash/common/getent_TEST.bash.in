@@ -4,7 +4,7 @@
 #
 # $Id$
 
-. "${SCRIPTDIR}/common/getent.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/getent.bash" || exit 1
 
 if [[ "${1}" == "--test" ]] ; then
 	if [[ "`egetent passwd 0`" != "`egetent passwd root`" ]] ; then

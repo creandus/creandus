@@ -6,12 +6,12 @@
 #
 # $Id$
 
-SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+CREANDUS_SCRIPTDIR=${CREANDUS_SCRIPTDIR:-@CREANDUS_SCRIPTDIR@}
 
 # Load the basic configuration
-. "${SCRIPTDIR}/common/config.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/config.bash" || exit 1
 # Load things like die()
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -20,7 +20,7 @@ main() {
 	[[ -z "${pkgname}" ]] && die "missing required arg: pkgname"
 	[[ -z "${userspace}" ]] && die "missing required arg: userspace"
 
-	"${SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
+	"${CREANDUS_SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
 }
 
 if [[ "${1}" == "--test" ]] ; then

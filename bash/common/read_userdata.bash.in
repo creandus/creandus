@@ -11,7 +11,7 @@
 # TODO: Split this file up in such a way as to be automatically done
 # correctly for various distros.
 
-. "${SCRIPTDIR}/common/get_profiledirs.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/get_profiledirs.bash" || exit 1
 
 # read_userdata()
 # Inputs:

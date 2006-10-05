@@ -6,11 +6,11 @@
 #
 # $Id$
 
-SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+CREANDUS_SCRIPTDIR=${CREANDUS_SCRIPTDIR:-@CREANDUS_SCRIPTDIR@}
 
 # Load the basic configuration
-. "${SCRIPTDIR}/common/config.bash" || exit 1
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/config.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -29,11 +29,11 @@ main() {
 	local done_once
 
 	for x in ${PASSWD_BACKENDS} ; do
-		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-userdel.bash" ]]
+		if [[ -e "${CREANDUS_SCRIPTDIR}/auth/${x}-${userspace}-userdel.bash" ]]
 		then
 			done_once="yes"
 			debug_msg "Running ${x}-${userspace}-userdel..."
-			. "${SCRIPTDIR}/auth/${x}-${userspace}-userdel.bash"
+			. "${CREANDUS_SCRIPTDIR}/auth/${x}-${userspace}-userdel.bash"
 			"${x}-${userspace}-userdel" "${deaduser}" "${root}" \
 				|| die "userdel failed"
 		else

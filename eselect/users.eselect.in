@@ -24,7 +24,7 @@ describe_show_options() {
 }
 
 do_show() {
-	local scriptdir="${ROOT}""@SCRIPTDIR@"
+	local scriptdir="${ROOT}""@CREANDUS_SCRIPTDIR@"
 
 	local dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.bash\" DBDIR)"
 	local mode=all
@@ -83,7 +83,7 @@ describe_scan_options() {
 }
 
 do_scan() {
-	local scriptdir="${ROOT}""@SCRIPTDIR@"
+	local scriptdir="${ROOT}""@CREANDUS_SCRIPTDIR@"
 
 	# Parse our commandline args
 	local target="${ROOT:-/}"
@@ -149,7 +149,7 @@ describe_update_options() {
 
 do_update() {
 	local pretend deadusers deadgroups
-	local scriptdir="${ROOT}""@SCRIPTDIR@"
+	local scriptdir="${ROOT}""@CREANDUS_SCRIPTDIR@"
 
 	local dbdir="${ROOT}$(load_config \"${scriptdir}/common/config.bash\" DBDIR)"
 	local userspace="$(cat \"${DBDIR}/userspace\")"

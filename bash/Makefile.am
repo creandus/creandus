@@ -14,7 +14,7 @@ backend_SCRIPTS = \
 
 # Some basic tests, mostly just syntax verification at the moment
 TESTS_ENVIRONMENT = env \
-	SCRIPTDIR="$(top_builddir)/bash/" \
+	CREANDUS_SCRIPTDIR="$(top_builddir)/bash/" \
 	bash $(top_srcdir)/tools/run_test.bash
 TESTS = $(backend_SCRIPTS)
 check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
@@ -29,7 +29,7 @@ dosed=@SED@ \
 	-e 's,\@SED\@,@SED@,g' \
 	-e 's,\@BASH\@,@BASH@,g' \
 	-e 's,\@PACKAGE\@,@PACKAGE@,g' \
-	-e 's,\@SCRIPTDIR\@,@SCRIPTDIR@,g' \
+	-e 's,\@CREANDUS_SCRIPTDIR\@,@CREANDUS_SCRIPTDIR@,g' \
 	-e 's,\@localstatedir\@,@localstatedir@,g' \
 	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 

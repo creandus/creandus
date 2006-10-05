@@ -7,11 +7,11 @@
 #
 # $Id$
 
-SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+CREANDUS_SCRIPTDIR=${CREANDUS_SCRIPTDIR:-@CREANDUS_SCRIPTDIR@}
 
 # Load the basic configuration
-. "${SCRIPTDIR}/common/config.bash" || exit 1
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/config.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -22,13 +22,13 @@ main() {
 	[[ -z "${userspace}" ]] && die "missing required arg: userspace"
 
 	# Remove this instance of pkgname from the database
-	"${SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
+	"${CREANDUS_SCRIPTDIR}/db.bash" del "${pkgname}" "${root}"
 
 	# If this install process created any users, then we should now remove
 	# them.
 	for x in ${eusers} ; do
 		if [[ ! -s "${DBDIR}/user/${x}" ]] ; then
-			"${SCRIPTDIR}/deluser.bash" "${x}" "${pkgname}" \
+			"${CREANDUS_SCRIPTDIR}/deluser.bash" "${x}" "${pkgname}" \
 				"${userspace}" "${root}" \
 				|| die "deluser ${x} failed"
 		fi
@@ -36,7 +36,7 @@ main() {
 
 	for x in ${egroups} ; do
 		if [[ ! -s "${DBDIR}/user/${x}" ]] ; then
-			"${SCRIPTDIR}/delgroup.bash" "${x}" "${pkgname}" \
+			"${CREANDUS_SCRIPTDIR}/delgroup.bash" "${x}" "${pkgname}" \
 				"${userspace}" "${root}" \
 				|| die "delgroup ${x} failed"
 		fi

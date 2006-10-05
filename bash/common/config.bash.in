@@ -27,6 +27,8 @@ DATADIR="${DATADIR:-@localstatedir@/@PACKAGE@/data}"
 # system.
 DBDIR="${DBDIR:-@localstatedir@/@PACKAGE@/db}"
 
+CREANDUS_CONFDIR="${CREANDUS_CONFDIR:-@CREANDUS_CONFDIR@}"
+
 # Get a list of the backend databases we're going to use
 ## XXX: Make these regexps better, more general
 if [[ -f "${NSSWITCH_CONF}" ]] ; then

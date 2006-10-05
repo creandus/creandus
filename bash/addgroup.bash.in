@@ -7,16 +7,16 @@
 #
 # $Id$
 
-SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+CREANDUS_SCRIPTDIR=${CREANDUS_SCRIPTDIR:-@CREANDUS_SCRIPTDIR@}
 
 # Load the basic configuration.
-. "${SCRIPTDIR}/common/config.bash" || exit 1
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/config.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 # We make use of egetent.
-. "${SCRIPTDIR}/common/getent.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/getent.bash" || exit 1
 # Reads the proper data file for the desired group
-. "${SCRIPTDIR}/common/read_groupdata.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/read_groupdata.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -80,7 +80,7 @@ main() {
 			debug_msg "We already have a group named ${newgroup}." \
 				"Nothing to do." 1>&2
 
-			"${SCRIPTDIR}/db.bash" "add" "group" "${pkgname}" \
+			"${CREANDUS_SCRIPTDIR}/db.bash" "add" "group" "${pkgname}" \
 				"${newgroup}" "${userspace}"
 			exit 0
 		fi
@@ -99,11 +99,11 @@ main() {
 	local done_once
 
 	for x in ${GROUP_BACKENDS}; do
-		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash" ]] 
+		if [[ -e "${CREANDUS_SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash" ]] 
 		then
 			done_once="yes"
 			debug_msg "Running ${x}-${userspace}-group${action}..."
-			. "${SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash"
+			. "${CREANDUS_SCRIPTDIR}/auth/${x}-${userspace}-group${action}.bash"
 			"${x}-${userspace}-group${action}" "${groupid}" "${newgroup}" \
 				"${root}" || die "group${action} failed"
 		else
@@ -115,7 +115,7 @@ main() {
 	[[ -z "${done_once}" ]] && die "Found no workable backends to run"
 
 	# Properly update the dynamic groups database
-	"${SCRIPTDIR}/db.bash" "add" "group" "${pkgname}" "${newgroup}" "${userspace}"
+	"${CREANDUS_SCRIPTDIR}/db.bash" "add" "group" "${pkgname}" "${newgroup}" "${userspace}"
 }
 
 if [[ "${1}" == "--test" ]] ; then

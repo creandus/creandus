@@ -6,12 +6,12 @@
 #
 # $Id$
 
-SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+CREANDUS_SCRIPTDIR=${CREANDUS_SCRIPTDIR:-@CREANDUS_SCRIPTDIR@}
 
 # Load the basic configuration
-. "${SCRIPTDIR}/common/config.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/config.bash" || exit 1
 # Load things like die()
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -21,13 +21,13 @@ main() {
 	[[ -z "${userspace}" ]] && die "missing required arg: userspace"
 
 	for x in ${egroups} ; do
-		"${SCRIPTDIR}/addgroup.bash" "${x}" "${pkgname}" \
+		"${CREANDUS_SCRIPTDIR}/addgroup.bash" "${x}" "${pkgname}" \
 			"${userspace}" "${root}" \
 			|| die "addgroup ${x} failed"
 	done
 
 	for x in ${eusers} ; do
-		"${SCRIPTDIR}/adduser.bash" "${x}" "${pkgname}" \
+		"${CREANDUS_SCRIPTDIR}/adduser.bash" "${x}" "${pkgname}" \
 			"${userspace}" "${root}" \
 			|| die "adduser ${x} failed"
 	done

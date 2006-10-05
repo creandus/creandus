@@ -4,7 +4,7 @@
 #
 # $Id$
 
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 do_test() {
 	die "What a world, what a world..."

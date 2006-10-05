@@ -24,7 +24,7 @@ dosed=@SED@ \
 	-e 's,\@SED\@,@SED@,g' \
 	-e 's,\@BASH\@,@BASH@,g' \
 	-e 's,\@PACKAGE\@,@PACKAGE@,g' \
-	-e 's,\@SCRIPTDIR\@,@SCRIPTDIR@,g' \
+	-e 's,\@CREANDUS_SCRIPTDIR\@,@CREANDUS_SCRIPTDIR@,g' \
 	-e 's,\@localstatedir\@,@localstatedir@,g' \
 	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 

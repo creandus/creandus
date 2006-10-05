@@ -7,16 +7,16 @@
 #
 # $Id$
 
-SCRIPTDIR=${SCRIPTDIR:-@SCRIPTDIR@}
+CREANDUS_SCRIPTDIR=${CREANDUS_SCRIPTDIR:-@CREANDUS_SCRIPTDIR@}
 
 # Load the basic configuration.
-. "${SCRIPTDIR}/common/config.bash" || exit 1
-. "${SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/config.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
 
 # We make use of egetent.
-. "${SCRIPTDIR}/common/getent.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/getent.bash" || exit 1
 # Reads the proper data file for the desired user
-. "${SCRIPTDIR}/common/read_userdata.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/read_userdata.bash" || exit 1
 
 main() {
 	# Read the command line arguments.
@@ -90,7 +90,7 @@ main() {
 			debug_msg "We already have a user named ${newuser}." \
 				"Nothing to do." 1>&2
 
-			"${SCRIPTDIR}/db.bash" add user "${pkgname}" \
+			"${CREANDUS_SCRIPTDIR}/db.bash" add user "${pkgname}" \
 				"${newuser}" "${userspace}"
 			exit 0
 		fi
@@ -109,11 +109,11 @@ main() {
 	local done_once
 
 	for x in ${PASSWD_BACKENDS}; do
-		if [[ -e "${SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash" ]] 
+		if [[ -e "${CREANDUS_SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash" ]] 
 		then
 			done_once="yes"
 			debug_msg "Running ${x}-${userspace}-user${action}..."
-			. "${SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash"
+			. "${CREANDUS_SCRIPTDIR}/auth/${x}-${userspace}-user${action}.bash"
 			"${x}-${userspace}-user${action}" "${userhome}" "${usergroups}" \
 				"${usershell}" "${userid}" "${usercomment}" "${username}" \
 				"${root}" || die "user${action} failed"
@@ -126,7 +126,7 @@ main() {
 	[[ -z "${done_once}" ]] && die "Found no workable backends to run"
 
 	# Properly update the dynamic users database
-	"${SCRIPTDIR}/db.bash" add user "${pkgname}" "${newuser}" "${userspace}"
+	"${CREANDUS_SCRIPTDIR}/db.bash" add user "${pkgname}" "${newuser}" "${userspace}"
 }
 
 if [[ "${1}" == "--test" ]] ; then

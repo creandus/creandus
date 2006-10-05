@@ -1,5 +1,17 @@
 ChangeLog for Creandus
 
+2006-10-04 Mike Kelly <pioto@gentoo.org>
+
+	* bash/auth/Makefile.am, bash/delgroup.bash.in,
+	bash/install_fail.bash.in, bash/deluser.bash.in,
+	bash/addgroup.bash.in, bash/db.bash.in, bash/common/die_TEST.bash.in,
+	bash/common/read_groupdata.bash.in, bash/common/read_userdata.bash.in,
+	bash/common/config.bash.in, bash/common/getent_TEST.bash.in,
+	bash/common/Makefile.am, bash/adduser.bash.in, bash/cleanup.bash.in,
+	bash/Makefile.am, bash/add.bash.in, doc/Makefile.am,
+	eselect/Makefile.am, eselect/users.eselect.in, configure.ac: Rename
+	SCRIPTDIR to CREANDUS_SCRIPTDIR.
+
 2006-09-22 Mike Kelly <pioto@gentoo.org>
 
 	* doc/API_flowchart.dia, doc/API_flowchart.png,
