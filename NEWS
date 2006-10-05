@@ -4,6 +4,15 @@ Feel free to send me some test cases to run everything through, though.
 This is a summary of what has changed between released versions. More detailed
 information may be found in the ChangeLog.
 
+0.6.0:
+    New Features:
+    - All user / group data is now stored as bash variables (so, key="value"
+      instead of key: value).
+
+    Bug Fixes:
+    - Read default settings from PROFILEDIR/accounts/defaults, rather than
+      PROFILEDIR/accounts/accounts
+
 0.5.0:
     New Features:
     - Read all user / group data from our portage profile, not the static

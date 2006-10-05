@@ -2,6 +2,20 @@ ChangeLog for Creandus
 
 2006-10-04 Mike Kelly <pioto@gentoo.org>
 
+	* configure.ac, bash/auth/Makefile.am,
+	bash/common/read_groupdata.bash.in, bash/common/read_userdata.bash.in,
+	bash/common/Makefile.am, bash/Makefile.am, doc/Makefile.am,
+	eselect/Makefile.am: Add a new config variable, CREANDUS_CONFDIR,
+	which defaults to /etc/creandus. It can contain user overrides of
+	accounts data files, or additional ones.  Make sure that
+	read_{user,group}data search it as well.
+
+	* bash/common/load_config.bash.in, bash/common/read_groupdata.bash.in,
+	bash/common/read_userdata.bash.in: Change the config file format to
+	key="value", rather than key: value.
+
+2006-10-04 Mike Kelly <pioto@gentoo.org>
+
 	* bash/auth/Makefile.am, bash/delgroup.bash.in,
 	bash/install_fail.bash.in, bash/deluser.bash.in,
 	bash/addgroup.bash.in, bash/db.bash.in, bash/common/die_TEST.bash.in,
