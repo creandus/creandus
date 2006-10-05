@@ -12,6 +12,7 @@
 # correctly for various distros.
 
 . "${CREANDUS_SCRIPTDIR}/common/get_profiledirs.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/load_config.bash" || exit 1
 
 # read_groupdata()
 # Inputs:
@@ -32,7 +33,7 @@ read_groupdata() {
 	local all_profile_dirs="$(get_profiledirs "${profile_dirs}")"
 
 	for d in "group/${1}" "defaults" ; do
-		for d_ in ${all_profile_dirs} ; do
+		for d_ in ${CREANDUS_CONFDIR} ${all_profile_dirs} ; do
 			[[ -f "${d_}/accounts/${d}" ]] \
 				&& groupfile="${groupfile} ${d_}/accounts/${d}"
 		done
@@ -41,8 +42,7 @@ read_groupdata() {
 	local groupid_ groupid
 
 	for x in ${groupfile}; do
-		groupid_=$(grep ^gid: ${x} |cut -d: -f2)
-		groupid_=`echo ${groupid_} |sed 's,^[[:space:]]*,,'`
+		groupid_=$(load_config "${x}" "gid")
 		groupid=${groupid:-${groupid_}}
 	done
 

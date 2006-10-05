@@ -35,6 +35,7 @@ dosed=@SED@ \
 	-e 's,\@PACKAGE\@,@PACKAGE@,g' \
 	-e 's,\@VERSION\@,@VERSION@,g' \
 	-e 's,\@CREANDUS_SCRIPTDIR\@,@CREANDUS_SCRIPTDIR@,g' \
+	-e 's,\@CREANDUS_CONFDIR\@,@CREANDUS_CONFDIR@,g' \
 	-e 's,\@localstatedir\@,@localstatedir@,g' \
 	-e 's,\@sysconfdir\@,@sysconfdir@,g'
 

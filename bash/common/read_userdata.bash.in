@@ -12,6 +12,7 @@
 # correctly for various distros.
 
 . "${CREANDUS_SCRIPTDIR}/common/get_profiledirs.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/load_config.bash" || exit 1
 
 # read_userdata()
 # Inputs:
@@ -36,9 +37,9 @@ read_userdata() {
 	local all_profile_dirs="$(get_profiledirs "${profile_dirs}")"
 
 	for d in "user/${1}" "defaults" ; do
-		for d_ in ${all_profile_dirs} ; do
+		for d_ in ${CREANDUS_CONFDIR} ${all_profile_dirs} ; do
 			[[ -f "${d_}/accounts/${d}" ]] \
-				&& userfile="${groupfile} ${d_}/accounts/${d}"
+				&& userfile="${userfile} ${d_}/accounts/${d}"
 		done
 	done
 
@@ -47,24 +48,19 @@ read_userdata() {
 	local usergroups usergroups_ usercomment usercomment_
 
 	for x in ${userfile}; do
-		userid_=$(grep ^uid: ${x} |cut -d: -f2)
-		userid_=`echo ${userid_} |sed 's,^[[:space:]]*,,'` 
+		userid_=$(load_config "${x}" "uid") 
 		userid=${userid:-${userid_}}
 
-		usershell_=$(grep ^shell: "${x}" |cut -d: -f2)
-		usershell_=`echo ${usershell_} |sed 's,^[[:space:]]*,,'`
+		usershell_=$(load_config "${x}" "shell")
 		usershell=${usershell:-${usershell_}}
 
-		userhome_=$(grep ^home: "${x}" |cut -d: -f2)
-		userhome_=`echo ${userhome_} |sed 's,^[[:space:]]*,,'`
+		userhome_=$(load_config "${x}" "home")
 		userhome=${userhome:-${userhome_}}
 
-		usergroups_=$(grep ^groups: "${x}" |cut -d: -f2)
-		usergroups_=`echo ${usergroups_} |sed 's,^[[:space:]]*,,'`
+		usergroups_=$(load_config "${x}" "groups")
 		usergroups=${usergroups:-${usergroups_}}
 
-		usercomment_=$(grep ^comment: "${x}" |cut -d: -f2)
-		usercomment_=`echo ${usercomment_} |sed 's,^[[:space:]]*,,'`
+		usercomment_=$(load_config "${x}" "comment")
 		usercomment=${usercomment:-${usercomment_}}
 	done
 

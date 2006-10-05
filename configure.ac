@@ -44,6 +44,8 @@ dnl }}}
 dnl {{{ substitution macros
 CREANDUS_SCRIPTDIR="${datadir}/creandus"
 AC_SUBST(CREANDUS_SCRIPTDIR)
+CREANDUS_CONFDIR="${sysconfdir}/creandus"
+AC_SUBST(CREANDUS_CONFDIR)
 dnl }}}
 
 dnl {{{ Generate our Makefiles

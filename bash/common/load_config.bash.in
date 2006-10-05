@@ -1,0 +1,18 @@
+# Copyright 2006 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+
+# the load_config function will echo the value of a given key in the given
+# file. Idea and code borrowed from eselect's lib/config.bash
+load_config() {
+	[[ ${#@} -eq 2 ]] || die
+	local filename="${1}" key="${2}"
+
+	[[ -f "${filename}" ]] || die
+	value=$(
+		source "${filename}" 1>&2 > /dev/null \
+			|| die "Failed to source ${filename}."
+		echo ${!key}
+	)
+	echo ${value}
+}
+# vim: ts=4 :
