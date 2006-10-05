@@ -4,6 +4,7 @@ commonbackend_DATA = \
 	config.bash \
 	getent.bash \
 	get_profiledirs.bash \
+	load_config.bash \
 	read_groupdata.bash \
 	read_userdata.bash \
 	functions.bash
