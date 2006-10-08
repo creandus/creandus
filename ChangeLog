@@ -1,5 +1,9 @@
 ChangeLog for Creandus
 
+2006-10-08 Danny van Dyk <kugelfang@gentoo.org>
+
+	* eselect/users.eselect.in: Clean up a bit.
+
 2006-10-04 Mike Kelly <pioto@gentoo.org>
 
 	* configure.ac, bash/auth/Makefile.am,
