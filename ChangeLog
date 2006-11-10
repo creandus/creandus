@@ -1,5 +1,13 @@
 ChangeLog for Creandus
 
+2006-11-10 Mike Kelly <pioto@gentoo.org>
+
+	* configure.ac, autogen.bash, Makefile.am: Bump our requirements up to
+	automake-1.10, autoconf-2.60. Going to go through later and clean up
+	the build files some more.
+
+	* configure.ac: Prepare for 0.6.0 release.
+
 2006-10-08 Danny van Dyk <kugelfang@gentoo.org>
 
 	* eselect/users.eselect.in: Clean up a bit.

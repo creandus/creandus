@@ -27,7 +27,7 @@ get() {
 
 run mkdir -p config
 rm -f config.cache
-run $(get aclocal 1.9 )
-run $(get autoconf 2.59 )
-run $(get automake 1.9 ) -a --copy
+run $(get aclocal 1.10 )
+run $(get autoconf 2.60 )
+run $(get automake 1.10 ) -a --copy
 

@@ -1,4 +1,4 @@
-AUTOMAKE_OPTIONS = dist-bzip2 no-dist-gzip
+AUTOMAKE_OPTIONS = dist-bzip2 no-dist-gzip check-news 1.10
 EXTRA_DIST = autogen.bash tools
 SUBDIRS = bash eselect doc
 
