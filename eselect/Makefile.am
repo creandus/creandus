@@ -3,7 +3,7 @@ eselectmoddir = $(datadir)/eselect/modules/
 eselectmod_DATA = \
 	users.eselect
 
-EXTRA_DIST = $(foreach f, $(eselectmod_DATA), $(f).in)
+EXTRA_DIST = $(eselectmod_DATA:.eselect=.eselect.in)
 
 CLEANFILES = *~ $(eselectmod_DATA)
 MAINTAINERCLEANFILES = Makefile.in

@@ -1,7 +1,6 @@
-SUBDIRS = auth common .
+SUBDIRS = auth common
 
-# Install our scripts in the proper place
-backenddir = $(datadir)/$(PACKAGE)/
+backenddir = $(pkgdatadir)/
 backend_SCRIPTS = \
 	addgroup.bash \
 	adduser.bash \
@@ -19,7 +18,7 @@ TESTS_ENVIRONMENT = env \
 TESTS = $(backend_SCRIPTS)
 check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
 
-EXTRA_DIST = $(foreach f, $(backend_SCRIPTS), $(f).in)
+EXTRA_DIST = $(backend_SCRIPTS:%=%.in)
 
 CLEANFILES = *~ $(backend_SCRIPTS)
 MAINTAINERCLEANFILES = Makefile.in

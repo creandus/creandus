@@ -1,5 +1,4 @@
-# Install our files in the proper place
-commonbackenddir = $(datadir)/$(PACKAGE)/common/
+commonbackenddir = $(pkgdatadir)/common/
 commonbackend_DATA = \
 	config.bash \
 	getent.bash \
@@ -18,7 +17,7 @@ XFAIL_TESTS = die_TEST.bash
 check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
 check_PROGRAMS = 
 
-EXTRA_DIST = $(foreach f, $(commonbackend_DATA) $(TESTS), $(f).in)
+EXTRA_DIST = $(commonbackend_DATA:%=%.in) $(TESTS:%=%.in)
 
 CLEANFILES = *~ $(commonbackend_DATA) $(TESTS)
 MAINTAINERCLEANFILES = Makefile.in

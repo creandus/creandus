@@ -2,10 +2,10 @@ DOCFLAGS=-g -d -t -s
 
 docs = API auth_modules datafiles
 
-txtfiles=$(foreach f,$(docs),$(f).txt)
-htmlfiles=$(foreach f,$(docs),$(f).html)
+txtfiles=$(docs:%=%.txt)
+htmlfiles=$(docs:%=%.html)
 
-EXTRA_DIST = $(foreach f,$(txtfiles),$(f).in) \
+EXTRA_DIST = $(docs:%=%.txt.in) \
 	API_flowchart.dia API_flowchart.png \
 	API_flowchart2.dia API_flowchart2.png
 

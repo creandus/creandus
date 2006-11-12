@@ -1,5 +1,11 @@
 ChangeLog for Creandus
 
+2006-11-12 Mike Kelly <pioto@gentoo.org>
+
+	* bash/auth/Makefile.am, bash/common/Makefile.am, bash/Makefile.am,
+	doc/Makefile.am, eselect/Makefile.am: Make our Makefile.am files less
+	sloppy.
+
 2006-11-10 Mike Kelly <pioto@gentoo.org>
 
 	* configure.ac, autogen.bash, Makefile.am: Bump our requirements up to
