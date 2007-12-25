@@ -1,11 +1,11 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 2006-2007 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
 inherit config
 
 DESCRIPTION="Maintain the system users added by the package manager"
-MAINTAINER="pioto@gentoo.org"
+MAINTAINER="pioto@pioto.org"
 SVN_DATE='$Date$'
 VERSION=$(svn_date_to_version "${SVN_DATE}")
 
