@@ -28,6 +28,7 @@ doc :
 endif
 
 CLEANFILES = *~ $(htmlfiles) $(txtfiles)
+MAINTAINERCLEANFILES = Makefile.in
 
 dosed=@SED@ \
 	-e 's,\@SED\@,@SED@,g' \
