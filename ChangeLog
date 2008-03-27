@@ -2,6 +2,10 @@ ChangeLog for Creandus
 
 2008-03-27 Mike Kelly <pioto@pioto.org>
 
+	* bash/common/: Add test cases for read_userdata.
+
+2008-03-27 Mike Kelly <pioto@pioto.org>
+
 	* config, doc/Makefile.am: Fix maintainer-clean.
 
 2006-11-12 Mike Kelly <pioto@pioto.org>

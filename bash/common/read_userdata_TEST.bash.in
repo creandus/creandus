@@ -1,0 +1,49 @@
+#!/bin/bash
+# Copyright 2008 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# $Id: die_TEST.bash.in 230 2008-03-27 01:10:28Z pioto $
+
+
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/read_userdata.bash" || exit 1
+
+run_one_test() {
+	local username="${1}" desired_userid="${2}" desired_usershell="${3}"
+	local desired_userhome="${4}" desired_usergroups="${5}"
+	local desired_usercomment="${6}"
+
+	echo -n "Reading userdata for \"${username}\": "
+	eval `read_userdata "${username}"`
+
+	for key in user{id,shell,home,groups,comment}; do
+		local desired_key="desired_${key}"
+		if [[ "${!key}" == "${!desired_key}" ]] ; then
+			echo -n "."
+		else
+			echo -n  "!"
+			ret=1
+		fi
+	done
+	echo " done."
+}
+
+do_test() {
+	local ret=0
+	PALUDIS_PROFILE_DIRS="${CREANDUS_TESTDIR}/profile/arch"
+	echo "PROFILE_DIRS=${PALUDIS_PROFILE_DIRS}"
+
+	run_one_test "user" "5" "/bin/sh" "/home" "mygroup" "the comment"
+
+	run_one_test "defaultuser" "1-999" "/bin/false" "/dev/null" "" "user created by portage"
+	run_one_test "somedefaultuser" "1-999" "/bin/false" "/myhome" "mygroup,anothergroup" "user created by portage"
+	run_one_test "cascade" "1-999" "/bin/sh" "/home" "" "user created by portage"
+	
+	exit ${ret}
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	do_test
+fi
+
+exit 0

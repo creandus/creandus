@@ -1,0 +1,7 @@
+# Default account settings for the glep27-user/group tools
+uid=1-999
+shell=/bin/false
+home=/dev/null
+groups= 
+comment="user created by portage"
+gid=1-999

@@ -1,0 +1,5 @@
+uid=5
+shell=/bin/sh
+home=/home
+groups=mygroup
+comment="the comment"

@@ -11,13 +11,14 @@ commonbackend_DATA = \
 # Some basic sanity checks.
 TESTS_ENVIRONMENT = env \
 	CREANDUS_SCRIPTDIR="$(top_builddir)/bash/" \
+	CREANDUS_TESTDIR="$(srcdir)/test" \
 	bash $(top_srcdir)/tools/run_test.bash
-TESTS = getent_TEST.bash die_TEST.bash
+TESTS = getent_TEST.bash die_TEST.bash read_userdata_TEST.bash
 XFAIL_TESTS = die_TEST.bash
 check_SCRIPTS = $(top_srcdir)/tools/run_test.bash
 check_PROGRAMS = 
 
-EXTRA_DIST = $(commonbackend_DATA:%=%.in) $(TESTS:%=%.in)
+EXTRA_DIST = $(commonbackend_DATA:%=%.in) $(TESTS:%=%.in) test
 
 CLEANFILES = *~ $(commonbackend_DATA) $(TESTS)
 MAINTAINERCLEANFILES = Makefile.in

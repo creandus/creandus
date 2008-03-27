@@ -1,4 +1,4 @@
-# Copyright 2006 Mike Kelly
+# Copyright 2006, 2008 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
 # read_userdata.sh - Read the proper data file for the desired user
@@ -44,35 +44,21 @@ read_userdata() {
 	done
 
 
-	local userid userid_ usershell usershell_ userhome userhome_
-	local usergroups usergroups_ usercomment usercomment_
+	local userid usershell userhome usergroups usercomment
 
 	for x in ${userfile}; do
-		userid_=$(load_config "${x}" "uid") 
-		userid=${userid:-${userid_}}
-
-		usershell_=$(load_config "${x}" "shell")
-		usershell=${usershell:-${usershell_}}
-
-		userhome_=$(load_config "${x}" "home")
-		userhome=${userhome:-${userhome_}}
-
-		usergroups_=$(load_config "${x}" "groups")
-		usergroups=${usergroups:-${usergroups_}}
-
-		usercomment_=$(load_config "${x}" "comment")
-		usercomment=${usercomment:-${usercomment_}}
+		userid=${userid:-$(load_config "${x}" "uid")}
+		usershell=${usershell:-$(load_config "${x}" "shell")}
+		userhome=${userhome:-$(load_config "${x}" "home")}
+		usergroups=${usergroups:-$(load_config "${x}" "groups")}
+		usercomment=${usercomment:-$(load_config "${x}" "comment")}
 	done
 
 	[[ -z "${userid}" ]] && die "Couldn't determine a uid range"
 	echo "local userid=\"${userid}\""
-	[[ -z "${usershell}" ]] && die "Couldn't determine a shell"
 	echo "local usershell=\"${usershell}\""
-	[[ -z "${userhome}" ]] && die "Couldn't determine a home dir"
 	echo "local userhome=\"${userhome}\""
-	[[ -z "${usergroups}" ]] && die "Couldn't determine any user groups"
 	echo "local usergroups=\"${usergroups}\""
-	[[ -z "${usercomment}" ]] && die "Couldn't determine a GECOS comment"
 	echo "local usercomment=\"${usercomment}\""
 }
 # vim: ts=4 :
