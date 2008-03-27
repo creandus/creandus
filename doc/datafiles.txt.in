@@ -20,7 +20,7 @@ Specifications
 All the description files follow a simple format. Lines beginning with a hash
 mark ("#"), or blank lines are comments. Other lines are of the format::
 
-  key: value
+  key=value
 
 When looking for the data for a user, first the file
 ``PROFILEDIR/accounts/user/${USERNAME}`` is checked, where *PROFILEDIR* is a
