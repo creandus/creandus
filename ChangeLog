@@ -2,6 +2,12 @@ ChangeLog for Creandus
 
 2008-03-27 Mike Kelly <pioto@pioto.org>
 
+	* bash/common/: Add test cases for read_groupdata.
+
+	+ Fixes: ticket:6, ticket:7
+
+2008-03-27 Mike Kelly <pioto@pioto.org>
+
 	* bash/common/: Add test cases for read_userdata.
 
 2008-03-27 Mike Kelly <pioto@pioto.org>

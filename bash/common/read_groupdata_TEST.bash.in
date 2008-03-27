@@ -1,0 +1,42 @@
+#!/bin/bash
+# Copyright 2008 Mike Kelly
+# Distributed under the terms of the GNU General Public License v2
+#
+# $Id$
+
+
+. "${CREANDUS_SCRIPTDIR}/common/functions.bash" || exit 1
+. "${CREANDUS_SCRIPTDIR}/common/read_groupdata.bash" || exit 1
+
+run_one_test() {
+	local groupname="${1}" desired_groupid="${2}"
+	echo -n "Reading groupdata for \"${groupname}\": "
+	eval `read_groupdata "${groupname}"`
+
+	if [[ "${groupid}" == "${desired_groupid}" ]] ; then
+		echo -n "."
+	else
+		echo -n "!"
+		echo -n " ${groupid} != ${desired_groupid} "
+		ret=1
+	fi
+	echo " done."
+}
+
+do_test() {
+	local ret=0
+	PALUDIS_PROFILE_DIRS="${CREANDUS_TESTDIR}/profile/arch"
+	echo "PROFILE_DIRS=${PALUDIS_PROFILE_DIRS}"
+
+	run_one_test "group" "5"
+	run_one_test "defaultgroup" "1-999"
+	run_one_test "cascade" "95"
+	
+	exit ${ret}
+}
+
+if [[ "${1}" == "--test" ]] ; then
+	do_test
+fi
+
+exit 0

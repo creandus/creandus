@@ -1,4 +1,4 @@
-# Copyright 2006 Mike Kelly
+# Copyright 2006, 2008 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
 # read_groupdata.sh - Read the proper data file for the desired group
@@ -39,11 +39,10 @@ read_groupdata() {
 		done
 	done
 
-	local groupid_ groupid
+	local groupid
 
 	for x in ${groupfile}; do
-		groupid_=$(load_config "${x}" "gid")
-		groupid=${groupid:-${groupid_}}
+		groupid=${groupid:-$(load_config "${x}" "gid")}
 	done
 
 	[[ -z "${groupid}" ]] && die "couldn't determine a gid range"

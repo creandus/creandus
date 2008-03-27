@@ -1,4 +1,4 @@
-# Copyright 2006 Mike Kelly
+# Copyright 2006, 2008 Mike Kelly
 # Distributed under the terms of the GNU General Public License v2
 #
 # get_profiledirs.bash - Prints a list of all the profile dirs from the current
@@ -11,12 +11,10 @@ get_parents() {
 	local profile_dir="${1}" d
 
 	[[ ! -d "${profile_dir}" ]] && die "${profile_dir} is not a directory!"
-
 	[[ ! -f "${profile_dir}/parent" ]] && return 0
 
-
 	pushd "${profile_dir}" >/dev/null
-	for d in $(cat "${profile_dir}/parent") ; do
+	for d in $(< parent) ; do
 		echo $(readlink -f "${d}")
 	done
 	popd >/dev/null
